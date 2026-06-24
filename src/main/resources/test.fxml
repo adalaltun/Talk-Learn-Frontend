@@ -47,10 +47,10 @@
   <children>
     <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane maxWidth="250.0" minWidth="200.0" prefHeight="598.0" prefWidth="220.0" styleClass="sidebar">
+        <AnchorPane maxWidth="350.0" minWidth="215.0" prefHeight="598.0" prefWidth="350.0" styleClass="sidebar">
           <children>
-                  <VBox layoutX="-2.0" layoutY="-1.0" prefHeight="558.0" prefWidth="223.0" styleClass="sidebar" />
-                  <Circle fill="DODGERBLUE" layoutX="111.0" layoutY="114.0"  radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="-2.0" layoutY="-1.0" prefHeight="558.0" prefWidth="222.0" styleClass="sidebar" />
+                  <Circle fill="DODGERBLUE" layoutX="111.0" layoutY="114.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
                   <Label alignment="CENTER" layoutX="46.0" layoutY="197.0" prefHeight="17.0" prefWidth="120.0" styleClass="username-text" text="Username" textAlignment="CENTER" textFill="#2ac7cd" />
                   <HBox layoutY="572.0" prefHeight="26.0" prefWidth="222.0" spacing="5.0" styleClass="bottom-bar">
                      <children>
@@ -63,7 +63,7 @@
                   </HBox>
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+        <ScrollPane prefHeight="598.0" prefWidth="138.0">
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="808.0" styleClass="content-area">
               <children>

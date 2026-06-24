@@ -22,7 +22,7 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/test.fxml"));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 800, 600);
+            Scene scene = new Scene(root, 800, 620);
 
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
