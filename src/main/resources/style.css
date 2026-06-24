@@ -1,0 +1,54 @@
+/* Target the root window background */
+.root {
+    -fx-background-color: #f4f4f9;
+}
+
+/* Force the Sidebar VBox/Pane container */
+.sidebar {
+    -fx-background-color: #1e1e24 !important; /* Forces color override */
+    -fx-padding: 20;
+    -fx-alignment: top-center;
+}
+
+/* Target the Username label text */
+.username-text {
+    -fx-text-fill: #00adb5;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica Neue", Arial;
+}
+
+/* Force the right-side main viewing area to be warm off-white */
+.content-area {
+    -fx-background-color: #f4f4f9 !important;
+}
+
+/* Force SplitPane dividers to look clean and dark */
+.split-pane, .split-pane *.split-pane-divider {
+    -fx-background-color: #111115;
+    -fx-padding: 1px;
+}
+
+/* The dark persistent bottom bar container */
+.bottom-bar {
+    -fx-background-color: #FFC09F;
+    -fx-padding: 10px;
+    -fx-alignment: center-left;
+}
+
+
+.nav-button {
+    -fx-background-color: #00adb5;
+    -fx-text-fill: white;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 0px;
+    -fx-max-width: 1000px;
+    -fx-hgrow: always;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #00adb5;
+}
