@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Main extends Application{
@@ -20,6 +21,8 @@ public class Main extends Application{
             System.out.println("RESOURCE URL: " + getClass().getResource("/test.fxml"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/test.fxml"));
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/test2.fxml"));
+
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 800, 620);
@@ -28,12 +31,18 @@ public class Main extends Application{
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);
+
+
             stage.show();
 
         } catch (IOException e) {
             System.err.println("Error: Could not load test.fxml. ");
             e.printStackTrace();
         }
+    }
+
+    public void changeScreen(ActionEvent actionEvent, FXMLLoader loader, Parent root) throws IOException {
+        root = loader.load();
     }
 
     public static void main(String[] args) {
