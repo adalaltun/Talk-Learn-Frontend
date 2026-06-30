@@ -5,4 +5,8 @@ public class HomeController {
     public void createAd(){
 
     }
+
+    public void myAds(){
+
+    }
 }
