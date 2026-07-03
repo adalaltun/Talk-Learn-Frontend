@@ -7,4 +7,6 @@ systematic way that will create regular time intervals for communication.
 through the app and withdraw before the meet up. Users can rate their meeting and contribute to the trust
 score of the proficient user. Proficient users can specify topics they want to discuss from a list of various
 subjects when posting an ad; users can filter ads to see those containing specific topics they are interested in.
+Team Name:Pear
+Team Members: Göktan Arslan, Adal Altun, Melikşah Sucu, Berke Güler
 
