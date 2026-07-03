@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="discoveryListing" prefHeight="50.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.DiscoveryController">
+   <children>
+      <Button alignment="CENTER" blendMode="ADD" mnemonicParsing="false" onAction="#handleListing" prefHeight="50.0" prefWidth="650.0" text="(Invisible) Listing" />
+      <HBox prefHeight="50.0" prefWidth="200.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" text="Place" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" text="Label" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" text="Rank" />
+         </children>
+      </HBox>
+   </children>
+</StackPane>

@@ -43,29 +43,34 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LoginController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
   <children>
-    <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="splitPane" dividerPositions="0.25" focusTraversable="true" onMouseDragged="#handleDrag" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane maxWidth="350.0" minWidth="215.0" prefHeight="598.0" prefWidth="350.0" styleClass="sidebar">
+        <AnchorPane maxWidth="350.0" minWidth="215.0" prefHeight="598.0" prefWidth="298.0" styleClass="sidebar">
           <children>
-                  <VBox layoutX="-2.0" layoutY="-1.0" prefHeight="558.0" prefWidth="222.0" styleClass="sidebar" />
-                  <Circle fill="DODGERBLUE" layoutX="111.0" layoutY="114.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label alignment="CENTER" layoutX="46.0" layoutY="197.0" prefHeight="17.0" prefWidth="120.0" styleClass="username-text" text="Username" textAlignment="CENTER" textFill="#2ac7cd" />
-                  <HBox layoutY="572.0" prefHeight="26.0" prefWidth="222.0" spacing="5.0" styleClass="bottom-bar">
+                  <VBox fx:id="buttonVBox" layoutX="11.0" layoutY="440.0" maxWidth="250.0" minWidth="150.0" prefHeight="100.0" prefWidth="200.0" styleClass="sidebar">
                      <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="26.0" prefWidth="37.0" styleClass="nav-button" text="H" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="39.0" styleClass="nav-button" text="D" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="37.0" styleClass="nav-button" text="C" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" styleClass="nav-button" text="R" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="44.0" styleClass="nav-button" text="S" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="menu-button" text="Create New Meetup" VBox.vgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="menu-button" text="My Meetups" VBox.vgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" styleClass="menu-button" text="Saved Meetups" VBox.vgrow="ALWAYS" />
+                     </children></VBox>
+                  <Circle fill="DODGERBLUE" layoutX="111.0" layoutY="114.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label alignment="CENTER" layoutX="51.0" layoutY="186.0" prefHeight="17.0" prefWidth="120.0" styleClass="username-text" text="Username" textAlignment="CENTER" textFill="#2ac7cd" />
+                  <HBox layoutX="5.0" layoutY="560.0" prefHeight="35.0" prefWidth="200.0" spacing="5.0" styleClass="bottom-bar">
+                     <children>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="35.0" prefWidth="36.0" styleClass="nav-button" text="H" HBox.hgrow="ALWAYS" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleDiscovery" prefHeight="35.0" prefWidth="36.0" styleClass="nav-button" text="D" HBox.hgrow="ALWAYS" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleChat" prefHeight="35.0" prefWidth="36.0" styleClass="nav-button" text="C" HBox.hgrow="ALWAYS" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleLeaderboard" prefHeight="35.0" prefWidth="36.0" styleClass="nav-button" text="R" HBox.hgrow="ALWAYS" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSettings" prefHeight="35.0" prefWidth="36.0" styleClass="nav-button" text="S" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="598.0" prefWidth="138.0">
+        <ScrollPane prefHeight="598.0" prefWidth="670.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="808.0" styleClass="content-area">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="546.0" prefWidth="794.0" styleClass="content-area">
               <children>
                 <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" wrapText="false">
                            <font>

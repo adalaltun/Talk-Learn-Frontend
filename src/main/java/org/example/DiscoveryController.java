@@ -1,4 +1,35 @@
 package org.example;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+
 public class DiscoveryController {
+    public void handleMain(ActionEvent actionEvent) {
+        Main.changeMenu(Main.homeMenu);
+    }
+
+    public void handleSignUp(ActionEvent actionEvent) {
+    }
+
+    public void handleDiscovery(ActionEvent actionEvent) {
+        Main.changeMenu(Main.discoveryMenu);
+    }
+
+    public void handleChat(ActionEvent actionEvent) {
+    }
+
+    public void handleLeaderboard(ActionEvent actionEvent) {
+    }
+
+    public void handleSettings(ActionEvent actionEvent) {
+    }
+
+    public void handleListing(ActionEvent actionEvent) {
+        System.out.println("-- handleListing");
+        Main.changeMenu(Main.homeMenu);
+    }
+
+    public void handleDebugAddListing(ActionEvent actionEvent) {
+        
+    }
 }
