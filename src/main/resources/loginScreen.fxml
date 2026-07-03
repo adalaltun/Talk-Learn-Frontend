@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LoginController">
+   <children>
+      <Pane layoutX="173.0" layoutY="14.0" prefHeight="343.0" prefWidth="256.0">
+         <children>
+            <Pane fx:id="titlePane" prefHeight="102.0" prefWidth="256.0" style="-fx-background-color: lightgray; -fx-border-radius: 12px; -fx-border-color: black;">
+               <children>
+                  <Label alignment="CENTER" layoutX="4.0" layoutY="4.0" prefHeight="95.0" prefWidth="247.0" text="Talk&amp;Learn">
+                     <font>
+                        <Font size="40.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="loginPane" layoutY="127.0" prefHeight="215.0" prefWidth="256.0" style="-fx-background-color: lightgray; -fx-border-color: black; -fx-border-radius: 12px;">
+               <children>
+                  <Pane fx:id="usernamePane" layoutX="7.0" layoutY="8.0" prefHeight="60.0" prefWidth="241.0">
+                     <children>
+                        <TextField alignment="CENTER" layoutX="73.0" layoutY="11.0" prefHeight="39.0" prefWidth="167.0" />
+                        <Label layoutX="4.0" layoutY="11.0" prefHeight="39.0" prefWidth="67.0" text="Username:" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="passwordPane" layoutX="8.0" layoutY="68.0" prefHeight="60.0" prefWidth="241.0">
+                     <children>
+                        <TextField alignment="CENTER" layoutX="73.0" layoutY="11.0" prefHeight="39.0" prefWidth="167.0" />
+                        <Label layoutX="2.0" layoutY="11.0" prefHeight="39.0" prefWidth="67.0" text="Password:" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="loginButton" layoutX="8.0" layoutY="128.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="241.0" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Login" />
+                  <Pane layoutX="5.0" layoutY="163.0" prefHeight="49.0" prefWidth="247.0">
+                     <children>
+                        <Label layoutX="6.0" layoutY="17.0" prefHeight="15.0" prefWidth="127.0" text="Create a new account:" />
+                        <Button fx:id="signUpButton" layoutX="143.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="101.0" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Sign Up" />
+                     </children>
+                  </Pane>
+      
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
