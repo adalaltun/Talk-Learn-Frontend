@@ -19,12 +19,12 @@ public class Main extends Application{
 
             System.out.println("RESOURCE URL: " + getClass().getResource("/test.fxml"));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/test.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/loginScreen.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 800, 620);
 
-            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            //scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);
