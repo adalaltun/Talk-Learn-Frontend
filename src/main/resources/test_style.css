@@ -52,3 +52,16 @@
     -fx-background-color: white;
     -fx-text-fill: #00adb5;
 }
+
+.menu-button {
+    -fx-background-color: #ffaa00;
+    -fx-text-fill: green;
+    -fx-background-radius: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+}
+
+.menu-button:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #00adb5;
+}
