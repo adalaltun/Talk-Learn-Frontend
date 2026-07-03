@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Main extends Application{
@@ -52,6 +53,8 @@ public class Main extends Application{
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);
+
+
             stage.show();
     }
 
