@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Added classes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/loginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/loginScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/registerScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/registerScreen.fxml" afterDir="false" />
     </list>
@@ -113,7 +117,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.keymap"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -162,10 +166,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AppLauncher" />
-        <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Application.AppLauncher" />
+        <item itemvalue="Application.AppLauncher" />
+        <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Gradle.Talk_Learn [clean]" />
       </list>
     </recent_temporary>

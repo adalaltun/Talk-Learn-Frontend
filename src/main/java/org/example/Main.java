@@ -14,6 +14,8 @@ public class Main extends Application{
 
     public static Scene scene;
     public static Parent homeMenu;
+    public static Parent loginScreen;
+    public static Parent registerScreen;
     public static Parent discoveryMenu;
     public static Parent chatMenu;
     public static Parent leaderboardMenu;
@@ -44,7 +46,12 @@ public class Main extends Application{
 
             FXMLLoader loader = new FXMLLoader();
 
-            homeMenu = loadFXML(loader, "test");
+            //GUI'ye kod yazıp test edecekseniz homeMenu'nun fxmlname'sini değiştirin
+            //fxmlname'nin sonunda .fxml olmasına gerek yok.
+            homeMenu = loadFXML(loader, "loginScreen");
+            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            loginScreen = loadFXML(loader, "loginScreen");
+            registerScreen = loadFXML(loader, "registerScreen");
             discoveryMenu = loadFXML(loader, "discoveryScene");
 
             scene = new Scene(homeMenu, 800, 620);
