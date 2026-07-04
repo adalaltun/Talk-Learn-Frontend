@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Added classes" />
+    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Added classes">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/loginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/loginScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/registerScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/registerScreen.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,29 +96,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AppLauncher.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk_Learn [:org.example.AppLauncher.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk_Learn [:org.example.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk_Learn [clean].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AppLauncher.executor": "Run",
+    "Gradle.Talk-Learn [:org.example.AppLauncher.main()].executor": "Run",
+    "Gradle.Talk_Learn [:org.example.AppLauncher.main()].executor": "Run",
+    "Gradle.Talk_Learn [:org.example.Main.main()].executor": "Run",
+    "Gradle.Talk_Learn [clean].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "testMeliksah",
+    "kotlin-language-version-configured": "true",
+    "onboarding.tips.debug.path": "/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.AppLauncher">
     <configuration name="AppLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.AppLauncher" />
@@ -212,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782483995189</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Modified login and register screens to be aligned center.">
+      <option name="closed" value="true" />
+      <created>1783202553605</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1783202553605</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,7 +254,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Project Creation" />
     <MESSAGE value="Added classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added classes" />
+    <MESSAGE value="Modified login and register screens to be aligned center." />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified login and register screens to be aligned center." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
