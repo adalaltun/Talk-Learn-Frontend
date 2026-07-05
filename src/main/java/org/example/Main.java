@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -15,9 +16,10 @@ public class Main extends Application{
     public static Scene scene;
     public static Parent homeMenu;
     public static Parent startingScene;
-    public static Parent loginScreen;
     public static Parent registerScreen;
+    public static Parent loginScreen;
     public static Parent discoveryMenu;
+    public static Parent applicationScene;
     public static Parent chatMenu;
     public static Parent leaderboardMenu;
     public static Parent settingsMenu;
@@ -40,6 +42,16 @@ public class Main extends Application{
         return root;
     }
 
+    //displayAlert method's first parameter is the error type the others are title and the message
+    //it is used to prompt a read only warning screen!
+    public static void displayAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @Override
     public void start(Stage stage) {
 
@@ -48,13 +60,14 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader();
 
             //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "loginScreen");
+            startingScene = loadFXML(loader, "homeScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
+            homeMenu = loadFXML(loader, "homeScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            homeMenu = loadFXML(loader, "test");
-            loginScreen = loadFXML(loader, "loginScreen");
             registerScreen = loadFXML(loader, "registerScreen");
+            loginScreen = loadFXML(loader, "loginScreen");
             discoveryMenu = loadFXML(loader, "discoveryScene");
+            applicationScene = loadFXML(loader, "listingApplicationScene");
 
             scene = new Scene(startingScene, 800, 620);
 

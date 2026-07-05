@@ -121,7 +121,7 @@ public class RegisterController {
 
     //displayAlert method's first parameter is the error type the others are title and the message
     //it is used to prompt a read only warning screen!
-    private void displayAlert(Alert.AlertType type, String title, String message) {
+    private static void displayAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);

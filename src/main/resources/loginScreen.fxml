@@ -6,63 +6,63 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LoginController">
-   <children>
-      <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-         <children>
-            <VBox fx:id="outerPane" alignment="CENTER" maxHeight="450" maxWidth="400" minHeight="420" minWidth="320" prefHeight="450" prefWidth="400" spacing="20">
-               <children>
+    <children>
+        <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+                <VBox fx:id="outerPane" alignment="CENTER" maxHeight="450" maxWidth="400" minHeight="420" minWidth="320" prefHeight="450" prefWidth="400" spacing="20">
+                    <children>
 
-                  <StackPane fx:id="titlePane" maxHeight="102" minHeight="102" prefHeight="102" style="-fx-background-color: lightgray; -fx-border-radius: 12px; -fx-border-color: black;">
-                     <children>
-                        <Label alignment="CENTER" text="Talk&amp;Learn" StackPane.alignment="CENTER">
-                           <font>
-                              <Font size="40" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
+                        <StackPane fx:id="titlePane" maxHeight="102" minHeight="102" prefHeight="102" style="-fx-background-color: lightgray; -fx-border-radius: 12px; -fx-border-color: black;">
+                            <children>
+                                <Label alignment="CENTER" text="Talk&amp;Learn" StackPane.alignment="CENTER">
+                                    <font>
+                                        <Font size="40" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </StackPane>
 
-                  <VBox fx:id="loginPane" alignment="CENTER" maxHeight="270" minHeight="240" prefHeight="270" spacing="15" style="-fx-background-color: lightgray; -fx-border-color: black; -fx-border-radius: 12px;">
-                     <padding>
-                        <Insets bottom="15" left="15" right="15" top="15" />
-                     </padding>
-                     <children>
-                        <GridPane alignment="CENTER" hgap="10" vgap="10">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="NEVER" minWidth="70" prefWidth="80" />
-                              <ColumnConstraints hgrow="ALWAYS" minWidth="120" prefWidth="160" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="40" prefHeight="45" vgrow="NEVER" />
-                              <RowConstraints minHeight="40" prefHeight="45" vgrow="NEVER" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                              <TextField fx:id="usernameField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <VBox fx:id="loginPane" alignment="CENTER" maxHeight="270" minHeight="240" prefHeight="270" spacing="15" style="-fx-background-color: lightgray; -fx-border-color: black; -fx-border-radius: 12px;">
+                            <padding>
+                                <Insets bottom="15" left="15" right="15" top="15" />
+                            </padding>
+                            <children>
+                                <GridPane alignment="CENTER" hgap="10" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" minWidth="70" prefWidth="80" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="120" prefWidth="160" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="40" prefHeight="45" vgrow="NEVER" />
+                                        <RowConstraints minHeight="40" prefHeight="45" vgrow="NEVER" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <TextField fx:id="usernameField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                              <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                              <PasswordField fx:id="passwordField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                           </children>
-                        </GridPane>
+                                        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <PasswordField fx:id="passwordField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    </children>
+                                </GridPane>
 
-                        <Button fx:id="loginButton" maxWidth="1000" mnemonicParsing="false" onAction="#handleLogin" prefHeight="39" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Login" />
+                                <Button fx:id="loginButton" maxWidth="1000" mnemonicParsing="false" onAction="#handleLogin" prefHeight="39" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Login" />
 
-                        <HBox alignment="CENTER" maxWidth="1000" spacing="10">
-                           <children>
-                              <Label text="Create a new account:" />
-                              <Button fx:id="signUpButton" onAction="#switchScene" mnemonicParsing="false" prefHeight="30" prefWidth="101" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Sign Up" />
-                           </children>
-                        </HBox>
+                                <HBox alignment="CENTER" maxWidth="1000" spacing="10">
+                                    <children>
+                                        <Label text="Create a new account:" />
+                                        <Button fx:id="signUpButton" onAction="#switchScene" mnemonicParsing="false" prefHeight="30" prefWidth="101" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Sign Up" />
+                                    </children>
+                                </HBox>
 
-                     </children>
-                  </VBox>
+                            </children>
+                        </VBox>
 
-               </children>
-               <padding>
-                  <Insets bottom="10" top="10" />
-               </padding>
-            </VBox>
-         </children>
-      </StackPane>
-   </children>
+                    </children>
+                    <padding>
+                        <Insets bottom="10" top="10" />
+                    </padding>
+                </VBox>
+            </children>
+        </StackPane>
+    </children>
 </AnchorPane>

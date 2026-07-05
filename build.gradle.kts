@@ -1,6 +1,11 @@
 plugins {
     id("java")
     id("org.openjfx.javafxplugin") version "0.1.0"
+    application
+}
+
+application {
+    mainClass.set("org.example.Main")
 }
 
 group = "org.example"

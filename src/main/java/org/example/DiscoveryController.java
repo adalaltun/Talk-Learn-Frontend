@@ -1,9 +1,14 @@
 package org.example;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.layout.VBox;
 
 public class DiscoveryController {
+    public VBox listingBox;
+
     public void handleMain(ActionEvent actionEvent) {
         Main.changeMenu(Main.homeMenu);
     }
@@ -26,10 +31,12 @@ public class DiscoveryController {
 
     public void handleListing(ActionEvent actionEvent) {
         System.out.println("-- handleListing");
-        Main.changeMenu(Main.homeMenu);
+        Main.changeMenu(Main.applicationScene);
     }
 
+    @FXML
     public void handleDebugAddListing(ActionEvent actionEvent) {
-        
+        Parent listing = Main.loadFXML(new FXMLLoader(), "discoveryListing");
+        listingBox.getChildren().add(listing);
     }
 }

@@ -4,16 +4,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="discoveryListing" prefHeight="50.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.DiscoveryController">
    <children>
-      <Button alignment="CENTER" blendMode="ADD" mnemonicParsing="false" onAction="#handleListing" prefHeight="50.0" prefWidth="650.0" text="(Invisible) Listing" />
       <HBox prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" text="Place" />
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" text="Label" />
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" text="Rank" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" text="Place">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" text="Label">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="217.0" text="Rank">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
          </children>
       </HBox>
+      <Button alignment="CENTER" blendMode="ADD" mnemonicParsing="false" onAction="#handleListing" opacity="0.0" prefHeight="50.0" prefWidth="650.0" text="(Invisible) Listing" />
    </children>
 </StackPane>

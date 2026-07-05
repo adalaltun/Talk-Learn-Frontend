@@ -22,11 +22,11 @@ public class LoginController {
         boolean fieldEmpty = false; //false if the username and password datas are entered
 
         if(username.isEmpty()) {
-            displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Username");
+            Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Username");
             fieldEmpty = true;
         }
         if(password.isEmpty()) {
-            displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Password");
+            Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Password");
             fieldEmpty = true;
         }
 
@@ -43,15 +43,15 @@ public class LoginController {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                displayAlert(Alert.AlertType.INFORMATION, "Success!", response.body());
+                Main.displayAlert(Alert.AlertType.INFORMATION, "Success!", response.body());
                 Main.changeMenu(Main.homeMenu);
             } else {
-                displayAlert(Alert.AlertType.ERROR, "Login Failed", response.body());
+                Main.displayAlert(Alert.AlertType.ERROR, "Login Failed", response.body());
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            displayAlert(Alert.AlertType.ERROR, "Connection Error", "Failed to connect to the backend server!");
+            Main.displayAlert(Alert.AlertType.ERROR, "Connection Error", "Failed to connect to the backend server!");
         }
     }
 
@@ -63,14 +63,5 @@ public class LoginController {
     private void clearFields() {
         usernameField.clear();
         passwordField.clear();
-    }
-    //displayAlert method's first parameter is the error type the others are title and the message
-    //it is used to prompt a read only warning screen!
-    private void displayAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
