@@ -14,6 +14,7 @@ public class Main extends Application{
 
     public static Scene scene;
     public static Parent homeMenu;
+    public static Parent startingScene;
     public static Parent loginScreen;
     public static Parent registerScreen;
     public static Parent discoveryMenu;
@@ -46,15 +47,16 @@ public class Main extends Application{
 
             FXMLLoader loader = new FXMLLoader();
 
-            //GUI'ye kod yazıp test edecekseniz homeMenu'nun fxmlname'sini değiştirin
+            //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
+            startingScene = loadFXML(loader, "loginScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
-            homeMenu = loadFXML(loader, "loginScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            homeMenu = loadFXML(loader, "test");
             loginScreen = loadFXML(loader, "loginScreen");
             registerScreen = loadFXML(loader, "registerScreen");
             discoveryMenu = loadFXML(loader, "discoveryScene");
 
-            scene = new Scene(homeMenu, 800, 620);
+            scene = new Scene(startingScene, 800, 620);
 
             scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
 

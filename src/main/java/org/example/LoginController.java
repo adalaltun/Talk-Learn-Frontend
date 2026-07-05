@@ -4,12 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class LoginController {
-    public Button loginButton;
-    public Button signUpButton;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+
+    private static final String BACKEND_URL = "http://localhost:8080/api/auth/login";
 
     @FXML
     public void handleLogin(ActionEvent event) {
@@ -25,13 +29,30 @@ public class LoginController {
             displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Password");
             fieldEmpty = true;
         }
-        if(!fieldEmpty) {
-            //this part is for verifying
-            //System.out.println("USERNAME: " + username);
-            //System.out.println("PASSWORD: " + password);
+
+        String jsonBody = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BACKEND_URL))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                displayAlert(Alert.AlertType.INFORMATION, "Success!", response.body());
+                Main.changeMenu(Main.homeMenu);
+            } else {
+                displayAlert(Alert.AlertType.ERROR, "Login Failed", response.body());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            displayAlert(Alert.AlertType.ERROR, "Connection Error", "Failed to connect to the backend server!");
         }
-
-
     }
 
     public void switchScene(ActionEvent event) {
