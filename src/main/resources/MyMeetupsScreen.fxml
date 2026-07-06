@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
+    <items>
+        <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0">
+            <children>
+                <VBox spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
+                    <children>
+                        <Label style="-fx-font-size: 18px; -fx-underline: true;" text="My Meetups :" />
+
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label style="-fx-font-size: 14px; -fx-underline: true;" text="Planned :" />
+                                <StackPane style="-fx-background-color: #a9a9a9; -fx-background-radius: 20; -fx-padding: 5;">
+                                    <children>
+                                        <Label style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 2 30 2 30;" text="Meet-up" />
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label style="-fx-font-size: 14px; -fx-underline: true;" text="Old :" />
+                                <StackPane style="-fx-background-color: #d3d3d3; -fx-background-radius: 20; -fx-padding: 5;">
+                                    <children>
+                                        <Label style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 2 20 2 20;" text="Pizza Night" />
+                                    </children>
+                                </StackPane>
+                                <StackPane style="-fx-background-color: #d3d3d3; -fx-background-radius: 20; -fx-padding: 5;">
+                                    <children>
+                                        <Label style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 2 20 2 20;" text="Jung Talks" />
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </VBox>
+
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: gray; -fx-font-size: 16px;" text="●&#10;●" textAlignment="CENTER" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="5.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                    <children>
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="250.0" text="My Meetups" />
+                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="250.0" text="Saved Meetups" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                    <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="H" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="D" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="C" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="R" HBox.hgrow="ALWAYS" />
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane minHeight="0.0" minWidth="400.0">
+            <children>
+                <VBox spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                    <children>
+                        <Label style="-fx-font-size: 18px; -fx-underline: true;" text="Applications :" />
+
+                        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #dcdcdc; -fx-background-radius: 10; -fx-padding: 10;">
+                            <children>
+                                <Circle fill="#e6e6fa" radius="25.0" stroke="#6a5acd" strokeType="INSIDE" strokeWidth="2.0" />
+                                <Label style="-fx-font-size: 18px;" text="Linda" />
+
+                                <Region HBox.hgrow="ALWAYS" />
+
+                                <HBox alignment="CENTER" style="-fx-background-color: #c0c0c0; -fx-background-radius: 15; -fx-border-color: #a9a9a9; -fx-border-radius: 15;">
+                                    <children>
+                                        <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-text-fill: #555;" text="✔" />
+                                        <Region prefWidth="2.0" style="-fx-background-color: #a9a9a9;" /> <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-text-fill: #555;" text="✖" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #dcdcdc; -fx-background-radius: 10; -fx-padding: 10;">
+                            <children>
+                                <Circle fill="#e6e6fa" radius="25.0" stroke="#6a5acd" strokeType="INSIDE" strokeWidth="2.0" />
+                                <Label style="-fx-font-size: 18px;" text="Linda" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <HBox alignment="CENTER" style="-fx-background-color: #c0c0c0; -fx-background-radius: 15; -fx-border-color: #a9a9a9; -fx-border-radius: 15;">
+                                    <children>
+                                        <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-text-fill: #555;" text="✔" />
+                                        <Region prefWidth="2.0" style="-fx-background-color: #a9a9a9;" />
+                                        <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-text-fill: #555;" text="✖" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #dcdcdc; -fx-background-radius: 10; -fx-padding: 10;">
+                            <children>
+                                <Circle fill="#e6e6fa" radius="25.0" stroke="#6a5acd" strokeType="INSIDE" strokeWidth="2.0" />
+                                <Label style="-fx-font-size: 18px;" text="Linda" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <HBox alignment="CENTER" style="-fx-background-color: #c0c0c0; -fx-background-radius: 15; -fx-border-color: #a9a9a9; -fx-border-radius: 15;">
+                                    <children>
+                                        <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-text-fill: #555;" text="✔" />
+                                        <Region prefWidth="2.0" style="-fx-background-color: #a9a9a9;" />
+                                        <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-text-fill: #555;" text="✖" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: gray; -fx-font-size: 16px;" text="●&#10;●&#10;●&#10;●&#10;●" textAlignment="CENTER" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
