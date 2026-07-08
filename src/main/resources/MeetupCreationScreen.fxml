@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<SplitPane dividerPositions="0.25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
+<SplitPane dividerPositions="0.25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MeetupCreation">
     <items>
         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefWidth="170.0">
             <children>
@@ -57,12 +57,12 @@
 
                         <HBox spacing="20.0">
                             <children>
-                                <TextField alignment="CENTER" promptText="Title" HBox.hgrow="ALWAYS" />
-                                <TextField alignment="CENTER" promptText="Language" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="titleField" alignment="CENTER" promptText="Title" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="languageField" alignment="CENTER" promptText="Language" HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
 
-                        <TextArea prefHeight="120.0" promptText="Description" />
+                        <TextArea fx:id="descriptionArea" prefHeight="120.0" promptText="Description" />
 
                         <VBox spacing="10.0">
                             <children>
@@ -122,6 +122,7 @@
                                 </HBox>
                             </children>
                         </VBox>
+                  <Button mnemonicParsing="false" onAction="#handleCreateMeetup" text="save and back to home page" />
 
                     </children>
                 </VBox>
