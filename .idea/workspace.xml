@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented Login and Register data validation logic. Added scene switch-ups between login and sign-up.">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MeetupCreationScreen.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MyMeetupsScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryListing.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryListing.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryScene.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +35,11 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Talk_Learn" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Talk_Learn" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
             </expand>
             <select />
@@ -96,10 +103,11 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "testBerke",
+    "git-widget-placeholder": "listing-test",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
@@ -155,8 +163,8 @@
       <list>
         <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Application.AppLauncher" />
-        <item itemvalue="Application.AppLauncher" />
         <item itemvalue="Gradle.Talk_Learn [clean]" />
+        <item itemvalue="Application.AppLauncher" />
         <item itemvalue="Gradle.Talk_Learn [clean]" />
       </list>
     </recent_temporary>
