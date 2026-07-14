@@ -67,7 +67,7 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader();
 
             //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "homeScreen");
+            startingScene = loadFXML(loader, "loginScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
             homeMenu = loadFXML(loader, "homeScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -75,6 +75,7 @@ public class Main extends Application{
             loginScreen = loadFXML(loader, "loginScreen");
             discoveryMenu = loadFXML(loader, "discoveryScene");
             applicationScene = loadFXML(loader, "listingApplicationScene");
+            chatMenu= loadFXML(loader, "chatScreen");
 
             scene = new Scene(startingScene, 800, 620);
 

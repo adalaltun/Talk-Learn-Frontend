@@ -87,7 +87,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="192.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="260.0">
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="201.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="260.0">
                      <children>
                         <RadioButton mnemonicParsing="false" text="Game Night">
                            <font>
@@ -125,6 +125,7 @@
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSettings" prefHeight="32.0" prefWidth="42.0" styleClass="nav-button" text="S" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
+                  <Button layoutX="5.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleReadAllListings" prefHeight="32.0" prefWidth="210.0" text="Read All From DB (DEBUG)" />
                </children>
             </AnchorPane>
             <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
