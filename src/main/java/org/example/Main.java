@@ -32,7 +32,14 @@ public class Main extends Application{
     public static Parent loadFXML(FXMLLoader loader, String fxmlname) {
         Parent root = null;
         try {
-            loader = new FXMLLoader(Main.class.getResource("/" + fxmlname + ".fxml"));
+            java.net.URL resourceLocation = Main.class.getResource("/" + fxmlname + ".fxml");
+
+            if (resourceLocation == null) {
+                System.err.println("CRITICAL ERROR: Cannot find FXML file -> " + fxmlname + ".fxml");
+                return null;
+            }
+
+            loader = new FXMLLoader(resourceLocation);
             root = loader.load();
 
         } catch (IOException e) {
