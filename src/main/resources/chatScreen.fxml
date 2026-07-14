@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ChatController">
     <children>
         <SplitPane dividerPositions="0.3" focusTraversable="true" VBox.vgrow="ALWAYS">
             <items>
@@ -47,7 +47,7 @@
                                         <Circle fill="#d1c4e9" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
                                         <Label text="Linda">
                                             <font><Font size="14.0" /></font>
-                                        </Label>
+                     W                   </Label>
                                     </HBox>
 
                                     <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="15.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #e5e5e5;">
@@ -89,7 +89,7 @@
 
                             <Region HBox.hgrow="ALWAYS" />
 
-                            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20;" text="Withdraw">
+                            <Button fx:id="withdrawButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20;" text="Withdraw">
                                 <font><Font size="14.0" /></font>
                             </Button>
                         </HBox>
@@ -112,11 +112,11 @@
                             <HBox alignment="CENTER_LEFT" style="-fx-background-color: #a6a6a6; -fx-background-radius: 30; -fx-border-color: black; -fx-border-radius: 30;" HBox.hgrow="ALWAYS">
                                 <padding><Insets bottom="5.0" left="20.0" right="10.0" top="5.0" /></padding>
 
-                                <TextField promptText="Send a message..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="messageField" promptText="Send a message..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                                     <font><Font name="System Italic" size="14.0" /></font>
                                 </TextField>
 
-                                <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="➤" />
+                                <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="➤" />
                             </HBox>
                         </HBox>
                     </bottom>
