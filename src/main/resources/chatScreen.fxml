@@ -47,7 +47,7 @@
                                         <Circle fill="#d1c4e9" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
                                         <Label text="Linda">
                                             <font><Font size="14.0" /></font>
-                     W                   </Label>
+                                        </Label>
                                     </HBox>
 
                                     <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="15.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #e5e5e5;">
@@ -89,7 +89,7 @@
 
                             <Region HBox.hgrow="ALWAYS" />
 
-                            <Button fx:id="withdrawButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20;" text="Withdraw">
+                            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20;" text="Withdraw">
                                 <font><Font size="14.0" /></font>
                             </Button>
                         </HBox>
@@ -112,11 +112,11 @@
                             <HBox alignment="CENTER_LEFT" style="-fx-background-color: #a6a6a6; -fx-background-radius: 30; -fx-border-color: black; -fx-border-radius: 30;" HBox.hgrow="ALWAYS">
                                 <padding><Insets bottom="5.0" left="20.0" right="10.0" top="5.0" /></padding>
 
-                                <TextField fx:id="messageField" promptText="Send a message..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                                <TextField promptText="Send a message..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                                     <font><Font name="System Italic" size="14.0" /></font>
                                 </TextField>
 
-                                <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="➤" />
+                                <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="➤" />
                             </HBox>
                         </HBox>
                     </bottom>
