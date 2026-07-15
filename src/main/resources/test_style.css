@@ -42,8 +42,8 @@
     -fx-text-fill: white;
     -fx-background-radius: 20px;
     -fx-font-weight: bold;
-    -fx-padding: 8px 0px;
-    -fx-max-width: 1000px;
+    -fx-padding: 5px 0px;
+    -fx-max-width: 10px;
     -fx-hgrow: always;
     -fx-cursor: hand;
 }

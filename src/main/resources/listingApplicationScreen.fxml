@@ -59,7 +59,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <fx:include fx:id="smallApplicationScene" source="smallApplicationScene.fxml" />
+                  <fx:include fx:id="smallApplicationScene" source="smallApplicationScreen.fxml" />
                </children>
             </AnchorPane>
          </items>

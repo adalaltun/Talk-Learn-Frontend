@@ -144,8 +144,8 @@
                            <children>
 
                            <!-- fx:include denemesi işe yaradı -->
-                              <fx:include fx:id="discoveryListing" source="discoveryListing.fxml" />
-                              <fx:include fx:id="discoveryListing1" source="discoveryListing.fxml" />
+                              <fx:include fx:id="discoveryListing" source="smallDiscoveryListing.fxml" />
+                              <fx:include fx:id="discoveryListing1" source="smallDiscoveryListing.fxml" />
                            </children>
                         </VBox>
                      </children>

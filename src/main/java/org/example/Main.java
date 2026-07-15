@@ -8,8 +8,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application{
 
@@ -59,6 +63,47 @@ public class Main extends Application{
         alert.showAndWait();
     }
 
+    public static <T> List<String> toJSON(List<T> objs) {
+        JsonMapper mapper = JsonMapper.builder().build();
+        List<String> jsonObjs = new ArrayList<>();
+
+        for (T o : objs) {
+            String json = mapper.writeValueAsString(o);
+
+            jsonObjs.add( json );
+        }
+        return jsonObjs;
+    }
+    public static <T> String toJSON(T obj) {
+        JsonMapper mapper = JsonMapper.builder().build();
+        return mapper.writeValueAsString(obj);
+    }
+
+    /**
+     * JSON'dan her şeye çeviren fonksiyon.
+     * <p>
+     * Kullanım 1 : {@code fromJSON(List<String> jsons, new TypeReference<User> {} ) }
+     * <p>
+     * ({@code {}}'lar önemli.)
+     * <p>
+     * Herhangi bir class'ın listesini de ayarlayabiliyoruz.
+     * <p>
+     * Kullanım 2 : {@code fromJSON(List<String> jsons, new TypeReference<List<User>> {} ) }
+     */
+    public static <T> List<T> fromJSON(List<String> jsons, TypeReference<T> typeReference) {
+        JsonMapper mapper = JsonMapper.builder().build();
+        List<T> objs = new ArrayList<>();
+
+        for (String json : jsons) {
+            objs.add( mapper.readValue(json, typeReference) );
+        }
+        return objs;
+    }
+    public static <T> T fromJSON(String json, TypeReference<T> typeReference) {
+        JsonMapper mapper = JsonMapper.builder().build();
+        return mapper.readValue(json, typeReference);
+    }
+
     @Override
     public void start(Stage stage) {
 
@@ -67,14 +112,14 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader();
 
             //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "loginScreen");
+            startingScene = loadFXML(loader, "discoveryScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
             homeMenu = loadFXML(loader, "homeScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             registerScreen = loadFXML(loader, "registerScreen");
             loginScreen = loadFXML(loader, "loginScreen");
-            discoveryMenu = loadFXML(loader, "discoveryScene");
-            applicationScene = loadFXML(loader, "listingApplicationScene");
+            discoveryMenu = loadFXML(loader, "discoveryScreen");
+            applicationScene = loadFXML(loader, "listingApplicationScreen");
             chatMenu= loadFXML(loader, "chatScreen");
 
             scene = new Scene(startingScene, 800, 620);
@@ -83,7 +128,6 @@ public class Main extends Application{
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);
-
 
             stage.show();
     }

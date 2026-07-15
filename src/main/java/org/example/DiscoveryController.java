@@ -58,11 +58,11 @@ public class DiscoveryController {
 
     @FXML
     public void handleDebugAddListing(ActionEvent e) {
-        Parent listing = Main.loadFXML(new FXMLLoader(), "discoveryListing");
+        Parent listing = Main.loadFXML(new FXMLLoader(), "smallDiscoveryListing");
         listingBox.getChildren().add(listing);
 
         // jsonbody to be added
-        String jsonbody = String.format("{\"listingname\":\"%s\", \"language\":\"%s\"}", "addListingDemo", "French");
+        String jsonbody = String.format("{\"listingname\":\"%s\", \"language\":\"%s\"}", "addListingDemo33", "German");
 
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -74,7 +74,7 @@ public class DiscoveryController {
 
             System.out.println(jsonbody);
 
-            HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
                 Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listing add success!");
@@ -104,7 +104,9 @@ public class DiscoveryController {
                 Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listings read success!");
                 System.out.println("Successfully sent to " + READ_ALL_BACKEND_URL + "\n");
 
-                this.addReadListings( this.readListings(response.body()) );
+                this.addReadListings(
+                    Main.fromJSON( response.body(), new TypeReference< List<HashMap<String, String>> >() {} )
+                );
                 System.out.println("response.body() " + response.body());
 
             } else {
@@ -115,6 +117,22 @@ public class DiscoveryController {
             System.out.println("Could not connect to the database.");
         }
     }
+    private void addReadListings(List<HashMap<String, String>> maplistings) {
+        for ( HashMap<String, String> map : maplistings) {
+            StackPane listingPane = (StackPane) Main.loadFXML(new FXMLLoader(), "smallDiscoveryListing");
+            HBox listingLabels = (HBox) listingPane.getChildren().getFirst();
+
+            Label placeLabel = (Label) listingLabels.getChildren().get(0);
+            Label titleLabel = (Label) listingLabels.getChildren().get(1);
+
+            placeLabel.setText(map.get("language"));
+            titleLabel.setText(map.get("listingname"));
+
+            listingBox.getChildren().add(listingPane);
+        }
+    }
+
+    // TODO bunun yeirne Main.fromJSON  olunca çalışmıyo bakmak lazım
     private List<HashMap<String, String>> readListings(String responsebody) {
         JsonMapper mapper = JsonMapper.builder().build();
 
@@ -128,19 +146,5 @@ public class DiscoveryController {
         }
         System.out.println("maplistings: " + maplistings);
         return maplistings;
-    }
-    private void addReadListings(List<HashMap<String, String>> maplistings) {
-        for ( HashMap<String, String> map : maplistings) {
-            StackPane listingPane = (StackPane) Main.loadFXML(new FXMLLoader(), "discoveryListing");
-            HBox listingLabels = (HBox) listingPane.getChildren().getFirst();
-
-            Label placeLabel = (Label) listingLabels.getChildren().get(0);
-            Label titleLabel = (Label) listingLabels.getChildren().get(1);
-
-            placeLabel.setText(map.get("language"));
-            titleLabel.setText(map.get("listingname"));
-
-            listingBox.getChildren().add(listingPane);
-        }
     }
 }
