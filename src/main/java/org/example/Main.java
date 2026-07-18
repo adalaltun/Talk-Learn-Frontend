@@ -101,7 +101,7 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader();
 
             //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "discoveryScreen");
+            startingScene = loadFXML(loader, "homeScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
             homeMenu = loadFXML(loader, "homeScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -113,7 +113,7 @@ public class Main extends Application{
 
             scene = new Scene(startingScene, 800, 620);
 
-            scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
+            //scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);

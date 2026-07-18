@@ -5,8 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -25,6 +24,27 @@ public class HomeController {
 
     @FXML
     private ScrollPane myMeetupsListView;
+
+    @FXML
+    private TextField meetupTitleInput;
+
+    @FXML
+    private ComboBox<String> languageComboBox;
+
+    @FXML
+    private TextArea meetupDescriptionInput;
+
+    @FXML
+    private ToggleGroup locationToggleGroup;
+
+    @FXML
+    private javafx.scene.control.ToggleButton tagGameNight;
+
+    @FXML
+    private javafx.scene.control.ToggleButton tagCooking;
+
+    @FXML
+    private javafx.scene.control.ToggleButton tagSports;
 
     public void handleMain(ActionEvent actionEvent) {
 
@@ -102,6 +122,40 @@ public class HomeController {
     }
 
     public void handleRejectApplication(ActionEvent actionEvent) {
+    }
+
+    public void handlePublishMeetup(ActionEvent actionEvent) {
+        // Read the values filled by the user
+        String title = meetupTitleInput.getText();
+        String language = languageComboBox.getValue();
+        String description = meetupDescriptionInput.getText();
+
+        // Check which location toggle button was selected
+        javafx.scene.control.ToggleButton selectedLocation =
+                (javafx.scene.control.ToggleButton) locationToggleGroup.getSelectedToggle();
+
+        String location = (selectedLocation != null) ? selectedLocation.getText() : "None";
+
+        java.util.List<String> selectedTags = new java.util.ArrayList<>();
+
+        if (tagGameNight != null && tagGameNight.isSelected()) {
+            selectedTags.add(tagGameNight.getText());
+        }
+        if (tagCooking != null && tagCooking.isSelected()) {
+            selectedTags.add(tagCooking.getText());
+        }
+        if (tagSports != null && tagSports.isSelected()) {
+            selectedTags.add(tagSports.getText());
+        }
+
+        System.out.println("Publishing Meetup: " + title + " [" + language + "] at " + location);
+        System.out.println("Selected Tags: " + selectedTags);
+
+
+
+
+
+
     }
 }
 
