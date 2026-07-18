@@ -45,6 +45,13 @@ public class HomeController {
 
     @FXML
     private javafx.scene.control.ToggleButton tagSports;
+    @FXML private NavigationController navMenuController;
+    @FXML
+    public void initialize() {
+        if (navMenuController != null) {
+            navMenuController.setActive("home");
+        }
+    }
 
     public void handleMain(ActionEvent actionEvent) {
 
@@ -66,9 +73,11 @@ public class HomeController {
     }
 
     public void handleLeaderboard(ActionEvent actionEvent) {
+        Main.changeMenu(Main.leaderboardMenu);
     }
 
     public void handleSettings(ActionEvent actionEvent) {
+        Main.changeMenu(Main.settingsMenu);
     }
 
     public void handleDrag(MouseEvent e) {

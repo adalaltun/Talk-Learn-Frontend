@@ -26,6 +26,14 @@ public class DiscoveryController {
     @FXML private Label placeLabel;
     @FXML private Label titleLabel;
     @FXML private Label rankLabel;
+    @FXML private NavigationController navMenuController;
+
+    @FXML
+    public void initialize() {
+        if (navMenuController != null) {
+            navMenuController.setActive("discovery");
+        }
+    }
 
     private final static String ADD_BACKEND_URL = "http://localhost:8080/api/listings/add";
     private final static String READ_ALL_BACKEND_URL = "http://localhost:8080/api/listings/all";

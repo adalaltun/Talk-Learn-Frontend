@@ -50,6 +50,7 @@ public class ChatController {
     private ScrollPane chatScrollArea;
     @FXML
     private HBox chatInputBar;
+    @FXML private NavigationController navMenuController;
 
     private final String BACKEND_URL = "http://localhost:8080/api/chat";
     private final HttpClient httpClient = HttpClient.newHttpClient();
@@ -72,6 +73,9 @@ public class ChatController {
         }
 
         showWelcomeScreen(true);
+        if (navMenuController != null) {
+            navMenuController.setActive("chat");
+        }
 
         chatListContainer.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
@@ -730,6 +734,6 @@ public class ChatController {
     }
 
     public void handleGoLeaderboard(ActionEvent actionEvent){
-        // Main.changeMenu(Main.scoreboard);
+         Main.changeMenu(Main.leaderboardMenu);
     }
 }

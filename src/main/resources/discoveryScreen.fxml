@@ -116,15 +116,7 @@
                   </VBox>
                   <Button mnemonicParsing="false" onAction="#handleDebugAddListing" prefHeight="32.0" prefWidth="210.0" text="Add Listing (DEBUG)" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                   <Button layoutX="3.0" layoutY="534.0" maxHeight="-Infinity" maxWidth="170.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="210.0" text="Search" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                  <HBox layoutY="572.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="170.0" spacing="5.0" styleClass="bottom-bar" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
-                     <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleMain" prefHeight="32.0" prefWidth="42.0" styleClass="nav-button" text="H" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleDiscovery" prefHeight="32.0" prefWidth="42.0" styleClass="nav-button" text="D" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleChat" prefHeight="32.0" prefWidth="42.0" styleClass="nav-button" text="C" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleLeaderboard" prefHeight="32.0" prefWidth="42.0" styleClass="nav-button" text="R" HBox.hgrow="ALWAYS" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSettings" prefHeight="32.0" prefWidth="42.0" styleClass="nav-button" text="S" HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
+                  <fx:include fx:id="navMenu" source="navigationMenu.fxml" />
                   <Button layoutX="5.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleReadAllListings" prefHeight="32.0" prefWidth="210.0" text="Read All From DB (DEBUG)" />
                </children>
             </AnchorPane>

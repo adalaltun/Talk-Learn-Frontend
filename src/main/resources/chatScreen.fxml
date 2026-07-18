@@ -43,17 +43,7 @@
 
                     <!-- Spacing gap updated here to 60.0 to match the home screen footer dock -->
                     <bottom>
-                        <HBox alignment="CENTER" prefHeight="60.0" spacing="8.0" style="-fx-background-color: white; -fx-border-color: #e0e0e0 transparent transparent transparent;" BorderPane.alignment="CENTER">
-                            <Button mnemonicParsing="false" onAction="#handleGoHome" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="H" />
-                            <Button mnemonicParsing="false" onAction="#handleGoDiscovery" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold;" text="D" />
-                            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="C" />
-                            <Button mnemonicParsing="false" onAction="#handleGoLeaderboard" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold;" text="L" />
-                            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="S" />
-                            <padding>
-                                <Insets bottom="5.0" />
-                            </padding>
-                        </HBox>
-                    </bottom>
+                        <fx:include fx:id="navMenu" source="navigationMenu.fxml" />                    </bottom>
                 </BorderPane>
 
                 <BorderPane style="-fx-background-color: white;">

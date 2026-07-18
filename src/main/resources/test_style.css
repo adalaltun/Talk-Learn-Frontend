@@ -65,3 +65,10 @@
     -fx-background-color: white;
     -fx-text-fill: #00adb5;
 }
+.nav-button-active {
+    -fx-background-color: #0078fe !important; /* Active Blue */
+}
+
+.nav-button-active .nav-icon {
+    -fx-icon-color: white !important; /* White icon on blue button */
+}
