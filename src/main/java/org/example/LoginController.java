@@ -48,7 +48,7 @@ public class LoginController {
 
                 Platform.runLater(() -> {
                     Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Logged In!");
-                    Main.changeMenu(Main.chatMenu);
+                    Main.changeMenu(Main.homeMenu);
                 });
             } else {
                 Platform.runLater(() -> {

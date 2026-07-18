@@ -91,7 +91,7 @@ public class RegisterController {
                         if (response.statusCode() == 201 || response.statusCode() == 200) {
                             Platform.runLater(() -> {
                                 Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Your account has been registered successfully!");
-                                Main.changeMenu(Main.loginScreen);
+                                Main.changeMenu(Main.homeMenu);
                             });
                             clearFields();
                         } else {
