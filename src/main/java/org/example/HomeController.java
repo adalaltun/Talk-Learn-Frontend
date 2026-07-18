@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,9 +25,15 @@ public class HomeController implements Initializable {
 
     static int i = 0;
 
+    @FXML private SplitPane rootPane;
     @FXML private AnchorPane contentArea;
 
     @FXML private VBox profileView;
+
+    @FXML private Label profileName;
+    @FXML private Label profileRank;
+    @FXML private Circle profileCircle;
+    @FXML private Label profileLetterLabel;
 
     @FXML private ScrollPane myMeetupsListView;
 
@@ -48,10 +56,15 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        profileName.setText("Zenco");
+        profileRank.setText("Lvl 99 ngga");
+
+        setProfilePicture("/images/zenco.png");
+        setWindowWallpaper("/images/5g.jpeg");
+
+
         if (plannedMeetupsContainer != null) plannedMeetupsContainer.getChildren().clear();
         if (pastMeetupsContainer != null) pastMeetupsContainer.getChildren().clear();
-
-
 
         addMeetupToSidebar("Tuvalet Partisi 2", true);
         addMeetupToSidebar("Tuvalet Partisi", false);
@@ -104,6 +117,57 @@ public class HomeController implements Initializable {
         changeView("/SavedMeetupsScreen.fxml");
     }
 
+    /**
+     * Updates the sidebar profile picture using a local file path or URL.
+     * @param imagePath The path to the image asset (e.g., "/images/avatar.png" or a file path)
+     */
+    public void setProfilePicture(String imagePath) {
+        try {
+            Image img = new Image(getClass().getResourceAsStream(imagePath));
+
+            ImagePattern imgPattern = new ImagePattern(img);
+
+            profileCircle.setFill(imgPattern);
+
+            profileLetterLabel.setVisible(false);
+
+        } catch (Exception e) {
+            System.err.println("Could not load profile image: " + imagePath);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sets a global wallpaper for the entire application window.
+     * @param imagePath The path to the image inside the resources directory (e.g., "/images/wallpaper.png")
+     */
+    public void setWindowWallpaper(String imagePath) {
+        try {
+            if (!imagePath.startsWith("/")) {
+                imagePath = "/" + imagePath;
+            }
+
+            java.net.URL imageURL = getClass().getResource(imagePath);
+            if (imageURL == null) {
+                System.err.println("Wallpaper image not found at path: " + imagePath);
+                return;
+            }
+
+            String externalForm = imageURL.toExternalForm();
+
+            rootPane.setStyle(
+                    "-fx-background-image: url('" + externalForm + "'); " +
+                            "-fx-background-position: center center; " +
+                            "-fx-background-repeat: no-repeat; " +
+                            "-fx-background-size: cover;"
+            );
+
+        } catch (Exception e) {
+            System.err.println("Could not load global wallpaper: " + imagePath);
+            e.printStackTrace();
+        }
+    }
+
     private void changeView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -134,6 +198,8 @@ public class HomeController implements Initializable {
             System.err.println("Could not swap view: " + fxmlPath);
         }
     }
+
+
 
     public void handlePlannedMeetupClick(ActionEvent actionEvent) {
 
