@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import tools.jackson.core.type.TypeReference;
@@ -62,7 +61,7 @@ public class DiscoveryController {
         listingBox.getChildren().add(listing);
 
         // jsonbody to be added
-        String jsonbody = String.format("{\"listingname\":\"%s\", \"language\":\"%s\"}", "addListingDemo33", "German");
+        String jsonbody = String.format("{\"listingname\":\"%s\", \"language\":\"%s\"}", "addListingDemo32", "German");
 
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -105,9 +104,8 @@ public class DiscoveryController {
                 System.out.println("Successfully sent to " + READ_ALL_BACKEND_URL + "\n");
 
                 this.addReadListings(
-                    Main.fromJSON( response.body(), new TypeReference< List<HashMap<String, String>> >() {} )
+                    Main.listFromJSON( response.body())
                 );
-                System.out.println("response.body() " + response.body());
 
             } else {
                 Main.displayAlert(Alert.AlertType.ERROR, "Reading failed.", response.body());
@@ -130,21 +128,5 @@ public class DiscoveryController {
 
             listingBox.getChildren().add(listingPane);
         }
-    }
-
-    // TODO bunun yeirne Main.fromJSON  olunca çalışmıyo bakmak lazım
-    private List<HashMap<String, String>> readListings(String responsebody) {
-        JsonMapper mapper = JsonMapper.builder().build();
-
-        // converting jsonlistings to hashmaps
-        List<String> jsonlistings = mapper.readValue(responsebody, new TypeReference<List<String>>() {} );
-        List<HashMap<String, String>> maplistings = new ArrayList<>();
-
-        for (String jsonbody : jsonlistings) {
-            HashMap<String, String> map = mapper.readValue(jsonbody, new TypeReference<HashMap<String, String>>() {} );
-            maplistings.add(map);
-        }
-        System.out.println("maplistings: " + maplistings);
-        return maplistings;
     }
 }

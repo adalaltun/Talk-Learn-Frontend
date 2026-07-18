@@ -7,12 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main extends Application{
@@ -63,7 +63,7 @@ public class Main extends Application{
         alert.showAndWait();
     }
 
-    public static <T> List<String> toJSON(List<T> objs) {
+    public static <T> List<String> listToJSON(List<T> objs) {
         JsonMapper mapper = JsonMapper.builder().build();
         List<String> jsonObjs = new ArrayList<>();
 
@@ -74,34 +74,23 @@ public class Main extends Application{
         }
         return jsonObjs;
     }
-    public static <T> String toJSON(T obj) {
-        JsonMapper mapper = JsonMapper.builder().build();
-        return mapper.writeValueAsString(obj);
-    }
 
     /**
-     * JSON'dan her şeye çeviren fonksiyon.
+     * JSON'u bir şeyin List'ine çevirir.
      * <p>
-     * Kullanım 1 : {@code fromJSON(List<String> jsons, new TypeReference<User> {} ) }
-     * <p>
-     * ({@code {}}'lar önemli.)
-     * <p>
-     * Herhangi bir class'ın listesini de ayarlayabiliyoruz.
-     * <p>
-     * Kullanım 2 : {@code fromJSON(List<String> jsons, new TypeReference<List<User>> {} ) }
+     * Frontend'de backend'deki classlar burda yok diye otomatik {@code HashMap<String, String>} yapıyo.
      */
-    public static <T> List<T> fromJSON(List<String> jsons, TypeReference<T> typeReference) {
-        JsonMapper mapper = JsonMapper.builder().build();
-        List<T> objs = new ArrayList<>();
+    public static List<HashMap<String, String>> listFromJSON(String body) {
+        JsonMapper MAPPER = JsonMapper.builder().build();
 
-        for (String json : jsons) {
-            objs.add( mapper.readValue(json, typeReference) );
+        List<String> jsons = new ArrayList<>();
+        jsons = MAPPER.readValue(body, new TypeReference<List<String>>(){} );
+
+        List<HashMap<String, String>> objs = new ArrayList<>();
+        for (String j : jsons) {
+            objs.add(MAPPER.readValue(j, new TypeReference<HashMap<String, String>>(){} ));
         }
         return objs;
-    }
-    public static <T> T fromJSON(String json, TypeReference<T> typeReference) {
-        JsonMapper mapper = JsonMapper.builder().build();
-        return mapper.readValue(json, typeReference);
     }
 
     @Override
