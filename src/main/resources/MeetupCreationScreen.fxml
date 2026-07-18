@@ -102,7 +102,7 @@
         <Button mnemonicParsing="false" onAction="#handlePublishMeetup"
                 prefHeight="40.0" prefWidth="140.0"
                 style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"
-                text="Publish Ad"
+                text="Create"
                 AnchorPane.bottomAnchor="25.0"
                 AnchorPane.rightAnchor="25.0">
             <font>
