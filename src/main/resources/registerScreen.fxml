@@ -13,7 +13,6 @@
                 <VBox fx:id="outerPane" alignment="CENTER" maxHeight="520" maxWidth="420" minHeight="470" minWidth="320" prefHeight="520" prefWidth="420" spacing="15">
                     <children>
 
-                        <!-- Clean Brand Header Block -->
                         <StackPane fx:id="titlePane" maxHeight="90" minHeight="90" prefHeight="90">
                             <children>
                                 <Label alignment="CENTER" text="Talk&amp;Learn" textFill="#0078fe" StackPane.alignment="CENTER">
@@ -24,7 +23,6 @@
                             </children>
                         </StackPane>
 
-                        <!-- Content Form Box -->
                         <VBox fx:id="loginPane" alignment="CENTER" maxHeight="360" minHeight="310" prefHeight="360" spacing="20" style="-fx-background-color: white;">
                             <padding>
                                 <Insets bottom="15" left="15" right="15" top="15" />
@@ -64,12 +62,10 @@
                                     </children>
                                 </GridPane>
 
-                                <!-- Primary Action Button -->
                                 <Button fx:id="signUpButton" maxWidth="1000" mnemonicParsing="false" onAction="#handleRegister" prefHeight="40" style="-fx-background-color: #0078fe; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Sign Up">
                                     <font><Font size="14.0" /></font>
                                 </Button>
 
-                                <!-- Secondary Redirect Action -->
                                 <HBox alignment="CENTER" maxWidth="1000" spacing="8">
                                     <children>
                                         <Label text="Already have an account:" textFill="#757575">

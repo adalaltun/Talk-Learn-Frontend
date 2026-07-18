@@ -15,11 +15,11 @@
 <SplitPane dividerPositions="0.28" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white; -fx-box-border: transparent;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
     <items>
 
-        <!-- FIXED SIDEBAR: Matches ChatScreen width dimensions precisely -->
+
         <AnchorPane maxWidth="240.0" minWidth="240.0" prefWidth="240.0" style="-fx-background-color: white; -fx-border-color: transparent #e0e0e0 transparent transparent;">
             <children>
 
-                <!-- Upper Main Content View Layer (Bottom anchor increased to 200 to accommodate the shift) -->
+
                 <StackPane AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="25.0">
                     <children>
 
@@ -63,7 +63,7 @@
                     </children>
                 </StackPane>
 
-                <!-- Core App Context Shortcuts (Nudged up to bottom anchor 75.0) -->
+
                 <VBox spacing="8.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" style="-fx-border-color: #e0e0e0 transparent transparent transparent; -fx-padding: 15 0 0 0;">
                     <children>
                         <Button mnemonicParsing="false" onAction="#handleCreateMeetup" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #0078fe; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Create new meetup">
@@ -75,7 +75,7 @@
                     </children>
                 </VBox>
 
-                <!-- Footer Navigation Dock Bar -->
+
                 <HBox alignment="CENTER" spacing="8.0" prefHeight="60.0" style="-fx-border-color: #e0e0e0 transparent transparent transparent; -fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
                         <Button mnemonicParsing="false" onAction="#handleMain" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="H" />
