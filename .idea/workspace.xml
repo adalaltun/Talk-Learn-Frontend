@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented Login and Register data validation logic. Added scene switch-ups between login and sign-up.">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryListing.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallDiscoveryListing.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/listingApplicationScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smallApplicationScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test_style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +55,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="07a933f41c7d2911cfd6fa82bc0dd1acc7b74140" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -148,25 +154,21 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Application.AppLauncher" />
-      <item itemvalue="Gradle.Talk_Learn [clean]" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Application.AppLauncher" />
+        <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Application.AppLauncher" />
-        <item itemvalue="Gradle.Talk_Learn [clean]" />
-        <item itemvalue="Gradle.Talk_Learn [clean]" />
+        <item itemvalue="Application.AppLauncher" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.26222.65" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.26222.65" />
       </set>
     </attachedChunks>
   </component>
@@ -252,17 +254,6 @@
     <MESSAGE value="Added classes" />
     <MESSAGE value="Modified login and register screens to be aligned center." />
     <option name="LAST_COMMIT_MESSAGE" value="Modified login and register screens to be aligned center." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
