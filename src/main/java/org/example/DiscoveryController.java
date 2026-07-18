@@ -41,14 +41,14 @@ public class DiscoveryController {
         Main.changeMenu(Main.discoveryMenu);
     }
 
-    public void handleChat(ActionEvent actionEvent) {
-    }
+    public void handleChat(ActionEvent actionEvent) {Main.changeMenu(Main.chatMenu);}
 
-    public void handleLeaderboard(ActionEvent actionEvent) {
-    }
 
-    public void handleSettings(ActionEvent actionEvent) {
-    }
+    public void handleLeaderboard(ActionEvent actionEvent) {Main.changeMenu(Main.leaderboardMenu);}
+
+
+    public void handleSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsMenu);}
+
 
     public void handleListing(ActionEvent actionEvent) {
         System.out.println("-- handleListing");

@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- ... Base standard structural core elements intact ... -->
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.RegisterController">
+<AnchorPane prefHeight="600" prefWidth="900" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.RegisterController">
     <children>
         <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
             <children>
-                <VBox fx:id="outerPane" alignment="CENTER" maxHeight="500" maxWidth="400" minHeight="470" minWidth="320" prefHeight="500" prefWidth="400" spacing="20">
+                <VBox fx:id="outerPane" alignment="CENTER" maxHeight="520" maxWidth="420" minHeight="470" minWidth="320" prefHeight="520" prefWidth="420" spacing="15">
                     <children>
-                        <StackPane fx:id="titlePane" maxHeight="102" minHeight="102" prefHeight="102" style="-fx-background-color: lightgray; -fx-border-radius: 12px; -fx-border-color: black;">
+
+                        <StackPane fx:id="titlePane" maxHeight="90" minHeight="90" prefHeight="90">
                             <children>
-                                <Label alignment="CENTER" text="Talk&amp;Learn" StackPane.alignment="CENTER">
+                                <Label alignment="CENTER" text="Talk&amp;Learn" textFill="#0078fe" StackPane.alignment="CENTER">
                                     <font>
-                                        <Font size="40" />
+                                        <Font name="System Bold" size="42.0" />
                                     </font>
                                 </Label>
                             </children>
                         </StackPane>
 
-                        <VBox fx:id="loginPane" alignment="CENTER" maxHeight="320" minHeight="290" prefHeight="320" spacing="15" style="-fx-background-color: lightgray; -fx-border-color: black; -fx-border-radius: 12px;">
+                        <VBox fx:id="loginPane" alignment="CENTER" maxHeight="360" minHeight="310" prefHeight="360" spacing="20" style="-fx-background-color: white;">
                             <padding>
                                 <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
                             <children>
-                                <GridPane alignment="CENTER" hgap="10" vgap="10">
+                                <GridPane alignment="CENTER" hgap="12" vgap="15">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="NEVER" minWidth="100" prefWidth="110" />
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="120" prefWidth="160" />
+                                        <ColumnConstraints hgrow="NEVER" minWidth="120" prefWidth="130" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="120" prefWidth="180" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="40" prefHeight="45" vgrow="NEVER" />
@@ -37,23 +39,39 @@
                                         <RowConstraints minHeight="40" prefHeight="45" vgrow="NEVER" />
                                     </rowConstraints>
                                     <children>
-                                        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                        <TextField fx:id="usernameField" onKeyPressed="#handleRegisterKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Label text="Username" textFill="#1a1a1a" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <font><Font name="System Bold" size="14.0" /></font>
+                                        </Label>
+                                        <TextField fx:id="usernameField" onKeyPressed="#handleRegisterKeyEvents" promptText="Choose a username" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-padding: 8; -fx-text-fill: black; -fx-prompt-text-fill: #888888;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <font><Font size="13.0" /></font>
+                                        </TextField>
 
-                                        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                        <PasswordField fx:id="passwordField" onKeyPressed="#handleRegisterKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Password" textFill="#1a1a1a" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <font><Font name="System Bold" size="14.0" /></font>
+                                        </Label>
+                                        <PasswordField fx:id="passwordField" onKeyPressed="#handleRegisterKeyEvents" promptText="Create password" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-padding: 8; -fx-text-fill: black; -fx-prompt-text-fill: #888888;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <font><Font size="13.0" /></font>
+                                        </PasswordField>
 
-                                        <Label text="Confirm Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                        <PasswordField fx:id="repeatedPasswordField" onKeyPressed="#handleRegisterKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="Confirm Password" textFill="#1a1a1a" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                            <font><Font name="System Bold" size="14.0" /></font>
+                                        </Label>
+                                        <PasswordField fx:id="repeatedPasswordField" onKeyPressed="#handleRegisterKeyEvents" promptText="Repeat password" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #cccccc; -fx-border-radius: 10; -fx-padding: 8; -fx-text-fill: black; -fx-prompt-text-fill: #888888;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <font><Font size="13.0" /></font>
+                                        </PasswordField>
                                     </children>
                                 </GridPane>
 
-                                <Button fx:id="signUpButton" maxWidth="1000" mnemonicParsing="false" onAction="#handleRegister" prefHeight="39" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Sign Up" />
+                                <Button fx:id="signUpButton" maxWidth="1000" mnemonicParsing="false" onAction="#handleRegister" prefHeight="40" style="-fx-background-color: #0078fe; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Sign Up">
+                                    <font><Font size="14.0" /></font>
+                                </Button>
 
-                                <HBox alignment="CENTER" maxWidth="1000" spacing="10">
+                                <HBox alignment="CENTER" maxWidth="1000" spacing="8">
                                     <children>
-                                        <Label text="Already have an account:" />
-                                        <Button fx:id="loginButton" onAction="#switchScene" mnemonicParsing="false" prefHeight="30" prefWidth="101" style="-fx-border-color: black; -fx-border-radius: 6px;" styleClass="f" text="Login" />
+                                        <Label text="Already have an account:" textFill="#757575">
+                                            <font><Font size="13.0" /></font>
+                                        </Label>
+                                        <Button fx:id="loginButton" onAction="#switchScene" mnemonicParsing="false" prefHeight="30" prefWidth="101" style="-fx-background-color: #e3f2fd; -fx-background-radius: 8; -fx-text-fill: #0078fe; -fx-font-weight: bold; -fx-cursor: hand;" text="Login" />
                                     </children>
                                 </HBox>
 
