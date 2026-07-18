@@ -101,7 +101,7 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader();
 
             //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "homeScreen");
+            startingScene = loadFXML(loader, "loginScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
             homeMenu = loadFXML(loader, "homeScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -121,8 +121,6 @@ public class Main extends Application{
             stage.setScene(scene);
 
             stage.show();
-
-
     }
 
     public static void main(String[] args) { launch(args); }

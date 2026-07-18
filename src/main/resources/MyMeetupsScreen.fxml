@@ -16,7 +16,7 @@
 
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" style="-fx-background-color: white; -fx-background: white; -fx-border-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
-                <VBox fx:id="applicationsContainer" spacing="18.0" style="-fx-padding: 25.0; -fx-background-color: white;">
+                <VBox spacing="18.0" style="-fx-padding: 25.0; -fx-background-color: white;">
                     <children>
 
                         <Label text="Incoming Applications" textFill="#1a1a1a">
