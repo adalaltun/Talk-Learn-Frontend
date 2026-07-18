@@ -7,9 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Main extends Application{
 
@@ -32,7 +36,14 @@ public class Main extends Application{
     public static Parent loadFXML(FXMLLoader loader, String fxmlname) {
         Parent root = null;
         try {
-            loader = new FXMLLoader(Main.class.getResource("/" + fxmlname + ".fxml"));
+            java.net.URL resourceLocation = Main.class.getResource("/" + fxmlname + ".fxml");
+
+            if (resourceLocation == null) {
+                System.err.println("CRITICAL ERROR: Cannot find FXML file -> " + fxmlname + ".fxml");
+                return null;
+            }
+
+            loader = new FXMLLoader(resourceLocation);
             root = loader.load();
 
         } catch (IOException e) {
@@ -52,6 +63,36 @@ public class Main extends Application{
         alert.showAndWait();
     }
 
+    public static <T> List<String> listToJSON(List<T> objs) {
+        JsonMapper mapper = JsonMapper.builder().build();
+        List<String> jsonObjs = new ArrayList<>();
+
+        for (T o : objs) {
+            String json = mapper.writeValueAsString(o);
+
+            jsonObjs.add( json );
+        }
+        return jsonObjs;
+    }
+
+    /**
+     * JSON'u bir şeyin List'ine çevirir.
+     * <p>
+     * Frontend'de backend'deki classlar burda yok diye otomatik {@code HashMap<String, String>} yapıyo.
+     */
+    public static List<HashMap<String, String>> listFromJSON(String body) {
+        JsonMapper MAPPER = JsonMapper.builder().build();
+
+        List<String> jsons = new ArrayList<>();
+        jsons = MAPPER.readValue(body, new TypeReference<List<String>>(){} );
+
+        List<HashMap<String, String>> objs = new ArrayList<>();
+        for (String j : jsons) {
+            objs.add(MAPPER.readValue(j, new TypeReference<HashMap<String, String>>(){} ));
+        }
+        return objs;
+    }
+
     @Override
     public void start(Stage stage) {
 
@@ -60,23 +101,22 @@ public class Main extends Application{
             FXMLLoader loader = new FXMLLoader();
 
             //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "homeScreen");
+            startingScene = loadFXML(loader, "discoveryScreen");
             //fxmlname'nin sonunda .fxml olmasına gerek yok.
             homeMenu = loadFXML(loader, "homeScreen");
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             registerScreen = loadFXML(loader, "registerScreen");
             loginScreen = loadFXML(loader, "loginScreen");
-            discoveryMenu = loadFXML(loader, "discoveryScene");
-
-            //applicationScene = loadFXML(loader, "listingApplicationScene");
+            discoveryMenu = loadFXML(loader, "discoveryScreen");
+            applicationScene = loadFXML(loader, "listingApplicationScreen");
+            chatMenu= loadFXML(loader, "chatScreen");
 
             scene = new Scene(startingScene, 800, 620);
 
-            //scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);
-
 
             stage.show();
     }
