@@ -23,7 +23,7 @@ public class Main extends Application{
     public static Parent chatMenu;
     public static Parent leaderboardMenu;
     public static Parent settingsMenu;
-
+    public static String loggedInUser = "";
     public VBox MainBox;
     public VBox buttonVBox;
 

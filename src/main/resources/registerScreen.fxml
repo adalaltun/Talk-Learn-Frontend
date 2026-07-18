@@ -38,13 +38,13 @@
                                     </rowConstraints>
                                     <children>
                                         <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                        <TextField fx:id="usernameField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <TextField fx:id="usernameField" onKeyPressed="#handleRegisterKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                                         <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                        <PasswordField fx:id="passwordField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <PasswordField fx:id="passwordField" onKeyPressed="#handleRegisterKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                        <Label text="Repeat Password:" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                        <PasswordField fx:id="repeatedPasswordField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="Confirm Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <PasswordField fx:id="repeatedPasswordField" onKeyPressed="#handleRegisterKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     </children>
                                 </GridPane>
 
