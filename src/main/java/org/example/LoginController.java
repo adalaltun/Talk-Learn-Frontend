@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +13,7 @@ import java.net.http.HttpResponse;
 public class LoginController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
+    @FXML private Button loginButton;
 
     private static final String BACKEND_URL = "http://localhost:8080/api/auth/login";
 
@@ -19,15 +21,14 @@ public class LoginController {
     public void handleLogin(ActionEvent event) {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
-        boolean fieldEmpty = false; //false if the username and password datas are entered
 
         if(username.isEmpty()) {
             Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Username");
-            fieldEmpty = true;
+            return;
         }
         if(password.isEmpty()) {
             Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Password");
-            fieldEmpty = true;
+            return;
         }
 
         String jsonBody = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
@@ -43,10 +44,16 @@ public class LoginController {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                Main.displayAlert(Alert.AlertType.INFORMATION, "Success!", response.body());
-                Main.changeMenu(Main.homeMenu);
+                Main.loggedInUser = username;
+
+                Platform.runLater(() -> {
+                    Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Logged In!");
+                    Main.changeMenu(Main.homeMenu);
+                });
             } else {
-                Main.displayAlert(Alert.AlertType.ERROR, "Login Failed", response.body());
+                Platform.runLater(() -> {
+                    Main.displayAlert(Alert.AlertType.ERROR, "Error", "Username or password is incorrect!");
+                });
             }
 
         } catch (Exception e) {
@@ -63,5 +70,16 @@ public class LoginController {
     private void clearFields() {
         usernameField.clear();
         passwordField.clear();
+    }
+
+    @FXML
+    private void handleLoginKeyEvents(javafx.scene.input.KeyEvent event) {
+        if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+            if (event.getSource() == usernameField) {
+                passwordField.requestFocus();
+            } else if (event.getSource() == passwordField) {
+                loginButton.fire();
+            }
+        }
     }
 }

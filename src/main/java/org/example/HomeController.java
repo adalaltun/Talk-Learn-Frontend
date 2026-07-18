@@ -62,6 +62,7 @@ public class HomeController {
     }
 
     public void handleChat(ActionEvent actionEvent) {
+        Main.changeMenu(Main.chatMenu);
     }
 
     public void handleLeaderboard(ActionEvent actionEvent) {

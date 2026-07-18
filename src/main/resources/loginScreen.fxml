@@ -38,10 +38,10 @@
                                     </rowConstraints>
                                     <children>
                                         <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                        <TextField fx:id="usernameField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <TextField fx:id="usernameField" onKeyPressed="#handleLoginKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                                         <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                        <PasswordField fx:id="passwordField" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <PasswordField fx:id="passwordField" onKeyPressed="#handleLoginKeyEvents" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
 
