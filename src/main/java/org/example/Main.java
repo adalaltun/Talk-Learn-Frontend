@@ -67,11 +67,12 @@ public class Main extends Application{
             registerScreen = loadFXML(loader, "registerScreen");
             loginScreen = loadFXML(loader, "loginScreen");
             discoveryMenu = loadFXML(loader, "discoveryScene");
-            applicationScene = loadFXML(loader, "listingApplicationScene");
+
+            //applicationScene = loadFXML(loader, "listingApplicationScene");
 
             scene = new Scene(startingScene, 800, 620);
 
-            scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
+            //scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
 
             stage.setTitle("Talk & Learn");
             stage.setScene(scene);
