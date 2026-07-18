@@ -94,6 +94,18 @@ public class HomeController {
     private void changeView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+
+            loader.setControllerFactory(param -> {
+                if (param == HomeController.class) {
+                    return this;
+                }
+                try {
+                    return param.getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
             Parent newView = loader.load();
 
             contentArea.getChildren().clear();
@@ -148,8 +160,35 @@ public class HomeController {
             selectedTags.add(tagSports.getText());
         }
 
+
+        //Values: title (string), language (string), description (string), location (string) and selected tags (arraylist) will be used to create a listing under here
+
+
+
         System.out.println("Publishing Meetup: " + title + " [" + language + "] at " + location);
         System.out.println("Selected Tags: " + selectedTags);
+        System.out.println("Saved Meetup: " + title);
+
+        meetupTitleInput.clear();
+        meetupDescriptionInput.clear();
+        languageComboBox.setValue(null);
+
+        if (locationToggleGroup.getSelectedToggle() != null) {
+            locationToggleGroup.getSelectedToggle().setSelected(false);
+        }
+
+        if (tagGameNight != null) tagGameNight.setSelected(false);
+        if (tagCooking != null) tagCooking.setSelected(false);
+        if (tagSports != null) tagSports.setSelected(false);
+
+        if (profileView != null) profileView.setVisible(true);
+        if (myMeetupsListView != null) myMeetupsListView.setVisible(false);
+
+        if (contentArea != null) {
+            contentArea.getChildren().clear();
+        }
+
+
 
 
 
