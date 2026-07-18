@@ -22,13 +22,7 @@ public class HomeController {
     }
 
     public void handleChat(ActionEvent actionEvent) {
-        Parent root =Main.loadFXML(new FXMLLoader(),"chatScreen");
-
-        if(root != null){
-            Main.changeMenu(root);
-        }else{
-            Main.displayAlert(Alert.AlertType.ERROR, "Error", "chatScreen not found!");
-        }
+        Main.changeMenu(Main.chatMenu);
     }
 
     public void handleLeaderboard(ActionEvent actionEvent) {

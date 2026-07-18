@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,7 +11,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class RegisterController {
+    @FXML
     public Button signUpButton;
+
     public Button loginButton;
 
     @FXML
@@ -85,14 +88,16 @@ public class RegisterController {
 
                         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                        if (response.statusCode() == 200) {
-                            Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Registration successful! Redirecting to login.");
-                            //homeMenu can be changed into any menu that will be shown after a successful login
-                            Main.changeMenu(Main.homeMenu);
-                            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                            System.out.println("Successfully redirected to " + BACKEND_URL);
+                        if (response.statusCode() == 201 || response.statusCode() == 200) {
+                            Platform.runLater(() -> {
+                                Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Your account has been registered successfully!");
+                                Main.changeMenu(Main.loginScreen);
+                            });
+                            clearFields();
                         } else {
-                            Main.displayAlert(Alert.AlertType.ERROR, "Registration Failed", response.body());
+                            Platform.runLater(() -> {
+                                Main.displayAlert(Alert.AlertType.ERROR, "Registration Failed", "Username is already taken");
+                            });
                         }
 
                     } catch (Exception e) {
@@ -117,5 +122,18 @@ public class RegisterController {
         usernameField.clear();
         passwordField.clear();
         repeatedPasswordField.clear();
+    }
+
+    @FXML
+    private void handleRegisterKeyEvents(javafx.scene.input.KeyEvent event) {
+        if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+            if (usernameField.isFocused()) {
+                passwordField.requestFocus();
+            } else if (passwordField.isFocused()) {
+                repeatedPasswordField.requestFocus();
+            } else if (repeatedPasswordField.isFocused()) {
+                signUpButton.fire();
+            }
+        }
     }
 }
