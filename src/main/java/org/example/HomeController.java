@@ -321,6 +321,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     public void handlePlannedMeetupClick(ActionEvent actionEvent) {}
     public void handleOldMeetupClick(ActionEvent actionEvent) {}
+
     public void handleAcceptApplication(ActionEvent actionEvent) {}
     public void handleRejectApplication(ActionEvent actionEvent) {}
 

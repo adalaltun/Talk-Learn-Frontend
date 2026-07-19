@@ -23,7 +23,7 @@
                             </children>
                         </StackPane>
 
-                        <VBox fx:id="loginPane" alignment="CENTER" maxHeight="360" minHeight="310" prefHeight="360" spacing="20" style="-fx-background-color: white;">
+                        <VBox fx:id="loginPane" alignment="CENTER" maxHeight="360" minHeight="310" prefHeight="360" spacing="20" style="-fx-background-color: white; -fx-background-radius: 15;">
                             <padding>
                                 <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
