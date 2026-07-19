@@ -39,7 +39,7 @@
                         <Button mnemonicParsing="false" onAction="#handleGoDiscovery" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="D" />
                         <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #0078fe; -fx-background-radius: 20; -fx-border-color: #0078fe; -fx-border-radius: 20; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="C" />
                         <Button mnemonicParsing="false" onAction="#handleGoLeaderboard" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="L" />
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="S" />
+                        <Button mnemonicParsing="false" onAction="#handleGoSettings" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="S" />
                     </children>
                 </HBox>
             </children>

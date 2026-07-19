@@ -740,4 +740,8 @@ public class ChatController {
         }
         Main.changeMenu(Main.leaderboardScreen);
     }
+
+    public void handleGoSettings(ActionEvent actionEvent) {
+        Main.changeMenu(Main.settingsScreen);
+    }
 }
