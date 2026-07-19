@@ -29,6 +29,9 @@ public class Main extends Application {
     public static Parent settingsScreen;
     public static String loggedInUser = "NoAccount";
     public static String accountCreationDate = "Please Login";
+    public static String selectedWallpaper = null;
+    public static String selectedAvatar = null;
+
     public VBox MainBox;
     public VBox buttonVBox;
 
@@ -142,5 +145,18 @@ public class Main extends Application {
 
     public static void changeMenu(Parent root) {
         scene.setRoot(root);
+
+        if (root == Main.homeMenu && selectedWallpaper != null && !selectedWallpaper.isEmpty()) {
+            java.net.URL bgURL = Main.class.getResource(selectedWallpaper);
+            if (bgURL != null) {
+                root.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
+
+            if (Main.homeController != null) {
+                Main.homeController.refreshWallpaperAndProfile();
+            }
+        }
     }
 }

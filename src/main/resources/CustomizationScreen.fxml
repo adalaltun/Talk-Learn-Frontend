@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="0.0" minWidth="450.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SettingsController">
+<AnchorPane fx:controller="org.example.CustomizationController" minHeight="0.0" minWidth="450.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
@@ -28,25 +28,25 @@
 
                                 <HBox alignment="CENTER_LEFT" spacing="15.0">
                                     <children>
-                                        <Button fx:id="avatar1" mnemonicParsing="false" onAction="#handleAvatarSelection" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
+                                        <Button fx:id="avatar1" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
                                             <graphic>
-                                                <Circle fx:id="avatarOpt1" fill="#e3f2fd" opacity="0.0" radius="35.0" stroke="#0078fe" strokeType="INSIDE" strokeWidth="2.0" />
+                                                <Circle fx:id="avatarOpt1" fill="#e3f2fd" radius="35.0" stroke="#0078fe" strokeType="INSIDE" strokeWidth="2.0" />
                                             </graphic>
                                         </Button>
 
-                                        <Button mnemonicParsing="false" onAction="#handleAvatarSelection" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
+                                        <Button fx:id="avatar2" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
                                             <graphic>
                                                 <Circle fx:id="avatarOpt2" fill="#e3f2fd" radius="35.0" stroke="transparent" strokeType="INSIDE" strokeWidth="2.0" />
                                             </graphic>
                                         </Button>
 
-                                        <Button mnemonicParsing="false" onAction="#handleAvatarSelection" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
+                                        <Button fx:id="avatar3" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
                                             <graphic>
                                                 <Circle fx:id="avatarOpt3" fill="#e3f2fd" radius="35.0" stroke="transparent" strokeType="INSIDE" strokeWidth="2.0" />
                                             </graphic>
                                         </Button>
 
-                                        <Button mnemonicParsing="false" onAction="#handleAvatarSelection" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
+                                        <Button fx:id="avatar4" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0;">
                                             <graphic>
                                                 <Circle fx:id="avatarOpt4" fill="#e3f2fd" radius="35.0" stroke="transparent" strokeType="INSIDE" strokeWidth="2.0" />
                                             </graphic>
@@ -66,15 +66,15 @@
 
                                 <HBox alignment="CENTER_LEFT" spacing="15.0">
                                     <children>
-                                        <Button fx:id="wallpaper1" mnemonicParsing="false" onAction="#handleWallpaperSelection" prefHeight="70.0" prefWidth="120.0" style="-fx-background-color: #ABD8FF; -fx-background-radius: 10; -fx-border-color: #0078fe; -fx-border-radius: 10; -fx-border-width: 2.0; -fx-cursor: hand;" textFill="white">
+                                        <Button fx:id="wallpaper1" mnemonicParsing="false" prefHeight="70.0" prefWidth="120.0" style="-fx-background-color: #ABD8FF; -fx-background-radius: 10; -fx-border-color: #0078fe; -fx-border-radius: 10; -fx-border-width: 2.0; -fx-cursor: hand;" textFill="white">
                                             <font><Font name="System Bold" size="12.0" /></font>
                                         </Button>
 
-                                        <Button fx:id="wallpaper2" mnemonicParsing="false" onAction="#handleWallpaperSelection" prefHeight="70.0" prefWidth="120.0" style="-fx-background-color: #2e7d32; -fx-background-radius: 10; -fx-border-color: transparent; -fx-border-radius: 10; -fx-border-width: 2.0; -fx-cursor: hand;" textFill="white">
+                                        <Button fx:id="wallpaper2" mnemonicParsing="false" prefHeight="70.0" prefWidth="120.0" style="-fx-background-color: #2e7d32; -fx-background-radius: 10; -fx-border-color: transparent; -fx-border-radius: 10; -fx-border-width: 2.0; -fx-cursor: hand;" textFill="white">
                                             <font><Font name="System Bold" size="12.0" /></font>
                                         </Button>
 
-                                        <Button fx:id="wallpaper3" mnemonicParsing="false" onAction="#handleWallpaperSelection" prefHeight="70.0" prefWidth="120.0" style="-fx-background-color: #c62828; -fx-background-radius: 10; -fx-border-color: transparent; -fx-border-radius: 10; -fx-border-width: 2.0; -fx-cursor: hand;" textFill="white">
+                                        <Button fx:id="wallpaper3" mnemonicParsing="false" prefHeight="70.0" prefWidth="120.0" style="-fx-background-color: #c62828; -fx-background-radius: 10; -fx-border-color: transparent; -fx-border-radius: 10; -fx-border-width: 2.0; -fx-cursor: hand;" textFill="white">
                                             <font><Font name="System Bold" size="12.0" /></font>
                                         </Button>
                                     </children>

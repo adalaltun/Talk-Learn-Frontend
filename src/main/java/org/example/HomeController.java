@@ -60,9 +60,19 @@ public class HomeController implements Initializable {
         profileName.setText(Main.loggedInUser);
         profileDate.setText(Main.accountCreationDate);
 
-        setProfilePicture("/images/defaultProfilePhoto.png");
-        //setWindowWallpaper("/images/wallpaper.jpg");
+
+        if (Main.selectedWallpaper != null) {
+            URL bgURL = getClass().getResource(Main.selectedWallpaper);
+            if (bgURL != null) {
+                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
+        }
+
+
         refreshPage();
+
     }
 
     public void refreshPage() {
@@ -82,6 +92,21 @@ public class HomeController implements Initializable {
         addMeetupToSidebar("Spanish Meeting", true);
         addMeetupToSidebar("Japanese Talk", false);
         loadWelcomeMessage();
+    }
+
+    public void refreshWallpaperAndProfile() {
+        if (Main.selectedWallpaper != null && !Main.selectedWallpaper.isEmpty()) {
+            URL bgURL = getClass().getResource(Main.selectedWallpaper);
+            if (bgURL != null) {
+                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
+        }
+
+        if (Main.selectedAvatar != null && !Main.selectedAvatar.isEmpty()) {
+            setProfilePicture(Main.selectedAvatar);
+        }
     }
 
     public void handleMain(ActionEvent actionEvent) {
@@ -433,6 +458,8 @@ public class HomeController implements Initializable {
         // Remove immediately from active visual array
         applicationsContainer.getChildren().remove(cardNode);
     }
+
+
 
 }
 
