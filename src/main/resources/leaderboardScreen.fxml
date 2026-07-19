@@ -52,8 +52,7 @@
                         </ScrollPane>
                     </center>
                     <bottom>
-                        <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                    </bottom>
+                        <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />                    </bottom>
                 </BorderPane>
                 <HBox spacing="15.0" style="-fx-background-color: white;">
                     <padding>
