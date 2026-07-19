@@ -4,18 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Completely updated the menu logic which now is a group of buttons that changes when clicked on.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" afterDir="false" />
+=======
+    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Merge branch 'testMeliksah'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/org/example/ChatController.java&#10;#&#9;src/main/java/org/example/HomeController.java&#10;#&#9;src/main/java/org/example/Main.java&#10;#&#9;src/main/resources/chatScreen.fxml">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/ProfileUpdatable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/profilephotos/pp2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/profilephotos/pp3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wallpapers/wp2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wallpapers/wp3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/AccountInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/AccountInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CustomizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomizationController.java" afterDir="false" />
+>>>>>>> origin/master
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LeaderboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LeaderboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SettingsController.java" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/resources/SettingsScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/SettingsScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/chatScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chatScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/leaderboardScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/leaderboardScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/test_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test_style.css" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/resources/AccountInfoScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/AccountInfoScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/CustomizationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CustomizationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/SettingsScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/SettingsScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" afterDir="false" />
+>>>>>>> origin/master
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +77,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="testMeliksah" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -105,9 +124,10 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "testMeliksah",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/meliksahsucu/IdeaProjects/Talk-Learn/src/main/resources/images/profilephotos",
     "node.js.selected.package.tslint": "(autodetect)",
     "onboarding.tips.debug.path": "/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Project",
@@ -122,6 +142,10 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/images/profilephotos" />
+      <recent name="$PROJECT_DIR$/src/main/resources/images/wallpapers" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/images/wallpapers" />
       <recent name="$PROJECT_DIR$/src/main/resources/images/profilephotos" />
@@ -280,8 +304,16 @@
     <MESSAGE value="Project Creation" />
     <MESSAGE value="Added classes" />
     <MESSAGE value="Modified login and register screens to be aligned center." />
+<<<<<<< HEAD
     <MESSAGE value="Completely updated the menu logic which now is a group of buttons that changes when clicked on." />
     <option name="LAST_COMMIT_MESSAGE" value="Completely updated the menu logic which now is a group of buttons that changes when clicked on." />
+=======
+    <MESSAGE value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
+    <MESSAGE value="Merge pull request #8 from adalaltun/chatb&#10;&#10;added some methods for chat controller" />
+    <MESSAGE value="Merge branch 'testMeliksah'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/org/example/ChatController.java&#10;#&#9;src/main/java/org/example/HomeController.java&#10;#&#9;src/main/java/org/example/Main.java&#10;#&#9;src/main/resources/chatScreen.fxml" />
+    <MESSAGE value="Added wallpaper and profile photo switching to settings." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added wallpaper and profile photo switching to settings." />
+>>>>>>> origin/master
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
