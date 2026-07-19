@@ -38,6 +38,6 @@ public class NavigationController {
     @FXML public void handleMain(ActionEvent e) { Main.changeMenu(Main.homeMenu); }
     @FXML public void handleDiscovery(ActionEvent e) { Main.changeMenu(Main.discoveryMenu); }
     @FXML public void handleChat(ActionEvent e) { Main.changeMenu(Main.chatMenu); }
-    @FXML public void handleLeaderboard(ActionEvent e) { Main.changeMenu(Main.leaderboardMenu); }
+    @FXML public void handleLeaderboard(ActionEvent e) { Main.changeMenu(Main.leaderboardScreen); }
     @FXML public void handleSettings(ActionEvent e) { Main.changeMenu(Main.settingsMenu); }
 }

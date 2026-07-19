@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main extends Application{
+public class Main extends Application {
 
     public static Scene scene;
     public static Parent homeMenu;
@@ -25,15 +25,18 @@ public class Main extends Application{
     public static Parent discoveryMenu;
     public static Parent applicationScene;
     public static Parent chatMenu;
-    public static Parent leaderboardMenu;
+    public static Parent leaderboardScreen;
     public static Parent settingsMenu;
-    public static String loggedInUser = "";
+    public static String loggedInUser = "NoAccount";
+    public static String accountCreationDate = "Please Login";
     public VBox MainBox;
     public VBox buttonVBox;
 
     private LoginController loginController;
+    public static HomeController homeController;
+    public static LeaderboardController leaderboardController;
 
-    public static Parent loadFXML(FXMLLoader loader, String fxmlname) {
+    public static Parent loadFXML(String fxmlname) {
         Parent root = null;
         try {
             java.net.URL resourceLocation = Main.class.getResource("/" + fxmlname + ".fxml");
@@ -43,8 +46,14 @@ public class Main extends Application{
                 return null;
             }
 
-            loader = new FXMLLoader(resourceLocation);
+            FXMLLoader loader = new FXMLLoader(resourceLocation);
             root = loader.load();
+
+            if (fxmlname.equalsIgnoreCase("homeScreen")) {
+                homeController = loader.getController();
+            }else if (fxmlname.equalsIgnoreCase("leaderboardScreen")) {
+                leaderboardController = loader.getController();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +79,7 @@ public class Main extends Application{
         for (T o : objs) {
             String json = mapper.writeValueAsString(o);
 
-            jsonObjs.add( json );
+            jsonObjs.add(json);
         }
         return jsonObjs;
     }
@@ -84,11 +93,13 @@ public class Main extends Application{
         JsonMapper MAPPER = JsonMapper.builder().build();
 
         List<String> jsons = new ArrayList<>();
-        jsons = MAPPER.readValue(body, new TypeReference<List<String>>(){} );
+        jsons = MAPPER.readValue(body, new TypeReference<List<String>>() {
+        });
 
         List<HashMap<String, String>> objs = new ArrayList<>();
         for (String j : jsons) {
-            objs.add(MAPPER.readValue(j, new TypeReference<HashMap<String, String>>(){} ));
+            objs.add(MAPPER.readValue(j, new TypeReference<HashMap<String, String>>() {
+            }));
         }
         return objs;
     }
@@ -96,36 +107,37 @@ public class Main extends Application{
     @Override
     public void start(Stage stage) {
 
-            System.out.println("RESOURCE URL: " + getClass().getResource("/test.fxml"));
+        System.out.println("RESOURCE URL: " + getClass().getResource("/test.fxml"));
 
-            FXMLLoader loader = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader();
 
-            //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-            startingScene = loadFXML(loader, "homeScreen");
-            //fxmlname'nin sonunda .fxml olmasına gerek yok.
-            homeMenu = loadFXML(loader, "homeScreen");
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            registerScreen = loadFXML(loader, "registerScreen");
-            loginScreen = loadFXML(loader, "loginScreen");
-            discoveryMenu = loadFXML(loader, "discoveryScreen");
-            applicationScene = loadFXML(loader, "listingApplicationScreen");
-            chatMenu= loadFXML(loader, "chatScreen");
-            leaderboardMenu = loadFXML(loader, "scoreBoardScreen");
-            settingsMenu = loadFXML(loader, "SettingsScreen");
+        //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
+        startingScene = loadFXML("loginScreen");
+        //fxmlname'nin sonunda .fxml olmasına gerek yok.
+        homeMenu = loadFXML("homeScreen");
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        registerScreen = loadFXML("registerScreen");
+        loginScreen = loadFXML("loginScreen");
+        leaderboardScreen = loadFXML("leaderboardScreen");
+        discoveryMenu = loadFXML("discoveryScreen");
+        applicationScene = loadFXML("listingApplicationScreen");
+        chatMenu = loadFXML("chatScreen");
 
-            scene = new Scene(startingScene, 800, 620);
+        scene = new Scene(startingScene, 800, 620);
 
-            scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
 
-            stage.setTitle("Talk & Learn");
-            stage.setScene(scene);
+        stage.setTitle("Talk & Learn");
+        stage.setScene(scene);
 
-            stage.show();
+        stage.show();
 
 
     }
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     public static void changeMenu(Parent root) {
         scene.setRoot(root);
