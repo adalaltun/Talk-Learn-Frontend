@@ -20,12 +20,12 @@
                            AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="38.0">
                     <children>
                         <VBox fx:id="profileView" alignment="CENTER" prefWidth="248.0" spacing="10.0"
-                              style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20; -fx-padding: 20;"
+                              style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 1); -fx-border-radius: 20; -fx-padding: 20;"
                               visible="true">
                             <children>
                                 <StackPane prefHeight="85.0" prefWidth="85.0">
                                     <children>
-                                        <Circle fx:id="profileCircle" fill="#C7E1FF" radius="50.0" stroke="#ABD8FF"
+                                        <Circle fx:id="profileCircle" fill="#C7E1FF" radius="50.0" stroke="rgba(224, 224, 224, 0.5)"
                                                 strokeType="INSIDE" strokeWidth="1.8"/>
                                         <Label fx:id="profileLetterLabel"
                                                style="-fx-font-size: 32px; -fx-text-fill: #0078fe; -fx-font-weight: bold;"
