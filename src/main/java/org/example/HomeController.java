@@ -54,8 +54,11 @@ public class HomeController implements Initializable {
     @FXML private VBox pastMeetupsContainer;
     @FXML private VBox applicationsContainer;
 
+    @FXML private NavigationController navMenuController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (navMenuController != null) navMenuController.setActive("home");
 
         profileName.setText(Main.loggedInUser);
         profileDate.setText(Main.accountCreationDate);

@@ -63,6 +63,8 @@ public class ChatController {
 
     @FXML
     public void initialize() {
+        if (navMenuController != null) navMenuController.setActive("chat");
+
         chatMessageArea.getChildren().clear();
 
         if (chatListContainer != null) {

@@ -15,9 +15,11 @@ public class SettingsController implements Initializable {
 
     @FXML private AnchorPane contentArea;
     @FXML private javafx.scene.shape.Circle sidebarProfileCircle;
+    @FXML private NavigationController navMenuController;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (navMenuController != null) navMenuController.setActive("settings");
         changeView("/AccountInfoScreen.fxml");
     }
 
