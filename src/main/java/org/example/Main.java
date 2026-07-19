@@ -26,7 +26,7 @@ public class Main extends Application {
     public static Parent applicationScene;
     public static Parent chatMenu;
     public static Parent leaderboardScreen;
-    public static Parent settingsMenu;
+    public static Parent settingsScreen;
     public static String loggedInUser = "NoAccount";
     public static String accountCreationDate = "Please Login";
     public VBox MainBox;
@@ -112,7 +112,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
 
         //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-        startingScene = loadFXML("loginScreen");
+        startingScene = loadFXML("homeScreen");
         //fxmlname'nin sonunda .fxml olmasına gerek yok.
         homeMenu = loadFXML("homeScreen");
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -122,6 +122,7 @@ public class Main extends Application {
         discoveryMenu = loadFXML("discoveryScreen");
         applicationScene = loadFXML("listingApplicationScreen");
         chatMenu = loadFXML("chatScreen");
+        settingsScreen = loadFXML("settingsScreen");
 
         scene = new Scene(startingScene, 800, 620);
 

@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -62,7 +61,7 @@ public class HomeController implements Initializable {
         profileDate.setText(Main.accountCreationDate);
 
         setProfilePicture("/images/defaultProfilePhoto.png");
-        setWindowWallpaper("/images/wallpaper.jpg");
+        //setWindowWallpaper("/images/wallpaper.jpg");
         refreshPage();
     }
 
@@ -151,7 +150,7 @@ public class HomeController implements Initializable {
     }
 
     public void handleSettings(ActionEvent actionEvent) {
-        Main.changeMenu(Main.settingsMenu);
+        Main.changeMenu(Main.settingsScreen);
     }
 
     public void handleDrag(MouseEvent e) {

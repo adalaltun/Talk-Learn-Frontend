@@ -2,21 +2,17 @@ package org.example;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.json.JsonMapper;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,7 +51,7 @@ public class DiscoveryController {
     public void handleLeaderboard(ActionEvent actionEvent) {Main.changeMenu(Main.leaderboardScreen);}
 
 
-    public void handleSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsMenu);}
+    public void handleSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsScreen);}
 
 
     public void handleListing(ActionEvent actionEvent) {
