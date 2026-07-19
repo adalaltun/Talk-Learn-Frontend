@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:controller="org.example.AccountInfoController" minHeight="0.0" minWidth="450.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="450.0" prefHeight="600.0" prefWidth="650.0" style="-fx-background-color: rgba(0,0,0,0.3);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.AccountInfoController">
     <children>
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
                 <VBox spacing="25.0" style="-fx-padding: 30.0; -fx-background-color: transparent;">
                     <children>
 
-                        <Label text="Account Information" textFill="black">
+                        <Label style="-fx-text-fill: white;" text="Account Information" textFill="black">
                             <font>
                                 <Font name="System Bold" size="26.0" />
                             </font>
@@ -20,19 +19,17 @@
 
                         <VBox spacing="15.0" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20; -fx-padding: 20.0;">
                             <children>
-                                <Label text="Change Username" textFill="black">
+                                <Label style="-fx-text-fill: white;" text="Change Username" textFill="black">
                                     <font>
                                         <Font name="System Bold" size="16.0" />
                                     </font>
                                 </Label>
 
-                                <HBox spacing="15.0" alignment="CENTER_LEFT">
+                                <HBox alignment="CENTER_LEFT" spacing="15.0">
                                     <children>
-                                        <TextField fx:id="newUsernameInput" prefHeight="40.0" promptText="Enter new username" HBox.hgrow="ALWAYS"
-                                                   style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" />
+                                        <TextField fx:id="newUsernameInput" prefHeight="40.0" promptText="Enter new username" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" HBox.hgrow="ALWAYS" />
 
-                                        <Button mnemonicParsing="false" onAction="#handleUpdateUsername" prefHeight="40.0" prefWidth="100.0"
-                                                style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Update" />
+                                        <Button mnemonicParsing="false" onAction="#handleUpdateUsername" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Update" />
                                     </children>
                                 </HBox>
                             </children>
@@ -40,7 +37,7 @@
 
                         <VBox spacing="15.0" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20; -fx-padding: 20.0;">
                             <children>
-                                <Label text="Change Password" textFill="black">
+                                <Label style="-fx-text-fill: white;" text="Change Password" textFill="black">
                                     <font>
                                         <Font name="System Bold" size="16.0" />
                                     </font>
@@ -48,16 +45,13 @@
 
                                 <VBox spacing="12.0">
                                     <children>
-                                        <PasswordField fx:id="currentPasswordInput" prefHeight="40.0" promptText="Current Password"
-                                                       style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" />
+                                        <PasswordField fx:id="currentPasswordInput" prefHeight="40.0" promptText="Current Password" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" />
 
-                                        <PasswordField fx:id="newPasswordInput" prefHeight="40.0" promptText="New Password"
-                                                       style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" />
+                                        <PasswordField fx:id="newPasswordInput" prefHeight="40.0" promptText="New Password" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" />
 
                                         <HBox alignment="TOP_RIGHT">
                                             <children>
-                                                <Button mnemonicParsing="false" onAction="#handleUpdatePassword" prefHeight="40.0" prefWidth="140.0"
-                                                        style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Save Password" />
+                                                <Button mnemonicParsing="false" onAction="#handleUpdatePassword" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Save Password" />
                                             </children>
                                         </HBox>
                                     </children>

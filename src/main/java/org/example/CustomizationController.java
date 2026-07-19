@@ -1,28 +1,49 @@
 package org.example;
 
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.image.Image;
 
-import java.io.InputStream;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CustomizationController implements Initializable {
-    @FXML private Button avatar1;
-    @FXML private Button wallpaper1;
-    @FXML private Button wallpaper2;
-    @FXML private Button wallpaper3;
-    @FXML private Circle avatarOpt1;
-    @FXML private Circle avatarOpt2;
-    @FXML private Circle avatarOpt3;
-    @FXML private Circle avatarOpt4;
+public class CustomizationController implements Initializable, ProfileUpdatable {
+    @FXML
+    private SplitPane rootPane;
+    @FXML
+    private Label profileName;
+    @FXML
+    private Label profileDate;
+    @FXML
+    private Circle profileCircle;
+    @FXML
+    private Label profileLetterLabel;
+
+    @FXML
+    private Button avatar1;
+    @FXML
+    private Button avatar2;
+    @FXML
+    private Button avatar3;
+    @FXML
+    private Button wallpaper1;
+    @FXML
+    private Button wallpaper2;
+    @FXML
+    private Button wallpaper3;
+    @FXML
+    private Circle avatarOpt1;
+    @FXML
+    private Circle avatarOpt2;
+    @FXML
+    private Circle avatarOpt3;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -31,27 +52,69 @@ public class CustomizationController implements Initializable {
         applyWallpaperImage(wallpaper3, "/images/wallpapers/wp3.jpg");
 
         loadAvatarImage("/images/profilephotos/pp1.png", avatarOpt1);
+        loadAvatarImage("/images/profilephotos/pp2.png", avatarOpt2);
+        loadAvatarImage("/images/profilephotos/pp3.png", avatarOpt3);
 
         setupWallpaperButton(wallpaper1, "/images/wallpapers/wp1.jpg");
         setupWallpaperButton(wallpaper2, "/images/wallpapers/wp2.jpg");
         setupWallpaperButton(wallpaper3, "/images/wallpapers/wp3.jpg");
 
         setupAvatarButton(avatar1, "/images/profilephotos/pp1.png", avatarOpt1);
+        setupAvatarButton(avatar2, "/images/profilephotos/pp2.png", avatarOpt2);
+        setupAvatarButton(avatar3, "/images/profilephotos/pp3.png", avatarOpt3);
+
+        refreshWallpaperAndProfile();
+    }
+
+    @Override
+    public void refreshWallpaperAndProfile() {
+        if (profileName != null) {
+            profileName.setText(Main.loggedInUser);
+            profileName.setStyle("-fx-font-family: 'System'; -fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: white; -fx-effect: dropshadow(one-pass-box, black, 2.0, 1.0, 0, 0);");
+        }
+        if (profileDate != null) {
+            profileDate.setText(Main.accountCreationDate);
+            profileDate.setStyle("-fx-font-family: 'System'; -fx-font-size: 14px; -fx-text-fill: white; -fx-effect: dropshadow(one-pass-box, black, 1.5, 1.0, 0, 0);");
+        }
+
+        if (Main.selectedWallpaper != null && !Main.selectedWallpaper.isEmpty() && rootPane != null) {
+            rootPane.setStyle("-fx-background-image: url('" + Main.selectedWallpaper + "'); -fx-background-size: cover; -fx-background-position: center;");
+        }
+
+        if (Main.selectedAvatar != null && !Main.selectedAvatar.isEmpty() && profileCircle != null) {
+            try {
+                javafx.scene.image.Image img = new javafx.scene.image.Image(Main.selectedAvatar);
+                profileCircle.setFill(new javafx.scene.paint.ImagePattern(img));
+                if (profileLetterLabel != null) {
+                    profileLetterLabel.setVisible(false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        syncBordersToCurrentSelection();
+    }
+
+    private void syncBordersToCurrentSelection() {
+        if (wallpaper1 != null)
+            updateButtonBorder(wallpaper1, "/images/wallpapers/wp1.jpg".equals(Main.selectedWallpaper));
+        if (wallpaper2 != null)
+            updateButtonBorder(wallpaper2, "/images/wallpapers/wp2.jpg".equals(Main.selectedWallpaper));
+        if (wallpaper3 != null)
+            updateButtonBorder(wallpaper3, "/images/wallpapers/wp3.jpg".equals(Main.selectedWallpaper));
+
+        if (avatarOpt1 != null)
+            avatarOpt1.setStroke("/images/profilephotos/pp1.png".equals(Main.selectedAvatar) ? javafx.scene.paint.Color.valueOf("#0078fe") : javafx.scene.paint.Color.TRANSPARENT);
+        if (avatarOpt2 != null)
+            avatarOpt2.setStroke("/images/profilephotos/pp2.png".equals(Main.selectedAvatar) ? javafx.scene.paint.Color.valueOf("#0078fe") : javafx.scene.paint.Color.TRANSPARENT);
+        if (avatarOpt3 != null)
+            avatarOpt3.setStroke("/images/profilephotos/pp3.png".equals(Main.selectedAvatar) ? javafx.scene.paint.Color.valueOf("#0078fe") : javafx.scene.paint.Color.TRANSPARENT);
     }
 
     private void setupWallpaperButton(Button button, String imagePath) {
         if (button == null) return;
         button.setOnAction(e -> handleWallpaperSelection(imagePath, button));
-    }
-
-    private void handleWallpaperSelection(String imagePath, Button selectedButton) {
-        Main.selectedWallpaper = imagePath;
-
-        if (wallpaper1 != null) updateButtonBorder(wallpaper1, false);
-        if (wallpaper2 != null) updateButtonBorder(wallpaper2, false);
-        if (wallpaper3 != null) updateButtonBorder(wallpaper3, false);
-
-        updateButtonBorder(selectedButton, true);
     }
 
     private void updateButtonBorder(Button button, boolean isSelected) {
@@ -72,35 +135,27 @@ public class CustomizationController implements Initializable {
         button.setOnAction(e -> handleAvatarSelection(imagePath, targetCircle));
     }
 
-    private void handleAvatarSelection(String imagePath, Circle targetCircle) {
-        Main.selectedAvatar = imagePath;
-
-        if (avatarOpt1 != null) avatarOpt1.setStroke(javafx.scene.paint.Color.TRANSPARENT);
-        if (avatarOpt2 != null) avatarOpt2.setStroke(javafx.scene.paint.Color.TRANSPARENT);
-        if (avatarOpt3 != null) avatarOpt3.setStroke(javafx.scene.paint.Color.TRANSPARENT);
-        if (avatarOpt4 != null) avatarOpt4.setStroke(javafx.scene.paint.Color.TRANSPARENT);
-
-        if (targetCircle != null) {
-            targetCircle.setStroke(javafx.scene.paint.Color.valueOf("#0078fe"));
-            loadAvatarImage(imagePath, targetCircle);
-        }
+    private void handleWallpaperSelection(String imagePath, Button selectedButton) {
+        Main.selectedWallpaper = imagePath;
+        refreshWallpaperAndProfile();
 
         if (Main.homeController != null) {
             Main.homeController.refreshWallpaperAndProfile();
         }
+        if (Main.settingsController != null) {
+            Main.settingsController.refreshWallpaperAndProfile();
+        }
+    }
 
-        if (avatar1 != null && avatar1.getScene() != null) {
-            javafx.scene.Node sidebarCircle = avatar1.getScene().lookup("#sidebarProfileCircle");
-            if (sidebarCircle instanceof Circle) {
-                try {
-                    java.io.InputStream is = getClass().getResourceAsStream(imagePath);
-                    if (is != null) {
-                        ((Circle) sidebarCircle).setFill(new javafx.scene.paint.ImagePattern(new Image(is)));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+    private void handleAvatarSelection(String imagePath, Circle targetCircle) {
+        Main.selectedAvatar = imagePath;
+        refreshWallpaperAndProfile();
+
+        if (Main.homeController != null) {
+            Main.homeController.refreshWallpaperAndProfile();
+        }
+        if (Main.settingsController != null) {
+            Main.settingsController.refreshWallpaperAndProfile();
         }
     }
 
@@ -110,23 +165,13 @@ public class CustomizationController implements Initializable {
             if (!imagePath.startsWith("/")) {
                 imagePath = "/" + imagePath;
             }
-            InputStream is = getClass().getResourceAsStream(imagePath);
-            if (is == null) {
-                return;
-            }
-            Image img = new Image(is);
-            ImagePattern imgPattern = new ImagePattern(img);
+            javafx.scene.image.Image img = new javafx.scene.image.Image(imagePath);
+            javafx.scene.paint.ImagePattern imgPattern = new javafx.scene.paint.ImagePattern(img);
             targetCircle.setFill(imgPattern);
             targetCircle.setOpacity(1.0);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void handleAvatarSelection(ActionEvent actionEvent) {
-    }
-
-    public void handleWallpaperSelection(ActionEvent actionEvent) {
     }
 
     public void applyWallpaperImage(Button button, String imagePath) {
@@ -137,18 +182,12 @@ public class CustomizationController implements Initializable {
                 imagePath = "/" + imagePath;
             }
 
-            URL imageURL = getClass().getResource(imagePath);
-            if (imageURL == null) {
-                return;
-            }
-
-            String externalForm = imageURL.toExternalForm();
             String currentStyle = button.getStyle();
             if (currentStyle == null) currentStyle = "";
 
             button.setStyle(
                     currentStyle +
-                            "; -fx-background-image: url('" + externalForm + "'); " +
+                            "; -fx-background-image: url('" + imagePath + "'); " +
                             "-fx-background-size: cover; " +
                             "-fx-background-position: center;"
             );
@@ -171,27 +210,5 @@ public class CustomizationController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void getWallpapers(String imagePath) {
-        if (Main.homeMenu != null) {
-            try {
-                if (!imagePath.startsWith("/")) {
-                    imagePath = "/" + imagePath;
-                }
-                URL bgURL = getClass().getResource(imagePath);
-                if (bgURL != null) {
-                    Main.homeMenu.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
-                            "-fx-background-size: cover; " +
-                            "-fx-background-position: center;");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void getAvatars(String imagePath) {
-        loadAvatarImage(imagePath, avatarOpt1);
     }
 }
