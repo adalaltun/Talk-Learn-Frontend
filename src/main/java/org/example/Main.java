@@ -79,7 +79,7 @@ public class Main extends Application {
         for (T o : objs) {
             String json = mapper.writeValueAsString(o);
 
-            jsonObjs.add(json);
+            jsonObjs.add( json );
         }
         return jsonObjs;
     }

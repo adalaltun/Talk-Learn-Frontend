@@ -143,21 +143,11 @@ public class ChatController {
                                     for (String partner : partners) {
                                         String cleanPartner = partner.replace("\"", "").trim();
                                         if (!cleanPartner.isEmpty()) {
-                                            createSidebarContact(cleanPartner);
-                                        }
-                                    }
-
-                                    if (!chatListContainer.getChildren().isEmpty()) {
-                                        Object firstContact = chatListContainer.getChildren().get(0);
-                                        if (firstContact instanceof HBox) {
-                                            HBox firstBox = (HBox) firstContact;
-                                            Label label = findLabelInHBox(firstBox);
-                                            if (label != null) {
-                                                startPrivateChat(label.getText());
+                                            String[] parts = cleanPartner.split(":", 2);
+                                            if (parts.length == 2) {
+                                                createSidebarContact(parts[0].trim(), parts[1].trim());
                                             }
                                         }
-                                    } else {
-                                        showWelcomeScreen(true);
                                     }
                                 } else {
                                     showWelcomeScreen(true);
@@ -198,7 +188,7 @@ public class ChatController {
                 }
 
                 if (isAlreadyExists(cleanPartnerName)) {
-                    startPrivateChat(cleanPartnerName);
+                    Main.displayAlert(Alert.AlertType.INFORMATION, "Already Exists", "You already have an open conversation with this person. Please click their name in the sidebar.");
                     return;
                 }
 
@@ -219,8 +209,9 @@ public class ChatController {
                                 public void run() {
                                     if (response.statusCode() == 200) {
                                         if (response.body().trim().equalsIgnoreCase("true")) {
-                                            createSidebarContact(cleanPartnerName);
-                                            startPrivateChat(cleanPartnerName);
+                                            String yeniOdaId = "room_" + java.util.UUID.randomUUID().toString();
+                                            createSidebarContact(yeniOdaId, cleanPartnerName);
+                                            startPrivateChat(yeniOdaId, cleanPartnerName);
                                         } else {
                                             Main.displayAlert(Alert.AlertType.ERROR, "User Not Found",
                                                     "The username \"" + cleanPartnerName + "\" is not registered in our database!");
@@ -284,9 +275,8 @@ public class ChatController {
                             Thread.sleep(800);
                         } catch (InterruptedException ignored) {}
 
-                        String sortedRoomId = generatePrivateRoomId(currentUser, targetPartner);
                         HttpRequest deleteRequest = HttpRequest.newBuilder()
-                                .uri(URI.create(BACKEND_URL + "/withdraw/" + sortedRoomId))
+                                .uri(URI.create(BACKEND_URL + "/withdraw/" + currentRoomId + "/" + currentUser))
                                 .DELETE()
                                 .build();
 
@@ -317,7 +307,7 @@ public class ChatController {
         chatListContainer.getChildren().removeAll(toRemove);
     }
 
-    private void createSidebarContact(String partnerName) {
+    private void createSidebarContact(String roomId, String partnerName) {
         if (isAlreadyExists(partnerName)) {
             return;
         }
@@ -338,12 +328,8 @@ public class ChatController {
 
         contactBox.getChildren().addAll(avatar, nameLabel);
 
-        contactBox.setOnMouseClicked(new javafx.event.EventHandler<javafx.scene.input.MouseEvent>() {
-            @Override
-            public void handle(javafx.scene.input.MouseEvent event) {
-                startPrivateChat(partnerName);
-            }
-        });
+
+        contactBox.setOnMouseClicked(event -> startPrivateChat(roomId, partnerName));
 
         if (chatListContainer != null) {
             chatListContainer.getChildren().add(contactBox);
@@ -373,7 +359,7 @@ public class ChatController {
         return null;
     }
 
-    private void startPrivateChat(String partnerName) {
+    private void startPrivateChat(String roomId, String partnerName) {
         showWelcomeScreen(false);
         enableChatInputs(true);
 
@@ -383,7 +369,9 @@ public class ChatController {
         }
 
         this.chatPartner = partnerName;
-        this.currentRoomId = generatePrivateRoomId(currentUser, chatPartner);
+
+
+        this.currentRoomId = roomId;
 
         if (activeChatTitle != null) {
             activeChatTitle.setText(chatPartner);
@@ -569,9 +557,9 @@ public class ChatController {
                                     @Override
                                     public void run() {
                                         if (!isAlreadyExists(sender)) {
-                                            createSidebarContact(sender);
+                                            createSidebarContact(messageRoomId, sender);
                                             if (currentRoomId == null) {
-                                                startPrivateChat(sender);
+                                                startPrivateChat(messageRoomId, sender);
                                             }
                                         }
                                     }
