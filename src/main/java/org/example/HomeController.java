@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     static int i = 0;
+    static int testValues = 1;
 
     @FXML private SplitPane rootPane;
     @FXML private AnchorPane contentArea;
