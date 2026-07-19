@@ -292,6 +292,9 @@ public class LeaderboardController {
         Main.changeMenu(Main.discoveryMenu);
     }
 
+    @FXML
+    private void handleGoSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsScreen);}
+
     public void refreshData() {
         System.out.println("refresh data");
         currentUser = Main.loggedInUser;

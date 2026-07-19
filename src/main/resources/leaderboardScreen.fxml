@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LeaderboardController">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LeaderboardController">
     <children>
         <SplitPane dividerPositions="0.32" focusTraversable="true" style="-fx-background-color: white; -fx-box-border: transparent;" VBox.vgrow="ALWAYS">
             <items>
@@ -32,15 +27,15 @@
                                             <padding><Insets bottom="15.0" left="15.0" right="15.0" top="15.0" /></padding>
                                             <children>
                                                 <HBox alignment="CENTER_LEFT">
-                                                    <Label text="Meetups Created:" textFill="#757575" HBox.hgrow="ALWAYS" maxWidth="10000" />
+                                                    <Label maxWidth="10000" text="Meetups Created:" textFill="#757575" HBox.hgrow="ALWAYS" />
                                                     <Label fx:id="meetupsCreatedLabel" text="0" textFill="BLACK"><font><Font name="System Bold" size="14.0" /></font></Label>
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT">
-                                                    <Label text="Total Reviews:" textFill="#757575" HBox.hgrow="ALWAYS" maxWidth="10000" />
+                                                    <Label maxWidth="10000" text="Total Reviews:" textFill="#757575" HBox.hgrow="ALWAYS" />
                                                     <Label fx:id="totalReviewsLabel" text="0" textFill="BLACK"><font><Font name="System Bold" size="14.0" /></font></Label>
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT">
-                                                    <Label text="Average Rating:" textFill="#757575" HBox.hgrow="ALWAYS" maxWidth="10000" />
+                                                    <Label maxWidth="10000" text="Average Rating:" textFill="#757575" HBox.hgrow="ALWAYS" />
                                                     <Label fx:id="ratingLabel" text="0.0" textFill="BLACK"><font><Font name="System Bold" size="14.0" /></font></Label>
                                                 </HBox>
                                             </children>
@@ -58,11 +53,11 @@
                     </center>
                     <bottom>
                         <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" style="-fx-background-color: white; -fx-border-color: #e0e0e0 transparent transparent transparent;" BorderPane.alignment="CENTER">
-                            <Button onAction="#handleGoHome" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="H" />
-                            <Button onAction="#handleGoDiscovery" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand; -fx-text-fill: black;" text="D" />
-                            <Button onAction="#handleGoChat" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="C" />
-                            <Button  mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #0078fe; -fx-background-radius: 20; -fx-border-color: #0078fe; -fx-border-radius: 20; -fx-cursor: hand; -fx-text-fill: white;" text="L" />
-                            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="S" />
+                            <Button mnemonicParsing="false" onAction="#handleGoHome" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="H" />
+                            <Button mnemonicParsing="false" onAction="#handleGoDiscovery" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand; -fx-text-fill: black;" text="D" />
+                            <Button mnemonicParsing="false" onAction="#handleGoChat" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="C" />
+                            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #0078fe; -fx-background-radius: 20; -fx-border-color: #0078fe; -fx-border-radius: 20; -fx-cursor: hand; -fx-text-fill: white;" text="L" />
+                            <Button mnemonicParsing="false" onAction="#handleGoSettings" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="S" />
                         </HBox>
                     </bottom>
                 </BorderPane>
