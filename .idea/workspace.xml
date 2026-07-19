@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented Login and Register data validation logic. Added scene switch-ups between login and sign-up.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/LeaderboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/defaultProfilePhoto.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/wallpaper.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/leaderboardScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryListing.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallDiscoveryListing.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/listingApplicationScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smallApplicationScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/test_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ScoreBoardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MyMeetupsScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MyMeetupsScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chatScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chatScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/5g.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/zenco.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/scoreBoardScreen.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +65,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="07a933f41c7d2911cfd6fa82bc0dd1acc7b74140" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -66,12 +76,12 @@
     &quot;assignee&quot;: &quot;adalaltun&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/adalaltun/Talk-Learn-Frontend.git&quot;,
-    &quot;accountId&quot;: &quot;aab7bea7-37c3-4b78-b9d6-1cef4d64aa10&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/adalaltun/Talk-Learn.git",
+    "accountId": "a9daf768-f698-4ceb-a302-dd95e4424965"
   }
-}</component>
+}]]></component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.2.0-bin/11i5gvueggl8a5cioxuftxrik/gradle-9.2.0" javaHome="/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home" gradleVersion="9.2.0" />
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/org/example/Main.java" root0="SKIP_INSPECTION" />
@@ -87,36 +97,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AppLauncher.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk-Learn [:org.example.AppLauncher.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk_Learn [:org.example.AppLauncher.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk_Learn [:org.example.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Talk_Learn [clean].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AppLauncher.executor": "Run",
+    "Gradle.Talk-Learn [:org.example.AppLauncher.main()].executor": "Run",
+    "Gradle.Talk_Learn [:org.example.AppLauncher.main()].executor": "Run",
+    "Gradle.Talk_Learn [:org.example.Main.main()].executor": "Run",
+    "Gradle.Talk_Learn [clean].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "testMeliksah",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/meliksahsucu/IdeaProjects/Talk-Learn/src/main/resources/images",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "onboarding.tips.debug.path": "/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.keymap"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/images" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.AppLauncher">
-    <configuration name="AppLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="AppLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.AppLauncher" />
       <module name="Talk_Learn.main" />
       <extension name="coverage">
@@ -154,13 +171,17 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.AppLauncher" />
+      <item itemvalue="Gradle.Talk_Learn [clean]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Application.AppLauncher" />
         <item itemvalue="Gradle.Talk_Learn [clean]" />
         <item itemvalue="Application.AppLauncher" />
-        <item itemvalue="Application.AppLauncher" />
+        <item itemvalue="Gradle.Talk_Learn [clean]" />
       </list>
     </recent_temporary>
   </component>

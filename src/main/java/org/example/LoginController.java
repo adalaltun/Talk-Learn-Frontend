@@ -11,9 +11,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class LoginController {
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
-    @FXML private Button loginButton;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Button loginButton;
 
     private static final String BACKEND_URL = "http://localhost:8080/api/auth/login";
 
@@ -22,11 +25,11 @@ public class LoginController {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if(username.isEmpty()) {
+        if (username.isEmpty()) {
             Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Username");
             return;
         }
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Password");
             return;
         }
@@ -46,8 +49,22 @@ public class LoginController {
             if (response.statusCode() == 200) {
                 Main.loggedInUser = username;
 
+                String body = response.body();
+                if (body != null && body.contains("creationDate")) {
+                    String[] parts = body.split("creationDate\":\"");
+                    if (parts.length > 1) {
+                        Main.accountCreationDate = parts[1].split("\"")[0];
+                    }
+                } else {
+                    Main.accountCreationDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                }
+
                 Platform.runLater(() -> {
                     Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Logged In!");
+
+                    if (Main.homeController != null) {
+                        Main.homeController.refreshPage();
+                    }
                     Main.changeMenu(Main.homeMenu);
                 });
             } else {

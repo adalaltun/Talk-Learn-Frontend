@@ -16,6 +16,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +32,8 @@ public class HomeController implements Initializable {
     @FXML private VBox profileView;
 
     @FXML private Label profileName;
-    @FXML private Label profileRank;
+    @FXML private Label profileDate;
+
     @FXML private Circle profileCircle;
     @FXML private Label profileLetterLabel;
 
@@ -56,27 +58,78 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        profileName.setText("Zenco");
-        profileRank.setText("Lvl 99 ngga");
+        profileName.setText(Main.loggedInUser);
+        profileDate.setText(Main.accountCreationDate);
 
-        setProfilePicture("/images/zenco.png");
-        setWindowWallpaper("/images/5g.jpeg");
+        setProfilePicture("/images/defaultProfilePhoto.png");
+        setWindowWallpaper("/images/wallpaper.jpg");
+        refreshPage();
+    }
 
+    public void refreshPage() {
+        if (profileName != null) {
+            profileName.setText(Main.loggedInUser);
+        }
+        if(profileDate != null) {
+            profileDate.setText(Main.accountCreationDate);
+        }
+        if (plannedMeetupsContainer != null) {
+            plannedMeetupsContainer.getChildren().clear();
+        }
+        if (pastMeetupsContainer != null) {
+            pastMeetupsContainer.getChildren().clear();
+        }
 
-        if (plannedMeetupsContainer != null) plannedMeetupsContainer.getChildren().clear();
-        if (pastMeetupsContainer != null) pastMeetupsContainer.getChildren().clear();
-
-        addMeetupToSidebar("Tuvalet Partisi 2", true);
-        addMeetupToSidebar("Tuvalet Partisi", false);
-
+        addMeetupToSidebar("Spanish Meeting", true);
+        addMeetupToSidebar("Japanese Talk", false);
+        loadWelcomeMessage();
     }
 
     public void handleMain(ActionEvent actionEvent) {
+        if (profileView != null) {
+            profileView.setVisible(true);
+        }
+        if (myMeetupsListView != null) {
+            myMeetupsListView.setVisible(false);
+        }
+        refreshPage();
+    }
 
-        profileView.setVisible(true);
-        myMeetupsListView.setVisible(false);
-
+    private void loadWelcomeMessage() {
+        if (contentArea == null) {
+            return;
+        }
         contentArea.getChildren().clear();
+
+        VBox welcomeBox = new VBox();
+        welcomeBox.setAlignment(javafx.geometry.Pos.CENTER);
+        welcomeBox.setSpacing(25.0);
+        welcomeBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20;");
+        welcomeBox.setPadding(new javafx.geometry.Insets(40, 40, 40, 40));
+
+        AnchorPane.setTopAnchor(welcomeBox, 40.0);
+        AnchorPane.setBottomAnchor(welcomeBox, 60.0);
+        AnchorPane.setLeftAnchor(welcomeBox, 40.0);
+        AnchorPane.setRightAnchor(welcomeBox, 40.0);
+
+        Label titleLabel = new Label("Talk & Learn");
+        titleLabel.setTextFill(Color.BLACK);
+        titleLabel.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 42.0));
+
+        Label subtitleLabel = new Label("Welcome to the ultimate language exchange platform!");
+        subtitleLabel.setTextFill(Color.BLACK);
+        subtitleLabel.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 18.0));
+
+        Label bodyLabel = new Label("Connect with people around the world, join active language sessions, or create your own meetings. Improve your communication skills naturally while expanding your network.\n\nUse the sidebar to manage your meetups, check out your favorites, or find ongoing talks near you.");
+        bodyLabel.setTextFill(Color.BLACK);
+        bodyLabel.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 14.0));
+        bodyLabel.setPrefWidth(500.0);
+        bodyLabel.setWrapText(true);
+        bodyLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        bodyLabel.setLineSpacing(6.0);
+
+        welcomeBox.getChildren().addAll(titleLabel, subtitleLabel, bodyLabel);
+        contentArea.getChildren().add(welcomeBox);
     }
 
     public void handleSignUp(ActionEvent actionEvent) {
@@ -91,6 +144,10 @@ public class HomeController implements Initializable {
     }
 
     public void handleLeaderboard(ActionEvent actionEvent) {
+        if (Main.leaderboardController != null) {
+            Main.leaderboardController.refreshData();
+        }
+        Main.changeMenu(Main.leaderboardScreen);
     }
 
     public void handleSettings(ActionEvent actionEvent) {

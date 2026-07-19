@@ -89,8 +89,21 @@ public class RegisterController {
                         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
                         if (response.statusCode() == 201 || response.statusCode() == 200) {
+                            Main.loggedInUser = username;
+                            String body = response.body();
+                            if (body != null && body.contains("creationDate")) {
+                                String[] parts = body.split("creationDate\":\"");
+                                if (parts.length > 1) {
+                                    Main.accountCreationDate = parts[1].split("\"")[0];
+                                }
+                            } else {
+                                Main.accountCreationDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                            }
                             Platform.runLater(() -> {
                                 Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Your account has been registered successfully!");
+                                if (Main.homeController != null) {
+                                    Main.homeController.refreshPage();
+                                }
                                 Main.changeMenu(Main.homeMenu);
                             });
                             clearFields();

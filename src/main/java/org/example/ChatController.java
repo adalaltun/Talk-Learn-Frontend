@@ -729,7 +729,11 @@ public class ChatController {
         Main.changeMenu(Main.discoveryMenu);
     }
 
-    public void handleGoLeaderboard(ActionEvent actionEvent){
-        // Main.changeMenu(Main.scoreboard);
+
+    public void handleGoLeaderboard(ActionEvent actionEvent) {
+        if (Main.leaderboardController != null) {
+            Main.leaderboardController.refreshData();
+        }
+        Main.changeMenu(Main.leaderboardScreen);
     }
 }

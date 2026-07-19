@@ -44,7 +44,7 @@ public class DiscoveryController {
     public void handleChat(ActionEvent actionEvent) {Main.changeMenu(Main.chatMenu);}
 
 
-    public void handleLeaderboard(ActionEvent actionEvent) {Main.changeMenu(Main.leaderboardMenu);}
+    public void handleLeaderboard(ActionEvent actionEvent) {Main.changeMenu(Main.leaderboardScreen);}
 
 
     public void handleSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsMenu);}
@@ -57,7 +57,7 @@ public class DiscoveryController {
 
     @FXML
     public void handleDebugAddListing(ActionEvent e) {
-        Parent listing = Main.loadFXML(new FXMLLoader(), "smallDiscoveryListing");
+        Parent listing = Main.loadFXML("smallDiscoveryListing");
         listingBox.getChildren().add(listing);
 
         // jsonbody to be added
@@ -117,7 +117,7 @@ public class DiscoveryController {
     }
     private void addReadListings(List<HashMap<String, String>> maplistings) {
         for ( HashMap<String, String> map : maplistings) {
-            StackPane listingPane = (StackPane) Main.loadFXML(new FXMLLoader(), "smallDiscoveryListing");
+            StackPane listingPane = (StackPane) Main.loadFXML("smallDiscoveryListing");
             HBox listingLabels = (HBox) listingPane.getChildren().getFirst();
 
             Label placeLabel = (Label) listingLabels.getChildren().get(0);
