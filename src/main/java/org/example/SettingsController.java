@@ -20,6 +20,10 @@ public class SettingsController implements Initializable, ProfileUpdatable {
     @FXML private AnchorPane contentArea;
     @FXML private javafx.scene.shape.Circle sidebarProfileCircle;
     @FXML private NavigationController navMenuController;
+    @FXML private Label profileName;
+    @FXML private Label profileDate;
+    @FXML private Circle profileCircle;
+    @FXML private Label profileLetterLabel;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

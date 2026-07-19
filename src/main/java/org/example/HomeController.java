@@ -59,6 +59,11 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private VBox pastMeetupsContainer;
     @FXML private VBox applicationsContainer;
 
+    String titleStyle = "", subtitleStyle = "", bodyStyle = "";
+    @FXML private Label titleLabel;
+    @FXML private Label subtitleLabel;
+    @FXML private Label bodyLabel;
+
     @FXML private NavigationController navMenuController;
 
     @Override
