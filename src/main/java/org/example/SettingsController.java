@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,20 +27,24 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Platform.runLater(() -> {
+            changeView("/AccountInfoScreen.fxml");
+        });
+
         getWallpapers("/images/wallpaper.jpg");
         getAvatars("/images/pp1.png");
     }
 
     public void handleAccountInfo(ActionEvent actionEvent) {
+        changeView("/AccountInfoScreen.fxml");
     }
 
     public void handleCustomization(ActionEvent actionEvent) {
         changeView("/CustomizationScreen.fxml");
     }
 
-    public void handleMain(ActionEvent actionEvent) {
-        Main.changeMenu(Main.homeMenu);
-    }
+    public void handleMain(ActionEvent actionEvent) {Main.changeMenu(Main.homeMenu);}
 
     public void handleDiscovery(ActionEvent actionEvent) {Main.changeMenu(Main.discoveryMenu);}
 
@@ -174,6 +179,9 @@ public class SettingsController implements Initializable {
     }
 
 
+    public void handleUpdateUsername(ActionEvent actionEvent) {
+    }
 
-
+    public void handleUpdatePassword(ActionEvent actionEvent) {
+    }
 }
