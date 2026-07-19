@@ -17,6 +17,13 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.stream.Collectors;
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -323,6 +330,54 @@ public class HomeController implements Initializable {
 
 
         //Values: title (string), language (string), description (string), location (string) and selected tags (arraylist) will be used to create a listing under here
+
+        String tagsJson = selectedTags.stream()
+                .map(tag -> "\"" + tag.replace("\"", "\\\"") + "\"")
+                .collect(Collectors.joining(", ", "[", "]"));
+
+        String jsonPayload = String.format(
+                "{\n" +
+                        "  \"listingname\": \"%s\",\n" +
+                        "  \"language\": \"%s\",\n" +
+                        "  \"listingdescription\": \"%s\",\n" +
+                        "  \"location\": \"%s\",\n" +
+                        "  \"tags\": %s\n" +
+                        "}",
+                title.replace("\"", "\\\""),
+                (language != null) ? language.replace("\"", "\\\"") : "",
+                description.replace("\"", "\\\""),
+                location.replace("\"", "\\\""),
+                tagsJson
+        );
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/listings/add?username=" + Main.loggedInUser))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .build();
+
+        System.out.println("Sending Listing to backend...");
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(response -> {
+                    // Network responses run on a background thread.
+                    // Use Platform.runLater to interact with UI components safely.
+                    Platform.runLater(() -> {
+                        if (response.statusCode() == 200) {
+                            System.out.println("Backend Success: " + response.body());
+                        } else {
+                            System.err.println("Backend Error (" + response.statusCode() + "): " + response.body());
+                        }
+                    });
+                })
+                .exceptionally(ex -> {
+                    Platform.runLater(() -> {
+                        System.err.println("Failed to connect to backend: " + ex.getMessage());
+                    });
+                    return null;
+                });
+
 
 
 
