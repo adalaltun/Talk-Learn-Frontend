@@ -65,7 +65,7 @@
                                 <Label alignment="CENTER" maxWidth="10000" text="Most Meetups" textFill="#1a1a1a">
                                     <font><Font name="System Bold" size="15.0" /></font>
                                 </Label>
-                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS" hbarPolicy="NEVER" vbarPolicy="NEVER">
                                     <content>
                                         <VBox fx:id="mostMeetupsContainer" spacing="10.0" />
                                     </content>
@@ -78,7 +78,7 @@
                                 <Label alignment="CENTER" maxWidth="10000" text="Fair Reliability" textFill="#0078fe">
                                     <font><Font name="System Bold" size="15.0" /></font>
                                 </Label>
-                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS" hbarPolicy="NEVER" vbarPolicy="NEVER">
                                     <content>
                                         <VBox fx:id="fairRankingContainer" spacing="10.0" />
                                     </content>
@@ -91,7 +91,7 @@
                                 <Label alignment="CENTER" maxWidth="1000000" text="Highest Rating" textFill="#1a1a1a">
                                     <font><Font name="System Bold" size="15.0" /></font>
                                 </Label>
-                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS" hbarPolicy="NEVER" vbarPolicy="NEVER">
                                     <content>
                                         <VBox fx:id="highestRatingContainer" spacing="10.0" />
                                     </content>
