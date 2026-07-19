@@ -35,6 +35,7 @@ public class LeaderboardController {
     private VBox fairRankingContainer;
     @FXML
     private VBox highestRatingContainer;
+    @FXML private NavigationController navMenuController;
 
     private final String BACKEND_URL = "http://localhost:8080/api/scoreboard";
     private final HttpClient httpClient = HttpClient.newHttpClient();
@@ -42,6 +43,7 @@ public class LeaderboardController {
 
     @FXML
     public void initialize() {
+        if (navMenuController != null) navMenuController.setActive("leaderboard");
         ranksContainer.getChildren().clear();
         mostMeetupsContainer.getChildren().clear();
         fairRankingContainer.getChildren().clear();

@@ -54,6 +54,7 @@ public class ChatController {
 
     private final String BACKEND_URL = "http://localhost:8080/api/chat";
     private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final int MAX_CHAR_LIMIT = 50;
 
     private String currentUser;
     private String chatPartner;
@@ -62,6 +63,8 @@ public class ChatController {
 
     @FXML
     public void initialize() {
+        if (navMenuController != null) navMenuController.setActive("chat");
+
         chatMessageArea.getChildren().clear();
 
         if (chatListContainer != null) {
@@ -73,6 +76,16 @@ public class ChatController {
         }
 
         showWelcomeScreen(true);
+        if (messageField != null) {
+            messageField.setTextFormatter(new TextFormatter<String>(change -> {
+
+                if (change.getControlNewText().length() > MAX_CHAR_LIMIT) {
+                    return null;
+                }
+                return change;
+            }));
+        }
+
         if (navMenuController != null) {
             navMenuController.setActive("chat");
         }
@@ -451,6 +464,7 @@ public class ChatController {
 
                                         String sender = "";
                                         String content = "";
+                                        String dbTimestamp = ""; // Variable to store the time received from the database
 
                                         String[] pairs = obj.split(",");
                                         for (String s : pairs) {
@@ -464,12 +478,32 @@ public class ChatController {
                                                     sender = value;
                                                 } else if (key.equalsIgnoreCase("content")) {
                                                     content = value;
+                                                } else if (key.equalsIgnoreCase("timestamp")) {
+                                                    dbTimestamp = value; // Capture the time received from the backend
                                                 }
                                             }
                                         }
 
                                         if (!sender.isEmpty() && !content.isEmpty()) {
-                                            addMessageBubble(sender, content, getCurrentTimeText());
+                                            String displayTime = getCurrentTimeText(); // Use the current time by default
+
+                                            // If a date was received from the database
+                                            if (!dbTimestamp.isEmpty() && dbTimestamp.contains("T")) {
+                                                try {
+                                                    // Get the part after "T" ("15:30:45.123")
+                                                    String timePart = dbTimestamp.split("T")[1];
+                                                    // Keep only the hour and minute parts ("15:30")
+                                                    String[] timeElements = timePart.split(":");
+                                                    if (timeElements.length >= 2) {
+                                                        displayTime = timeElements[0] + ":" + timeElements[1];
+                                                    }
+                                                } catch (Exception e) {
+                                                    System.out.println("Time could not be formatted; using the default time.");
+                                                }
+                                            }
+
+                                            // Display the time received from the database instead of the current time
+                                            addMessageBubble(sender, content, displayTime);
                                         }
                                     }
                                 }
@@ -496,6 +530,19 @@ public class ChatController {
         if (content.isEmpty() || currentRoomId == null) {
             return;
         }
+
+        sendButton.setDisable(true);
+        messageField.setEditable(false);
+        messageField.setPromptText("Please wait...");
+
+        javafx.animation.PauseTransition cooldown = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
+        cooldown.setOnFinished(e -> {
+            sendButton.setDisable(false);
+            messageField.setEditable(true);
+            messageField.setPromptText("Send a message...");
+            messageField.requestFocus();
+        });
+        cooldown.play();
 
         String jsonPayload = "{\"roomId\":\"" + currentRoomId + "\",\"sender\":\"" + currentUser + "\",\"content\":\"" + content + "\"}";
 
