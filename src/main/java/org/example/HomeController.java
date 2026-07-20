@@ -332,7 +332,66 @@ public class HomeController implements Initializable, ProfileUpdatable {
     public void handlePlannedMeetupClick(ActionEvent actionEvent) {}
     public void handleOldMeetupClick(ActionEvent actionEvent) {}
 
-    public void handleAcceptApplication(ActionEvent actionEvent) {}
+    @FXML
+    public void handleAcceptApplication(javafx.event.ActionEvent actionEvent) {
+        javafx.scene.control.Button clickedButton = (javafx.scene.control.Button) actionEvent.getSource();
+
+        clickedButton.setDisable(true);
+
+        javafx.scene.layout.HBox buttonContainer = (javafx.scene.layout.HBox) clickedButton.getParent();
+        javafx.scene.layout.HBox mainRow = (javafx.scene.layout.HBox) buttonContainer.getParent();
+        javafx.scene.layout.VBox textContainer = (javafx.scene.layout.VBox) mainRow.getChildren().get(1);
+
+        javafx.scene.control.Label nameLabel = (javafx.scene.control.Label) textContainer.getChildren().get(0);
+        javafx.scene.control.Label meetupLabel = (javafx.scene.control.Label) textContainer.getChildren().get(1);
+
+        String applicantUsername = nameLabel.getText().toLowerCase();
+
+        String meetupTitle = meetupLabel.getText().replace("Wants to join: ", "").trim();
+
+        String approverUser = Main.loggedInUser;
+
+        String jsonPayload = "{"
+                + "\"hostUsername\":\"" + applicantUsername + "\","
+                + "\"roomName\":\"" + meetupTitle + "\","
+                + "\"isGroupChat\":true,"
+                + "\"participants\":[\"" + applicantUsername + "\", \"" + approverUser + "\"]"
+                + "}";
+
+        java.net.http.HttpRequest createRoomRequest = java.net.http.HttpRequest.newBuilder()
+                .uri(java.net.URI.create("http://localhost:8080/api/chat/create-room"))
+                .header("Content-Type", "application/json")
+                .POST(java.net.http.HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .build();
+
+        Thread chatThread = new Thread(() -> {
+            try {
+                java.net.http.HttpResponse<String> response = java.net.http.HttpClient.newHttpClient()
+                        .send(createRoomRequest, java.net.http.HttpResponse.BodyHandlers.ofString());
+
+                javafx.application.Platform.runLater(() -> {
+                    if (response.statusCode() == 200) {
+                        System.out.println("SUCCESS! A chat room was created/updated for '" + meetupTitle + "' by host " + applicantUsername);
+                        mainRow.setVisible(false);
+                        mainRow.setManaged(false);
+                    } else if (response.statusCode() == 400) {
+                        Main.displayAlert(javafx.scene.control.Alert.AlertType.WARNING,
+                                "Grup Kapasitesi Doldu",
+                                "Bu gruba en fazla 8 kişi katılabilir. Daha fazla onay veremezsiniz!");
+                        clickedButton.setDisable(false);
+                    } else {
+                        System.out.println("Error: Failed to create the chat room. Status Code: " + response.statusCode());
+                        clickedButton.setDisable(false);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                javafx.application.Platform.runLater(() -> clickedButton.setDisable(false));
+            }
+        });
+        chatThread.setDaemon(true);
+        chatThread.start();
+    }
     public void handleRejectApplication(ActionEvent actionEvent) {}
 
     public void handlePublishMeetup(ActionEvent actionEvent) {
