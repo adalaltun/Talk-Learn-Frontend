@@ -8,7 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -18,6 +18,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
@@ -26,13 +28,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable, ProfileUpdatable {
@@ -66,16 +68,19 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private VBox pastMeetupsContainer;
     @FXML private VBox applicationsContainer;
 
+    @FXML private NavigationController navMenuController;
+
     String titleStyle = "", subtitleStyle = "", bodyStyle = "";
     @FXML private Label titleLabel;
     @FXML private Label subtitleLabel;
     @FXML private Label bodyLabel;
 
-    @FXML private NavigationController navMenuController;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (navMenuController != null) navMenuController.setActive("home");
+
+        if (navMenuController != null) {
+            navMenuController.setActive("home");
+        }
 
         profileName.setText(Main.loggedInUser);
         profileDate.setText(Main.accountCreationDate);
@@ -91,6 +96,11 @@ public class HomeController implements Initializable, ProfileUpdatable {
         }
 
 
+        profileName.setText("Zenco");
+        profileDate.setText("Lvl 99 ngga");
+
+        setProfilePicture("/images/defaultProfilePhoto.png");
+        //setWindowWallpaper("/images/wallpaper.jpg");
         refreshPage();
 
     }
@@ -112,10 +122,13 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     @Override
     public void refreshWallpaperAndProfile() {
-        if (Main.selectedWallpaper != null && !Main.selectedWallpaper.isEmpty() && rootPane != null) {
-            rootPane.setStyle("-fx-background-image: url('" + Main.selectedWallpaper + "'); " +
-                    "-fx-background-size: cover; " +
-                    "-fx-background-position: center;");
+        if (Main.selectedWallpaper != null && !Main.selectedWallpaper.isEmpty()) {
+            URL bgURL = getClass().getResource(Main.selectedWallpaper);
+            if (bgURL != null) {
+                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
         }
 
         if (Main.selectedAvatar != null && !Main.selectedAvatar.isEmpty()) {
@@ -232,9 +245,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     public void handleSettings(ActionEvent actionEvent) {
         Main.changeMenu(Main.settingsScreen);
-    }
-
-    public void handleDrag(MouseEvent e) {
     }
 
     public void handleCreateMeetup(ActionEvent actionEvent) {

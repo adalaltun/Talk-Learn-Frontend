@@ -184,6 +184,11 @@ public class ChatController {
         networkThread.start();
     }
 
+
+    public void handleGoHome(ActionEvent actionEvent){
+        Main.changeMenu(Main.homeMenu);
+    }
+
     @FXML
     private void handleAddPeople() {
         TextInputDialog dialog = new TextInputDialog();
@@ -248,6 +253,11 @@ public class ChatController {
                 checkThread.start();
             }
         }
+    }
+
+    @FXML
+    public void handleGoScoreBoard(ActionEvent actionEvent){
+        Main.changeMenu(Main.leaderboardMenu);
     }
 
     @FXML
@@ -760,9 +770,9 @@ public class ChatController {
         }
     }
 
-    public void handleGoHome(ActionEvent actionEvent){
-        Main.changeMenu(Main.homeMenu);
-    }
+//    public void handleGoHome(ActionEvent actionEvent){
+//        Main.changeMenu(Main.homeMenu);
+//    }
 
     public void handleGoDiscovery(ActionEvent actionEvent){
         Main.changeMenu(Main.discoveryMenu);

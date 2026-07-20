@@ -7,63 +7,77 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="smallApplicationScene" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ListingApplyController">
+<AnchorPane fx:id="smallApplicationScreen" minHeight="0.0" minWidth="450.0" style="-fx-background-color: &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;?import javafx.scene.control.Button?&gt;&lt;?import javafx.scene.text.Font?&gt;&lt;Button mnemonicParsing=&quot;false&quot; onAction=&quot;#handlePublishMeetup&quot; prefHeight=&quot;40.0&quot; prefWidth=&quot;140.0&quot; style=&quot;-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;&quot; text=&quot;Create&quot; xmlns=&quot;http://javafx.com/javafx/26&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot;&gt;   &lt;font&gt;      &lt;Font size=&quot;14.0&quot; /&gt;   &lt;/font&gt;&lt;/Button&gt;;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ListingApplyController">
    <children>
-      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="400.0">
+      <VBox maxWidth="10000.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label text="Application" textFill="#9f9f9f" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
+            <Label styleClass="menu-text" text="Application" textFill="#1a1a1a">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <GridPane layoutX="22.0" layoutY="55.0" prefWidth="203.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            <VBox maxWidth="10000.0" spacing="15.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label prefHeight="25.0" text="Title" textFill="#9f9f9f">
+                  <!-- FIXED: Changed row constraints and spacing variables to prevent the input grid text labels from overlapping -->
+                  <GridPane hgap="15.0" maxWidth="10000.0" vgap="12.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="100.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="35.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="35.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #4d4d4d;" text="Title">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="applicationTitle" prefHeight="25.0" style="-fx-text-fill: #999999;" styleClass="menu-text" text="Label" textFill="#d1d1d6" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #4d4d4d;" text="Language" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="applicationLanguage" prefHeight="25.0" style="-fx-text-fill: #999999;" styleClass="menu-text" text="Label" textFill="#d1d1d6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <Label alignment="CENTER_LEFT" maxWidth="10000.0" prefHeight="25.0" style="-fx-font-weight: bold; -fx-text-fill: #4d4d4d;" text="Description  (Optional)">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="18.0" fx:id="x11" />
                      </font>
+                     <textFill>
+                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
+                     </textFill>
                   </Label>
-                  <Label fx:id="applicationTitle" prefHeight="25.0" text="Label" textFill="#5e5e5e" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="25.0" text="Language" textFill="#9f9f9f" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="applicationLanguage" prefHeight="25.0" text="Label" textFill="#5e5e5e" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <!-- FIXED: Applied internal background styles to match the application canvas dark theme -->
+                  <TextArea fx:id="applicationTextField" prefHeight="140.0" promptText="Talk about your application here." style="-fx-control-inner-background: #f5f5f5; -fx-background-color: transparent; -fx-text-box-border: #e0e0e0; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 5;" />
                </children>
-            </GridPane>
-            <Label alignment="CENTER" layoutX="34.0" layoutY="34.0" prefHeight="25.0" style="&#10;" text="Description  (Optional)" textAlignment="CENTER" wrapText="false" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
-               <font>
-                  <Font size="18.0" fx:id="x11" />
-               </font>
-               <textFill>
-                  <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
-               </textFill>
-            </Label>
-            <TextArea fx:id="applicationTextField" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0" promptText="Talk about your meeting here." AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
-            <Button fx:id="applyButton" layoutX="80.0" layoutY="314.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleApplication" prefHeight="26.0" prefWidth="100.0" text="Applyy" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="215.0" />
-            <Button fx:id="goBackButton" layoutX="229.0" layoutY="313.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="26.0" prefWidth="100.0" text="Go Back" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="81.0" />
+            </VBox>
          </children>
-      </AnchorPane>
+      </VBox>
+      <Button fx:id="applyButton" mnemonicParsing="false" onAction="#handleApplication" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Apply" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="goBackButton1" layoutX="330.0" layoutY="535.0" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Go Back" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="180.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
-</StackPane>
+</AnchorPane>
