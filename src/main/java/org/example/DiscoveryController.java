@@ -1,18 +1,18 @@
 package org.example;
 
-import com.sun.javafx.scene.control.behavior.ToggleButtonBehavior;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -22,27 +22,124 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DiscoveryController {
-    public VBox listingBox;
+    @FXML public VBox listingBox;
     @FXML private ScrollPane discoveryScrollPane;
-
     @FXML private GridPane filterBox;
     @FXML private GridPane tagBox;
-
     @FXML private Label placeLabel;
     @FXML private Label titleLabel;
     @FXML private Label rankLabel;
     @FXML private NavigationController navMenuController;
+    @FXML private Button showListingsButton;
+
+    @FXML private AnchorPane smallApplicationScreen;
+    @FXML private ListingApplyController smallApplicationScreenController;
+
+    private static final String READ_ALL_BACKEND_URL = "http://localhost:8080/api/listings/all";
+    private static final String SEARCH_BACKEND_URL = "http://localhost:8080/api/listings/search";
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+
+    private static final String ACTIVE_STYLE = "-fx-background-color: #0078fe; -fx-text-fill: white; -fx-background-radius: 20; -fx-border-color: #0078fe; -fx-border-radius: 20; -fx-cursor: hand; -fx-font-weight: bold;";
+    private static final String INACTIVE_STYLE = "-fx-background-color: #f5f5f5; -fx-text-fill: #333333; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand; -fx-font-weight: bold;";
 
     @FXML
     public void initialize() {
         if (navMenuController != null) {
             navMenuController.setActive("discovery");
         }
+
+        if (smallApplicationScreen != null) {
+            smallApplicationScreen.setVisible(false);
+            smallApplicationScreen.setManaged(false);
+        }
+        if (discoveryScrollPane != null) {
+            discoveryScrollPane.setVisible(false);
+            discoveryScrollPane.setManaged(false);
+        }
+        if (showListingsButton != null) {
+            showListingsButton.setVisible(true);
+            showListingsButton.setManaged(true);
+        }
+
+        for (int i = 0; i < filterBox.getChildren().size(); i++) {
+            if (filterBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) filterBox.getChildren().get(i);
+                button.setOnAction(this::handleToggleButtonColor);
+            }
+        }
+        for (int i = 0; i < tagBox.getChildren().size(); i++) {
+            if (tagBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) tagBox.getChildren().get(i);
+                button.setOnAction(this::handleToggleButtonColor);
+            }
+        }
+
+        updateAllButtonStyles();
     }
 
-    private final static String ADD_BACKEND_URL = "http://localhost:8080/api/listings/add";
-    private final static String READ_ALL_BACKEND_URL = "http://localhost:8080/api/listings/all";
-    private final static String SEARCH_BACKEND_URL = "http://localhost:8080/api/listings/search";
+    @FXML
+    public void handleDebugAddListing(ActionEvent event) {
+    }
+
+    @FXML
+    public void handleReadAllListings(ActionEvent event) {
+        readAllListings();
+    }
+
+    @FXML
+    public void handleShowListingsClick(ActionEvent event) {
+        if (showListingsButton != null) {
+            showListingsButton.setVisible(false);
+            showListingsButton.setManaged(false);
+        }
+        handleResetFilters(null);
+    }
+
+    @FXML
+    public void handleToggleButtonColor(ActionEvent event) {
+        updateAllButtonStyles();
+    }
+
+    private void updateAllButtonStyles() {
+        for (int i = 0; i < filterBox.getChildren().size(); i++) {
+            if (filterBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) filterBox.getChildren().get(i);
+                if (button.isSelected()) {
+                    button.setStyle(ACTIVE_STYLE);
+                } else {
+                    button.setStyle(INACTIVE_STYLE);
+                }
+            }
+        }
+        for (int i = 0; i < tagBox.getChildren().size(); i++) {
+            if (tagBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) tagBox.getChildren().get(i);
+                if (button.isSelected()) {
+                    button.setStyle(ACTIVE_STYLE);
+                } else {
+                    button.setStyle(INACTIVE_STYLE);
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void handleResetFilters(ActionEvent event) {
+        for (int i = 0; i < filterBox.getChildren().size(); i++) {
+            if (filterBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) filterBox.getChildren().get(i);
+                button.setSelected(false);
+            }
+        }
+        for (int i = 0; i < tagBox.getChildren().size(); i++) {
+            if (tagBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) tagBox.getChildren().get(i);
+                button.setSelected(false);
+            }
+        }
+        updateAllButtonStyles();
+        readAllListings();
+    }
 
     public void handleMain(ActionEvent actionEvent) {
         Main.changeMenu(Main.homeMenu);
@@ -55,143 +152,264 @@ public class DiscoveryController {
         Main.changeMenu(Main.discoveryMenu);
     }
 
-    public void handleChat(ActionEvent actionEvent) {Main.changeMenu(Main.chatMenu);}
+    public void handleChat(ActionEvent actionEvent) {
+        Main.changeMenu(Main.chatMenu);
+    }
 
+    public void handleLeaderboard(ActionEvent actionEvent) {
+        Main.changeMenu(Main.leaderboardScreen);
+    }
 
-    public void handleLeaderboard(ActionEvent actionEvent) {Main.changeMenu(Main.leaderboardScreen);}
-
-
-    public void handleSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsScreen);}
-
+    public void handleSettings(ActionEvent actionEvent) {
+        Main.changeMenu(Main.settingsScreen);
+    }
 
     @FXML
     public void handleSearchListings(ActionEvent actionEvent) {
+        if (showListingsButton != null && showListingsButton.isVisible()) {
+            showListingsButton.setVisible(false);
+            showListingsButton.setManaged(false);
+        }
+
         String filter = "all";
         List<String> tags = new ArrayList<>();
-        List<String> comboFilters = new ArrayList<>();
-        List<String> toggleFilters = new ArrayList<>();
 
-        // collecting selected tags and filters
         for (int i = 0; i < tagBox.getChildren().size(); i++) {
-            ToggleButton tagBtn = (ToggleButton) tagBox.getChildren().get(i);
-            if (tagBtn.isSelected())
-                tags.add(tagBtn.getText());
+            if (tagBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) tagBox.getChildren().get(i);
+                if (button.isSelected()) {
+                    tags.add(button.getText());
+                }
+            }
         }
         for (int i = 0; i < filterBox.getChildren().size(); i++) {
-            Node filterNode = filterBox.getChildren().get(i);
-
-            if (((ToggleButton) filterNode).isSelected())
-                filter = ((ToggleButton) filterNode).getText();
+            if (filterBox.getChildren().get(i) instanceof ToggleButton) {
+                ToggleButton button = (ToggleButton) filterBox.getChildren().get(i);
+                if (button.isSelected()) {
+                    filter = button.getText();
+                }
+            }
         }
 
-        addReadListings( searchListings(tags, filter) );
+        List<HashMap<String, String>> searchResult = searchListings(tags, filter);
+        addReadListings(searchResult);
     }
 
-    public static List<HashMap<String, String>> searchListings(List<String> tags, String filter) {
+    public List<HashMap<String, String>> searchListings(List<String> tags, String filter) {
         List<HashMap<String, String>> searchResult = new ArrayList<>();
-
         try {
+            StringBuilder tagsURL = new StringBuilder("tags=");
             if (!tags.isEmpty()) {
-
-                String tagsURL = "tags=" + tags.getFirst() + ",";
-                for (int i = 1; i < tags.size(); i++)
-                    tagsURL += "," + tags.get(i);
-
-                String FINAL_SEARCH_BACKEND_URL = SEARCH_BACKEND_URL + "?" + tagsURL + "&filter=" + filter;
-
-                // filter can be "A-Z", "Z-A", "HIGHEST RANK", "LOWEST RANK"
-                // last element in URL is "filter".
-                HttpResponse<String> response = Main.sendHttpGET(FINAL_SEARCH_BACKEND_URL);
-
-                if (response.statusCode() == 200) {
-                    Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listing add success!");
-                    System.out.println("Successfully sent to " + FINAL_SEARCH_BACKEND_URL + "\n");
-
-                    System.out.println("-- searchListings response.body():\n" + response.body());
-                    System.out.println("-- Main.listFromJSON( response.body() ):\n" + Main.listFromJSON(response.body()));
-
-                    searchResult = Main.listFromJSON(response.body());
-
-                } else {
-                    Main.displayAlert(Alert.AlertType.ERROR, "Search failed.", response.body());
+                tagsURL.append(tags.get(0));
+                for (int i = 1; i < tags.size(); i++) {
+                    tagsURL.append(",").append(tags.get(i));
                 }
             }
 
+            String finalUrl = SEARCH_BACKEND_URL + "?" + tagsURL.toString() + "&filter=" + filter;
+            String cleanUrl = finalUrl.replace(" ", "%20");
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(cleanUrl))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                searchResult = parseJsonArray(response.body());
+            } else {
+                Main.displayAlert(Alert.AlertType.ERROR, "Search failed.", response.body());
+            }
         } catch (Exception ex) {
-            System.out.println("Could not connect to the database.");
+            ex.printStackTrace();
         }
         return searchResult;
     }
 
-    @FXML
-    public void handleDebugAddListing(ActionEvent e) {
-        addListing();
-    }
-    private void addListing() {
-        // jsonbody to be added
-        String jsonbody = String.format("{\"listingname\":\"%s\", \"language\":\"%s\"}", "addListingDemo32", "German");
-
-        try {
-            HttpResponse<String> response = Main.sendHttpPOST(jsonbody, ADD_BACKEND_URL);
-
-            if (response.statusCode() == 200) {
-                Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listing add success!");
-                System.out.println("Successfully sent to " + ADD_BACKEND_URL + "\n");
-            } else {
-                Main.displayAlert(Alert.AlertType.ERROR, "Addition failed.", response.body());
-            }
-
-        } catch (Exception ex) {
-            System.out.println("Could not connect to the database.");
-        }
-    }
-
-    @FXML
-    public void handleReadAllListings(ActionEvent e) {
-        readAllListings();
-    }
     private void readAllListings() {
         try {
-            HttpResponse<String> response = Main.sendHttpGET(READ_ALL_BACKEND_URL);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(READ_ALL_BACKEND_URL))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listings read success!");
-                System.out.println("Successfully sent to " + READ_ALL_BACKEND_URL + "\n");
-
-                this.addReadListings( Main.listFromJSON(response.body()) );
-
+                List<HashMap<String, String>> parsedList = parseJsonArray(response.body());
+                addReadListings(parsedList);
             } else {
                 Main.displayAlert(Alert.AlertType.ERROR, "Reading failed.", response.body());
             }
-
         } catch (Exception ex) {
-            System.out.println("Could not connect to the database.");
+            ex.printStackTrace();
         }
     }
 
     private void addReadListings(List<HashMap<String, String>> maplistings) {
-        for ( HashMap<String, String> map : maplistings) {
+        if (listingBox == null) {
+            return;
+        }
+        listingBox.getChildren().clear();
+
+        if (smallApplicationScreen != null) {
+            smallApplicationScreen.setVisible(false);
+            smallApplicationScreen.setManaged(false);
+        }
+        if (discoveryScrollPane != null) {
+            discoveryScrollPane.setVisible(true);
+            discoveryScrollPane.setManaged(true);
+        }
+
+        for (int i = 0; i < maplistings.size(); i++) {
+            HashMap<String, String> map = maplistings.get(i);
             StackPane listingPane = (StackPane) Main.loadFXML("smallListing");
-            HBox listingLabels = (HBox) listingPane.getChildren().getFirst();
+            if (listingPane != null && !listingPane.getChildren().isEmpty()) {
+                HBox listingLabels = (HBox) listingPane.getChildren().get(0);
 
-            Label placeLabel = (Label) listingLabels.getChildren().get(0);
-            Label titleLabel = (Label) listingLabels.getChildren().get(1);
+                Label ratingLabel = (Label) listingLabels.getChildren().get(0);
+                Label userLabel = (Label) listingLabels.getChildren().get(1);
+                Label langLabel = (Label) listingLabels.getChildren().get(2);
+                Label topicLabel = (Label) listingLabels.getChildren().get(3);
+                Label tagsLabel = (Label) listingLabels.getChildren().get(4);
+                Label locLabel = (Label) listingLabels.getChildren().get(5);
+                Label limitLabel = (Label) listingLabels.getChildren().get(6);
+                Label dateLabel = (Label) listingLabels.getChildren().get(7);
 
-            placeLabel.setText(map.get("language"));
-            titleLabel.setText(map.get("listingname"));
+                String rating = map.get("fairRating");
+                if (rating != null) {
+                    ratingLabel.setText(rating);
+                } else {
+                    ratingLabel.setText("0.0");
+                }
 
-            listingBox.getChildren().add(listingPane);
+                String hostUser = map.get("user");
+                if (hostUser != null && !hostUser.isEmpty()) {
+                    userLabel.setText(hostUser);
+                } else {
+                    userLabel.setText("Unknown");
+                }
+
+                String lang = map.get("language");
+                if (lang != null) {
+                    langLabel.setText(lang);
+                } else {
+                    langLabel.setText("Unknown");
+                }
+
+                String topic = map.get("listingname");
+                if (topic != null) {
+                    topicLabel.setText(topic);
+                } else {
+                    topicLabel.setText("Untitled");
+                }
+
+                String rawTags = map.get("tags");
+                if (rawTags != null && !rawTags.equals("[]")) {
+                    String cleanTags = rawTags.replace("[", "").replace("]", "").replace("\"", "");
+                    String[] tagArray = cleanTags.split(",");
+                    List<String> formattedTags = new ArrayList<>();
+
+                    int limitCount = 4;
+                    if (tagArray.length < 4) {
+                        limitCount = tagArray.length;
+                    }
+
+                    for (int j = 0; j < limitCount; j++) {
+                        formattedTags.add(tagArray[j].trim());
+                    }
+                    tagsLabel.setText(String.join(", ", formattedTags));
+                } else {
+                    tagsLabel.setText("General");
+                }
+
+                String loc = map.get("location");
+                if (loc != null) {
+                    locLabel.setText(loc);
+                } else {
+                    locLabel.setText("Unspecified");
+                }
+
+                String limit = map.get("participantLimit");
+                if (limit != null) {
+                    limitLabel.setText("Max: " + limit);
+                } else {
+                    limitLabel.setText("Unlimited");
+                }
+
+                String date = map.get("date");
+                if (date != null) {
+                    dateLabel.setText(date);
+                } else {
+                    dateLabel.setText("No Date");
+                }
+
+                listingPane.setOnMouseClicked(event -> {
+                    if (smallApplicationScreen != null && smallApplicationScreenController != null) {
+                        smallApplicationScreenController.setLabels(topicLabel, langLabel);
+
+                        if (discoveryScrollPane != null) {
+                            discoveryScrollPane.setVisible(false);
+                            discoveryScrollPane.setManaged(false);
+                        }
+                        smallApplicationScreen.setVisible(true);
+                        smallApplicationScreen.setManaged(true);
+                    }
+                });
+
+                listingBox.getChildren().add(listingPane);
+            }
         }
     }
 
-    @FXML
-    private void handleToggleColor(ActionEvent e) {
-        ToggleButton btn = (ToggleButton) e.getSource();
-        System.out.println(btn.getText() + " IS SELECTED.");
+    private List<HashMap<String, String>> parseJsonArray(String json) {
+        List<HashMap<String, String>> list = new ArrayList<>();
+        try {
+            String clean = json.trim();
+            if (clean.startsWith("[")) {
+                clean = clean.substring(1);
+            }
+            if (clean.endsWith("]")) {
+                clean = clean.substring(0, clean.length() - 1);
+            }
+            clean = clean.trim();
+            if (clean.isEmpty()) {
+                return list;
+            }
 
-//        if (btn.isSelected())
-//            btn.getStyleClass().add("filter-button");
-//        else
-//            btn.getStyleClass().remove("filter-button");
+            String[] objects = clean.split("\",\\s*\"");
+
+            for (int i = 0; i < objects.length; i++) {
+                String object = objects[i];
+                String obj = object.trim();
+                if (obj.startsWith("\"")) {
+                    obj = obj.substring(1);
+                }
+                if (obj.endsWith("\"")) {
+                    obj = obj.substring(0, obj.length() - 1);
+                }
+
+                obj = obj.replace("{", "").replace("}", "");
+                obj = obj.replace("\\\"", "\"");
+
+                HashMap<String, String> map = new HashMap<>();
+                String[] pairs = obj.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                for (int j = 0; j < pairs.length; j++) {
+                    String pair = pairs[j];
+                    String[] kv = pair.split(":", 2);
+                    if (kv.length == 2) {
+                        String key = kv[0].replace("\"", "").trim();
+                        String value = kv[1].replace("\"", "").trim();
+                        map.put(key, value);
+                    }
+                }
+                list.add(map);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

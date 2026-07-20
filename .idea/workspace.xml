@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="updated DiscoveryScreen and listingApplicationScreen.fxml screen UI.">
+    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ListingApplyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ListingApplyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/MeetupCreationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MeetupCreationScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smallListing.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallListing.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/test_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test_style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +101,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "listing-search-unstable",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -239,13 +240,13 @@
       <option name="project" value="LOCAL" />
       <updated>1784426627421</updated>
     </task>
-    <task id="LOCAL-00007" summary="updated DiscoveryScreen and listingApplicationScreen.fxml screen UI.">
+    <task id="LOCAL-00007" summary="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend.">
       <option name="closed" value="true" />
-      <created>1784543380441</created>
+      <created>1784572268268</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1784543380442</updated>
+      <updated>1784572268268</updated>
     </task>
     <option name="localTasksCounter" value="8" />
     <servers />
@@ -281,43 +282,8 @@
     <MESSAGE value="Added classes" />
     <MESSAGE value="Modified login and register screens to be aligned center." />
     <MESSAGE value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
-    <MESSAGE value="updated DiscoveryScreen and listingApplicationScreen.fxml screen UI." />
-    <option name="LAST_COMMIT_MESSAGE" value="updated DiscoveryScreen and listingApplicationScreen.fxml screen UI." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/SmallListingController.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java</url>
-          <line>188</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java</url>
-          <line>89</line>
-          <properties class="org.example.DiscoveryController" method="searchListings">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

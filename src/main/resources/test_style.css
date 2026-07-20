@@ -1,16 +1,13 @@
-/* Target the root window background */
 .root {
     -fx-background-color: #f4f4f9;
 }
 
-/* Force the Sidebar VBox/Pane container */
 .sidebar {
-    -fx-background-color: #1e1e24 !important; /* Forces color override */
+    -fx-background-color: #1e1e24 !important;
     -fx-padding: 20;
     -fx-alignment: top-center;
 }
 
-/* Target the Username label text */
 .username-text {
     -fx-text-fill: #E3F0FC;
     -fx-font-size: 24px;
@@ -23,18 +20,15 @@
     -fx-font-weight: bold;
 }
 
-/* Force the right-side main viewing area to be warm off-white */
 .content-area {
     -fx-background-color: #f4f4f9 !important;
 }
 
-/* Force SplitPane dividers to look clean and dark */
 .split-pane, .split-pane *.split-pane-divider {
     -fx-background-color: #cccccc;
     -fx-padding: 1px;
 }
 
-/* The dark persistent bottom bar container */
 .bottom-bar {
     -fx-background-color: #FFC09F;
     -fx-padding: 10px;
@@ -47,28 +41,27 @@
     -fx-border-radius: 20;
     -fx-cursor: hand;
     -fx-font-weight: bold;
-    -fx-border-color: #ccccc;
+    -fx-border-color: #cccccc;
 }
 
 .nav-button {
-    -fx-background-color: #0078fe;
+    -fx-background-color: #f5f5f5;
     -fx-background-radius: 20px;
-    -fx-border-color: #0078fe;
+    -fx-border-color: #cccccc;
     -fx-border-radius: 20px;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+    -fx-padding: 6px 8px;
     -fx-cursor: hand;
 }
 
 .nav-button:hover {
-    -fx-background-color: white;
-    -fx-text-fill: #00adb5;
+    -fx-background-color: #e3f2fd;
+    -fx-border-color: #0078fe;
 }
 
 .menu-button {
     -fx-background-color: #0078fe;
     -fx-background-radius: 10px;
-    -fx-text-fill: #33333;
+    -fx-text-fill: #333333;
     -fx-font-weight: bold;
     -fx-cursor: hand;
 }
@@ -77,33 +70,15 @@
     -fx-background-color: white;
     -fx-text-fill: #00adb5;
 }
-/* Default state for the navigation buttons */
-.nav-button {
-    -fx-background-color: #f5f5f5;
-    -fx-background-radius: 20px;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 20px;
-    -fx-padding: 6px 8px; /* Reduced from 12px so all 5 buttons fit perfectly */
-    -fx-cursor: hand;
-}
 
-/* Default color for the icon inside the button */
 .nav-icon {
-    -fx-icon-color: #757575; /* Dark grey */
+    -fx-icon-color: #757575;
 }
 
-/* When the user hovers over the button */
-.nav-button:hover {
-    -fx-background-color: #e3f2fd;
-    -fx-border-color: #0078fe;
-}
-
-/* Change icon color on hover */
 .nav-button:hover .nav-icon {
     -fx-icon-color: #0078fe;
 }
 
-/* Active Page State */
 .nav-button-active {
     -fx-background-color: #0078fe !important;
     -fx-border-color: #0078fe !important;
