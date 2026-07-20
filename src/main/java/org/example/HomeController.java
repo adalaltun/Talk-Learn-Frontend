@@ -13,10 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
-import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
@@ -81,6 +78,16 @@ public class HomeController implements Initializable, ProfileUpdatable {
     private Map<LocalDate, List<String>> plannedMeetupsMap = new HashMap<>();
     @FXML private javafx.scene.control.DatePicker meetupDatePicker;
 
+
+    @FXML private AnchorPane listingDetailView;
+
+    @FXML private Label listingDetailTitle;
+    @FXML private Label listingDetailRating;
+    @FXML private Label listingDetailLanguage;
+    @FXML private Label listingDetailType;
+    @FXML private Label listingDetailPlace;
+    @FXML private Label listingDetailSize;
+    @FXML private Label listingDetailDate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -261,19 +268,43 @@ public class HomeController implements Initializable, ProfileUpdatable {
     public void handleCreateMeetup(ActionEvent actionEvent) {
         profileView.setVisible(true);
         myMeetupsListView.setVisible(false);
+        listingDetailView.setVisible(false);
         changeView("/MeetupCreationScreen.fxml");
     }
 
     public void handleMyMeetups(ActionEvent actionEvent) {
         profileView.setVisible(false);
         myMeetupsListView.setVisible(true);
+        listingDetailView.setVisible(false);
         changeView("/MyMeetupsScreen.fxml");
     }
 
     public void handleSavedMeetups(ActionEvent actionEvent) {
         profileView.setVisible(true);
         myMeetupsListView.setVisible(false);
+        listingDetailView.setVisible(false);
         changeView("/SavedMeetupsScreen.fxml");
+    }
+
+    public void handleListingDetail(ActionEvent actionEvent) {
+        HBox parentBox = (HBox) (((Button)actionEvent.getSource()).getParent());
+        HBox listingDetailBox = (HBox) parentBox.getChildren().getLast();
+
+        profileView.setVisible(false);
+        listingDetailView.setVisible(true);
+
+        Label favListingTitle = (Label) listingDetailBox.getChildren().get(0);
+        Label favListingLanguage = (Label) listingDetailBox.getChildren().get(1);
+        Label favListingSize = (Label) listingDetailBox.getChildren().get(2);
+
+        listingDetailTitle.setText( favListingTitle.getText() );
+        listingDetailLanguage.setText( favListingLanguage.getText() );
+        listingDetailSize.setText( favListingSize.getText() );
+    }
+
+    public void handleCalendar(ActionEvent actionEvent) {
+        profileView.setVisible(false);
+        myMeetupsListView.setVisible(false);
     }
 
     public void setProfilePicture(String imagePath) {

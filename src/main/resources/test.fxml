@@ -45,7 +45,7 @@
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
   <children>
-    <SplitPane fx:id="splitPane" dividerPositions="0.25" focusTraversable="true" onMouseDragged="#handleDrag" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="splitPane" dividerPositions="0.25" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane maxWidth="350.0" minWidth="215.0" prefHeight="598.0" prefWidth="298.0" styleClass="sidebar">
           <children>

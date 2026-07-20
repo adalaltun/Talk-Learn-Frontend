@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -25,8 +26,8 @@ public class DiscoveryController {
     public VBox listingBox;
     @FXML private ScrollPane discoveryScrollPane;
 
-    @FXML private VBox filterBox;
-    @FXML private VBox tagBox;
+    @FXML private GridPane filterBox;
+    @FXML private GridPane tagBox;
 
     @FXML private Label placeLabel;
     @FXML private Label titleLabel;

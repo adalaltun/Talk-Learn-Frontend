@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend.">
+    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="added favorite meetups menu with temp meetups">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/SavedMeetupsScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/AccountInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/AccountInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CustomizationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/CustomizationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/AccountInfoScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/AccountInfoScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chatScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chatScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +93,7 @@
   "keyToString": {
     "Application.AppLauncher.executor": "Run",
     "Gradle.Build Talk-Learn.executor": "Run",
-    "Gradle.Talk-Learn [:org.example.AppLauncher.main()].executor": "Run",
+    "Gradle.Talk-Learn [:org.example.AppLauncher.main()].executor": "Debug",
     "Gradle.Talk_Learn [:org.example.AppLauncher.main()].executor": "Run",
     "Gradle.Talk_Learn [:org.example.Main.main()].executor": "Run",
     "Gradle.Talk_Learn [clean].executor": "Run",
@@ -104,6 +106,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sedak/Documents/GitHub/Talk-Learn/src/main/resources",
     "node.js.selected.package.tslint": "(autodetect)",
     "onboarding.tips.debug.path": "/Users/adalaltun/Desktop/Talk_Learn/src/main/java/org/example/Main.java",
     "project.structure.last.edited": "Project",
@@ -118,6 +121,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sedak\Documents\GitHub\Talk-Learn\src\main\resources" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/images/wallpapers" />
       <recent name="$PROJECT_DIR$/src/main/resources/images/profilephotos" />
@@ -283,7 +289,67 @@
     <MESSAGE value="Modified login and register screens to be aligned center." />
     <MESSAGE value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
     <MESSAGE value="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend." />
+    <MESSAGE value="updated DiscoveryScreen and listingApplicationScreen.fxml screen UI." />
+    <MESSAGE value="added favorite meetups menu with temp meetups" />
+    <option name="LAST_COMMIT_MESSAGE" value="added favorite meetups menu with temp meetups" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/SmallListingController.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/HomeController.java</url>
+          <line>307</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/HomeController.java</url>
+          <line>285</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/HomeController.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java</url>
+          <line>133</line>
+          <properties class="org.example.DiscoveryController" method="readAllListings">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/HomeController.java</url>
+          <line>307</line>
+          <properties class="org.example.HomeController">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/HomeController.java</url>
+          <line>281</line>
+          <properties class="org.example.HomeController" method="handleSavedMeetups">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

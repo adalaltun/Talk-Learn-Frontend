@@ -63,7 +63,6 @@
                         <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
-                  <!-- FIXED: Applied internal background styles to match the application canvas dark theme -->
                   <TextArea fx:id="applicationTextField" prefHeight="140.0" promptText="Talk about your application here." style="-fx-control-inner-background: #f5f5f5; -fx-background-color: transparent; -fx-text-box-border: #e0e0e0; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 5;" />
                </children>
             </VBox>

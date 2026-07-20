@@ -6,89 +6,120 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="rootPane" dividerPositions="0.32" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"
-           style="-fx-background-color: transparent; -fx-box-border: transparent;"
-           xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.example.HomeController">
+<SplitPane fx:id="rootPane" dividerPositions="0.32" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-box-border: transparent;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
     <items>
-        <AnchorPane maxWidth="350.0" minWidth="280.0"
-                    style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;">
+        <AnchorPane maxWidth="350.0" minWidth="280.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;">
             <children>
-                <StackPane layoutX="23.0" layoutY="39.0" prefHeight="333.0" prefWidth="240.0"
-                           style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="227.0"
-                           AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="38.0">
+                <StackPane layoutX="23.0" layoutY="39.0" prefHeight="333.0" prefWidth="240.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="227.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="38.0">
                     <children>
-                        <VBox fx:id="profileView" alignment="CENTER" prefWidth="248.0" spacing="10.0"
-                              style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 1); -fx-border-radius: 20; -fx-padding: 20;"
-                              visible="true">
+                  <AnchorPane fx:id="listingDetailView" prefHeight="200.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <Label fx:id="listingDetailTitle" text="ListingTitle" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox layoutX="10.399999618530273" layoutY="50.400001525878906" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Rating">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Language">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Location">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Size">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label fx:id="listingDetailRating" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="listingDetailLanguage" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="listingDetailLocation" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="listingDetailSize" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                        <VBox fx:id="profileView" alignment="CENTER" prefWidth="248.0" spacing="10.0" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 1); -fx-border-radius: 20; -fx-padding: 20;">
                             <children>
                                 <StackPane prefHeight="85.0" prefWidth="85.0">
                                     <children>
-                                        <Circle fx:id="profileCircle" fill="#C7E1FF" radius="50.0" stroke="rgba(224, 224, 224, 0.5)"
-                                                strokeType="INSIDE" strokeWidth="1.8"/>
-                                        <Label fx:id="profileLetterLabel"
-                                               style="-fx-font-size: 32px; -fx-text-fill: #0078fe; -fx-font-weight: bold;"
-                                               text="U"/>
+                                        <Circle fx:id="profileCircle" fill="#C7E1FF" radius="50.0" stroke="rgba(224, 224, 224, 0.5)" strokeType="INSIDE" strokeWidth="1.8" />
+                                        <Label fx:id="profileLetterLabel" style="-fx-font-size: 32px; -fx-text-fill: #0078fe; -fx-font-weight: bold;" text="U" />
                                     </children>
                                 </StackPane>
-                                <Label fx:id="profileName"
-                                       style="-fx-font-weight: bold; -fx-text-fill: #E3F0FC; -fx-font-size: 24px;"
-                                       text="Username"/>
-                                <Label fx:id="profileDate" style="-fx-text-fill: #E3F0FC; -fx-font-size: 16px;"
-                                       text="Account Created"/>
+                                <Label fx:id="profileName" style="-fx-font-weight: bold; -fx-text-fill: #E3F0FC; -fx-font-size: 24px;" text="Username" />
+                                <Label fx:id="profileDate" style="-fx-text-fill: #E3F0FC; -fx-font-size: 16px;" text="Account Created" />
                             </children>
                         </VBox>
-                        <ScrollPane fx:id="myMeetupsListView" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER"
-                                    style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;"
-                                    vbarPolicy="AS_NEEDED" visible="false">
+                        <ScrollPane fx:id="myMeetupsListView" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED" visible="false">
                             <content>
-                                <VBox fx:id="pastMeetups" spacing="18.0"
-                                      style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20;">
+                                <VBox fx:id="pastMeetups" spacing="18.0" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20;">
                                     <padding>
-                                        <Insets bottom="25.0" left="20.0" right="20.0" top="30.0"/>
+                                        <Insets bottom="25.0" left="20.0" right="20.0" top="30.0" />
                                     </padding>
                                     <children>
-                                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"
-                                               text="My Meetups"/>
+                                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="My Meetups" />
                                         <VBox spacing="8.0">
                                             <children>
-                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;"
-                                                       text="PLANNED"/>
+                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;" text="PLANNED" />
                                                 <VBox fx:id="plannedMeetupsContainer" spacing="8.0">
                                                     <children>
-                                                        <Button maxWidth="10000" mnemonicParsing="false"
-                                                                onAction="#handlePlannedMeetupClick"
-                                                                style="-fx-background-color: #e3f2fd; -fx-background-radius: 10; -fx-text-fill: #0078fe; -fx-font-weight: bold; -fx-padding: 8; -fx-cursor: hand;"
-                                                                text="Meet-up"/>
+                                                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handlePlannedMeetupClick" style="-fx-background-color: #e3f2fd; -fx-background-radius: 10; -fx-text-fill: #0078fe; -fx-font-weight: bold; -fx-padding: 8; -fx-cursor: hand;" text="Meet-up" />
                                                     </children>
                                                 </VBox>
                                             </children>
                                         </VBox>
                                         <VBox spacing="8.0">
                                             <children>
-                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;"
-                                                       text="PAST"/>
+                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: white;" text="PAST" />
                                                 <VBox fx:id="pastMeetupsContainer" spacing="8.0">
                                                     <children>
-                                                        <Button maxWidth="10000" mnemonicParsing="false"
-                                                                onAction="#handleOldMeetupClick"
-                                                                style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;"
-                                                                text="Pizza Night"/>
-                                                        <Button maxWidth="10000" mnemonicParsing="false"
-                                                                onAction="#handleOldMeetupClick"
-                                                                style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;"
-                                                                text="Jung Talks"/>
+                                                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleOldMeetupClick" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;" text="Pizza Night" />
+                                                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleOldMeetupClick" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;" text="Jung Talks" />
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -99,25 +130,15 @@
                         </ScrollPane>
                     </children>
                 </StackPane>
-                <VBox layoutX="16.0" layoutY="375.0" spacing="8.0"
-                      style="-fx-border-color: #e0e0e0 transparent transparent transparent; -fx-padding: 15 0 0 0; -fx-background-color: transparent;"
-                      AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
+                <VBox layoutX="16.0" layoutY="375.0" spacing="8.0" style="-fx-border-color: #e0e0e0 transparent transparent transparent; -fx-padding: 15 0 0 0; -fx-background-color: transparent;" AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
                     <children>
-                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleCreateMeetup"
-                                prefHeight="38.0"
-                                style="-fx-background-color: #0078fe; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"
-                                text="+ Create new meetup">
+                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleCreateMeetup" prefHeight="38.0" style="-fx-background-color: #0078fe; -fx-background-radius: 10; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Create new meetup">
                             <font>
-                                <Font size="13.0"/>
+                                <Font size="13.0" />
                             </font>
                         </Button>
-                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleMyMeetups" prefHeight="38.0"
-                                style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;"
-                                text="My Meetups"/>
-                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleSavedMeetups"
-                                prefHeight="38.0"
-                                style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;"
-                                text="Favourites"/>
+                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleMyMeetups" prefHeight="38.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="My Meetups" />
+                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleSavedMeetups" prefHeight="38.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Favourites" />
                     </children>
                 </VBox>
                 <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -134,12 +155,12 @@
                             <children>
                                 <Label text="Talk &amp; Learn" textFill="black">
                                     <font>
-                                        <Font name="System Bold" size="28.0"/>
+                                        <Font name="System Bold" size="28.0" />
                                     </font>
                                 </Label>
                                 <Label text="Welcome to the ultimate language exchange platform!" textFill="#4d4d4d">
                                     <font>
-                                        <Font name="System Bold" size="14.0"/>
+                                        <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -153,7 +174,7 @@
                                     <children>
                                         <Label fx:id="calendarMonthYearLabel" text="Month Year" textFill="#1a1a1a">
                                             <font>
-                                                <Font name="System Bold" size="20.0"/>
+                                                <Font name="System Bold" size="20.0" />
                                             </font>
                                         </Label>
                                         <Region HBox.hgrow="ALWAYS" />
