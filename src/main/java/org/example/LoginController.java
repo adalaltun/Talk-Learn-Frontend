@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,12 +24,13 @@ public class LoginController {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (username.isEmpty()) {
-            Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Username");
+        if (username.isEmpty() || password.isEmpty()) {
+            Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please fill all fields");
             return;
         }
-        if (password.isEmpty()) {
-            Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Password");
+
+        if (username.length() > 16 || password.length() > 20) {
+            Main.displayAlert(Alert.AlertType.ERROR, "Security Warning", "Input length exceeded boundaries");
             return;
         }
 
@@ -48,32 +48,31 @@ public class LoginController {
 
             if (response.statusCode() == 200) {
                 Main.loggedInUser = username;
-
                 String body = response.body();
-                if (body != null && body.contains("creationDate")) {
-                    String[] parts = body.split("creationDate\":\"");
-                    if (parts.length > 1) {
-                        Main.accountCreationDate = parts[1].split("\"")[0];
-                    }
-                } else {
-                    Main.accountCreationDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                if (body != null && body.contains("selectedAvatar")) {
+                    String avatar = body.split("selectedAvatar\":\"")[1].split("\"")[0];
+                    Main.selectedAvatar = avatar.isEmpty() ? null : avatar;
+                }
+                if (body != null && body.contains("selectedWallpaper")) {
+                    String wallpaper = body.split("selectedWallpaper\":\"")[1].split("\"")[0];
+                    Main.selectedWallpaper = wallpaper.isEmpty() ? null : wallpaper;
                 }
 
-                Platform.runLater(() -> {
-                    Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Logged In!");
+                Main.accountCreationDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-                    if (Main.homeController != null) {
-                        Main.homeController.refreshPage();
-                    }
-                    if (Main.leaderboardController != null) {
-                        Main.leaderboardController.refreshData();
-                    }
-                    Main.changeMenu(Main.homeMenu);
-                });
+                Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Logged In!");
+
+                if (Main.homeController != null) {
+                    Main.homeController.refreshPage();
+                }
+                if (Main.leaderboardController != null) {
+                    Main.leaderboardController.refreshData();
+                }
+
+                Main.changeMenu(Main.homeMenu);
             } else {
-                Platform.runLater(() -> {
-                    Main.displayAlert(Alert.AlertType.ERROR, "Error", "Username or password is incorrect!");
-                });
+                Main.displayAlert(Alert.AlertType.ERROR, "Error", "Username or password is incorrect!");
             }
 
         } catch (Exception e) {

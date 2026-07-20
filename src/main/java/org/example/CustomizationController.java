@@ -1,6 +1,5 @@
 package org.example;
 
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,7 +8,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.effect.ColorAdjust;
-
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -145,6 +143,8 @@ public class CustomizationController implements Initializable, ProfileUpdatable 
         if (Main.settingsController != null) {
             Main.settingsController.refreshWallpaperAndProfile();
         }
+
+        saveCustomizationToDatabase();
     }
 
     private void handleAvatarSelection(String imagePath, Circle targetCircle) {
@@ -157,6 +157,8 @@ public class CustomizationController implements Initializable, ProfileUpdatable 
         if (Main.settingsController != null) {
             Main.settingsController.refreshWallpaperAndProfile();
         }
+
+        saveCustomizationToDatabase();
     }
 
     private void loadAvatarImage(String imagePath, Circle targetCircle) {
@@ -207,6 +209,33 @@ public class CustomizationController implements Initializable, ProfileUpdatable 
             button.setOnMousePressed(e -> button.setEffect(clickDarken));
             button.setOnMouseReleased(e -> button.setEffect(null));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveCustomizationToDatabase() {
+        String avatar = Main.selectedAvatar != null ? Main.selectedAvatar : "";
+        String wallpaper = Main.selectedWallpaper != null ? Main.selectedWallpaper : "";
+
+        String jsonBody = String.format(
+                "{\"username\":\"%s\", \"selectedAvatar\":\"%s\", \"selectedWallpaper\":\"%s\"}",
+                Main.loggedInUser, avatar, wallpaper
+        );
+
+        try {
+            java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
+            java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
+                    .uri(java.net.URI.create("http://localhost:8080/api/auth/update-customization"))
+                    .header("Content-Type", "application/json")
+                    .PUT(java.net.http.HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+
+            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                System.out.println("Customization save failed: " + response.body());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
