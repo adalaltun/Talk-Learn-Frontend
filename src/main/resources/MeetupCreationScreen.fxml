@@ -2,7 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -12,8 +11,6 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -31,11 +28,9 @@
 
                 <HBox spacing="20.0">
                     <children>
-                        <TextField fx:id="meetupTitleInput" prefHeight="40.0" promptText="Title" HBox.hgrow="ALWAYS"
-                                   style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" />
+                        <TextField fx:id="meetupTitleInput" prefHeight="40.0" promptText="Title" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 15 0 15;" HBox.hgrow="ALWAYS" />
 
-                        <ComboBox fx:id="languageComboBox" prefHeight="40.0" prefWidth="200.0" promptText="Language" HBox.hgrow="ALWAYS"
-                                  style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 5 0 5;">
+                        <ComboBox fx:id="languageComboBox" prefHeight="40.0" prefWidth="200.0" promptText="Language" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-padding: 0 5 0 5;" HBox.hgrow="ALWAYS">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="English" />
@@ -49,8 +44,7 @@
                     </children>
                 </HBox>
 
-                <TextArea fx:id="meetupDescriptionInput" prefHeight="140.0" promptText="Describe what you will talk about..." wrapText="true"
-                          style="-fx-control-inner-background: #f5f5f5; -fx-background-color: transparent; -fx-text-box-border: #e0e0e0; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 5;" />
+                <TextArea fx:id="meetupDescriptionInput" prefHeight="140.0" promptText="Describe what you will talk about..." style="-fx-control-inner-background: #f5f5f5; -fx-background-color: transparent; -fx-text-box-border: #e0e0e0; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 5;" wrapText="true" />
 
                 <VBox spacing="12.0">
                     <children>
@@ -65,14 +59,13 @@
                                     <ToggleGroup fx:id="locationToggleGroup" />
                                 </fx:define>
 
-                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" text="Library" toggleGroup="$locationToggleGroup"
-                                              style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" />
-                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" text="Bilka" toggleGroup="$locationToggleGroup"
-                                              style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" />
-                                <ToggleButton textAlignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" text="S Pool" toggleGroup="$locationToggleGroup" wrapText="true"
-                                              style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" />
-                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" text="Cafeteria" toggleGroup="$locationToggleGroup"
-                                              style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" />
+                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" style="-fx-background-color: #f5f5f5; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" text="Library">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="locationToggleGroup" />
+                           </toggleGroup></ToggleButton>
+                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" style="-fx-background-color: #f5f5f5; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" text="Bilka" toggleGroup="$locationToggleGroup" />
+                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-font-weight: bold; -fx-cursor: hand;" text="S Pool" textAlignment="CENTER" toggleGroup="$locationToggleGroup" wrapText="true" />
+                                <ToggleButton mnemonicParsing="false" prefHeight="45.0" prefWidth="100.0" style="-fx-background-color: #f5f5f5; -fx-font-weight: bold; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand;" text="Cafeteria" toggleGroup="$locationToggleGroup" />
                             </children>
                         </HBox>
                     </children>
@@ -87,12 +80,9 @@
 
                         <HBox spacing="12.0">
                             <children>
-                                <ToggleButton fx:id="tagGameNight" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Game Night"
-                                              style="-fx-background-color: #e3f2fd; -fx-text-fill: #0078fe; -fx-background-radius: 15; -fx-font-weight: bold; -fx-cursor: hand;" />
-                                <ToggleButton fx:id="tagCooking" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Cooking"
-                                              style="-fx-background-color: #e3f2fd; -fx-text-fill: #0078fe; -fx-background-radius: 15; -fx-font-weight: bold; -fx-cursor: hand;" />
-                                <ToggleButton fx:id="tagSports" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" text="Sports"
-                                              style="-fx-background-color: #e3f2fd; -fx-text-fill: #0078fe; -fx-background-radius: 15; -fx-font-weight: bold; -fx-cursor: hand;" />
+                                <ToggleButton fx:id="tagGameNight" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #e3f2fd; -fx-text-fill: #0078fe; -fx-background-radius: 15; -fx-font-weight: bold; -fx-cursor: hand;" text="Game Night" />
+                                <ToggleButton fx:id="tagCooking" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #e3f2fd; -fx-text-fill: #0078fe; -fx-background-radius: 15; -fx-font-weight: bold; -fx-cursor: hand;" text="Cooking" />
+                                <ToggleButton fx:id="tagSports" mnemonicParsing="false" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #e3f2fd; -fx-text-fill: #0078fe; -fx-background-radius: 15; -fx-font-weight: bold; -fx-cursor: hand;" text="Sports" />
                             </children>
                         </HBox>
                     </children>
@@ -101,12 +91,7 @@
             </children>
         </VBox>
 
-        <Button mnemonicParsing="false" onAction="#handlePublishMeetup"
-                prefHeight="40.0" prefWidth="140.0"
-                style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"
-                text="Create"
-                AnchorPane.bottomAnchor="25.0"
-                AnchorPane.rightAnchor="25.0">
+        <Button mnemonicParsing="false" onAction="#handlePublishMeetup" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="Create" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0">
             <font>
                 <Font size="14.0" />
             </font></Button>

@@ -41,6 +41,15 @@
     -fx-alignment: center-left;
 }
 
+.filter-button {
+    -fx-background-color: #0078fe;
+    -fx-text-fill: white;
+    -fx-border-radius: 20;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-border-color: #ccccc;
+}
+
 .nav-button {
     -fx-background-color: #0078fe;
     -fx-background-radius: 20px;

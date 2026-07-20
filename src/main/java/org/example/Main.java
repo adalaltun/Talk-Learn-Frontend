@@ -55,6 +55,7 @@ public class Main extends Application {
     public static CustomizationController customizationController;
     public static SettingsController settingsController;
     public static ListingApplyController listingApplyController;
+    public static DiscoveryController discoveryController;
 
     public static Parent loadFXML(String fxmlname) {
         Parent root = null;
@@ -160,7 +161,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
 
         //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-        startingScene = loadFXML("loginScreen");
+        startingScene = loadFXML("discoveryScreen");
         //fxmlname'nin sonunda .fxml olmasına gerek yok.
         homeMenu = loadFXML("homeScreen");
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -214,6 +215,8 @@ public class Main extends Application {
             accountInfoController.refreshWallpaperAndProfile();
         } else if (root == customizationScreen && customizationController != null) {
             customizationController.refreshWallpaperAndProfile();
+        } else if (root == discoveryMenu && discoveryController != null) {
+            discoveryController.searchListings(new ArrayList<String>(), "");
         }
     }
 }

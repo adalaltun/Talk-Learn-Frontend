@@ -1,13 +1,13 @@
 package org.example;
 
+import com.sun.javafx.scene.control.behavior.ToggleButtonBehavior;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -25,8 +25,8 @@ public class DiscoveryController {
     public VBox listingBox;
     @FXML private ScrollPane discoveryScrollPane;
 
-    @FXML private VBox filterBox;
-    @FXML private VBox tagBox;
+    @FXML private GridPane filterBox;
+    @FXML private GridPane tagBox;
 
     @FXML private Label placeLabel;
     @FXML private Label titleLabel;
@@ -66,41 +66,61 @@ public class DiscoveryController {
 
     @FXML
     public void handleSearchListings(ActionEvent actionEvent) {
-        List<String> allFilters = new ArrayList<>();
+        String filter = "all";
+        List<String> tags = new ArrayList<>();
+        List<String> comboFilters = new ArrayList<>();
+        List<String> toggleFilters = new ArrayList<>();
 
         // collecting selected tags and filters
         for (int i = 0; i < tagBox.getChildren().size(); i++) {
-            RadioButton tagBtn = (RadioButton) tagBox.getChildren().get(i);
+            ToggleButton tagBtn = (ToggleButton) tagBox.getChildren().get(i);
             if (tagBtn.isSelected())
-                allFilters.add(tagBtn.getText());
+                tags.add(tagBtn.getText());
         }
         for (int i = 0; i < filterBox.getChildren().size(); i++) {
-            RadioButton filterBtn = (RadioButton) filterBox.getChildren().get(i);
-            if (filterBtn.isSelected())
-                allFilters.add(filterBtn.getText());
+            Node filterNode = filterBox.getChildren().get(i);
+
+            if (((ToggleButton) filterNode).isSelected())
+                filter = ((ToggleButton) filterNode).getText();
         }
-        searchListings(allFilters);
+
+        addReadListings( searchListings(tags, filter) );
     }
-    // WIP
-    private List<String> searchListings(List<String> params) {
+
+    public static List<HashMap<String, String>> searchListings(List<String> tags, String filter) {
+        List<HashMap<String, String>> searchResult = new ArrayList<>();
 
         try {
-            String FINAL_SEARCH_BACKEND_URL = SEARCH_BACKEND_URL;
+            if (!tags.isEmpty()) {
 
-            HttpResponse<String> response = Main.sendHttpGET(SEARCH_BACKEND_URL);
+                String tagsURL = "tags=" + tags.getFirst() + ",";
+                for (int i = 1; i < tags.size(); i++)
+                    tagsURL += "," + tags.get(i);
 
-            if (response.statusCode() == 200) {
-                Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listing add success!");
-                System.out.println("Successfully sent to " + SEARCH_BACKEND_URL + "\n");
-            } else {
-                Main.displayAlert(Alert.AlertType.ERROR, "Addition failed.", response.body());
+                String FINAL_SEARCH_BACKEND_URL = SEARCH_BACKEND_URL + "?" + tagsURL + "&filter=" + filter;
+
+                // filter can be "A-Z", "Z-A", "HIGHEST RANK", "LOWEST RANK"
+                // last element in URL is "filter".
+                HttpResponse<String> response = Main.sendHttpGET(FINAL_SEARCH_BACKEND_URL);
+
+                if (response.statusCode() == 200) {
+                    Main.displayAlert(Alert.AlertType.INFORMATION, "Success", "Listing add success!");
+                    System.out.println("Successfully sent to " + FINAL_SEARCH_BACKEND_URL + "\n");
+
+                    System.out.println("-- searchListings response.body():\n" + response.body());
+                    System.out.println("-- Main.listFromJSON( response.body() ):\n" + Main.listFromJSON(response.body()));
+
+                    searchResult = Main.listFromJSON(response.body());
+
+                } else {
+                    Main.displayAlert(Alert.AlertType.ERROR, "Search failed.", response.body());
+                }
             }
 
         } catch (Exception ex) {
             System.out.println("Could not connect to the database.");
         }
-
-        return new ArrayList<>();
+        return searchResult;
     }
 
     @FXML
@@ -162,5 +182,16 @@ public class DiscoveryController {
 
             listingBox.getChildren().add(listingPane);
         }
+    }
+
+    @FXML
+    private void handleToggleColor(ActionEvent e) {
+        ToggleButton btn = (ToggleButton) e.getSource();
+        System.out.println(btn.getText() + " IS SELECTED.");
+
+//        if (btn.isSelected())
+//            btn.getStyleClass().add("filter-button");
+//        else
+//            btn.getStyleClass().remove("filter-button");
     }
 }
