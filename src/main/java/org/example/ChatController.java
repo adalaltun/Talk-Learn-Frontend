@@ -182,71 +182,7 @@ public class ChatController {
         networkThread.start();
     }
 
-    @FXML
-    private void handleAddPeople() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Start New Conversation");
-        dialog.setHeaderText("Add Someone to Chat");
-        dialog.setContentText("Please enter the username of the person:");
 
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            String cleanPartnerName = result.get().trim();
-            if (!cleanPartnerName.isEmpty()) {
-                if (cleanPartnerName.equalsIgnoreCase(currentUser)) {
-                    Main.displayAlert(Alert.AlertType.WARNING, "Warning", "You cannot start a chat with yourself!");
-                    return;
-                }
-
-                if (isAlreadyExists(cleanPartnerName)) {
-                    Main.displayAlert(Alert.AlertType.INFORMATION, "Already Exists", "You already have an open conversation with this person. Please click their name in the sidebar.");
-                    return;
-                }
-
-                String USER_CHECK_URL = "http://localhost:8080/api/auth/exists/";
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(USER_CHECK_URL + cleanPartnerName))
-                        .GET()
-                        .build();
-
-                Thread checkThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (response.statusCode() == 200) {
-                                        if (response.body().trim().equalsIgnoreCase("true")) {
-                                            String yeniOdaId = "room_" + java.util.UUID.randomUUID().toString();
-                                            createSidebarContact(yeniOdaId, cleanPartnerName);
-                                            startPrivateChat(yeniOdaId, cleanPartnerName);
-                                        } else {
-                                            Main.displayAlert(Alert.AlertType.ERROR, "User Not Found",
-                                                    "The username \"" + cleanPartnerName + "\" is not registered in our database!");
-                                        }
-                                    } else {
-                                        Main.displayAlert(Alert.AlertType.ERROR, "Server Error", "Failed to verify user.");
-                                    }
-                                }
-                            });
-                        } catch (Exception ex) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Main.displayAlert(Alert.AlertType.ERROR, "Connection Error", "Could not connect to server.");
-                                }
-                            });
-                        }
-                    }
-                });
-                checkThread.setDaemon(true);
-                checkThread.start();
-            }
-        }
-    }
 
     @FXML
     private void handleWithdraw() {
@@ -595,21 +531,9 @@ public class ChatController {
                         String sender = parts[1];
                         String content = parts[2];
 
-                        if (currentUser != null && messageRoomId.contains(currentUser.toLowerCase())) {
 
-                            if (!sender.equalsIgnoreCase(currentUser)) {
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (!isAlreadyExists(sender)) {
-                                            createSidebarContact(messageRoomId, sender);
-                                            if (currentRoomId == null) {
-                                                startPrivateChat(messageRoomId, sender);
-                                            }
-                                        }
-                                    }
-                                });
-                            }
+
+                        if (currentUser != null) {
 
                             if (messageRoomId.equals(currentRoomId)) {
                                 Platform.runLater(new Runnable() {
