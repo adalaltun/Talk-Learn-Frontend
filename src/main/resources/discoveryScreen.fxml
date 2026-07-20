@@ -1,52 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
-
-<SplitPane fx:id="discoveryScreen" dividerPositions="0.32" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.DiscoveryController">
+<SplitPane fx:id="discoveryScreen" dividerPositions="0.32" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.DiscoveryController">
    <items>
-      <AnchorPane maxWidth="450.0" minWidth="280.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;">
+      <AnchorPane maxWidth="350.0" minWidth="280.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;">
          <children>
             <Label layoutX="10.0" layoutY="12.0" styleClass="menu-text" text="Filters" textFill="#1a1a1a" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="12.0">
                <font>
@@ -111,22 +72,17 @@
             </VBox>
             <VBox prefHeight="106.0" prefWidth="210.0" spacing="5.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-color: transparent;" AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
                <children>
-                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleDebugAddListing" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #33333; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Listing (DEBUG)" />
-                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleReadAllListings" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #33333; -fx-font-weight: bold; -fx-cursor: hand;" text="Read All From DB (DEBUG)" />
-                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleSearchListings" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #33333; -fx-font-weight: bold; -fx-cursor: hand;" text="Search" />
+                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleDebugAddListing" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Listing (DEBUG)" />
+                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleReadAllListings" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Read All From DB (DEBUG)" />
+                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleSearchListings" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Search" />
                </children>
             </VBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" spacing="12.0" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0 transparent transparent transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#handleMain" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #0078fe; -fx-background-radius: 20; -fx-border-color: #0078fe; -fx-border-radius: 20; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="H" />
-                  <Button mnemonicParsing="false" onAction="#handleDiscovery" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="D" />
-                  <Button mnemonicParsing="false" onAction="#handleChat" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="C" />
-                  <Button mnemonicParsing="false" onAction="#handleLeaderboard" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="L" />
-                  <Button mnemonicParsing="false" onAction="#handleSettings" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-font-weight: bold; -fx-cursor: hand;" text="S" />
-               </children>
-            </HBox>
+
+            <!-- Standardized Navigation Bar Include -->
+            <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
+
       <ScrollPane fx:id="discoveryScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minHeight="0.0" minWidth="450.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;" vbarPolicy="ALWAYS">
          <content>
             <AnchorPane id="Content" maxHeight="10000.0" minHeight="-1.0" minWidth="-1.0" styleClass="content-area">
@@ -136,7 +92,7 @@
                         <Font size="18.0" fx:id="x1" />
                      </font>
                      <textFill>
-                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                        <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
                      </textFill>
                   </Label>
                   <VBox fx:id="listingBox" layoutX="5.0" layoutY="43.0" spacing="3.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-color: transparent #e0e0e0 transparent transparent;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">

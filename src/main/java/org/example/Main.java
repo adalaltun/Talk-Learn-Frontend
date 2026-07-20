@@ -175,7 +175,7 @@ public class Main extends Application {
         settingsScreen = loadFXML("settingsScreen");
 
         //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-        startingScene = discoveryMenu;
+        //startingScene = discoveryMenu;
         //fxmlname'nin sonunda .fxml olmasına gerek yok.
 
         scene = new Scene(startingScene, 800, 620);

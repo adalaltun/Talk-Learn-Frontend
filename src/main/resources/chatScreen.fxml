@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- ... Keep identical structural root imports intact ... -->
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -41,9 +39,9 @@
                         </ScrollPane>
                     </center>
 
-                    <!-- Spacing gap updated here to 60.0 to match the home screen footer dock -->
+                    <!-- Navigation Bar Include -->
                     <bottom>
-                        <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <fx:include fx:id="navMenu" source="navigationMenu.fxml" />
                     </bottom>
                 </BorderPane>
 
@@ -74,30 +72,30 @@
                                     <padding><Insets bottom="40.0" left="40.0" right="40.0" top="40.0" /></padding>
                                     <children>
                                         <Circle fill="#e3f2fd" radius="50.0" stroke="#90caf9" strokeType="INSIDE" strokeWidth="2.0" />
-                                      <ScrollPane fx:id="chatScrollArea" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: white; -fx-background: white; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED">
-                                          <content>
-                                              <VBox fx:id="chatMessageArea" spacing="10.0" style="-fx-background-color: white;">
-                                                  <padding>
-                                          <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-                                       </padding>
-                                                  <children>
-                                                      <VBox alignment="TOP_CENTER" style="-fx-background-color: white;">
-                                                          <padding>
-                                                <Insets bottom="20.0" top="10.0" />
-                                             </padding>
-                                                          <Label alignment="CENTER" prefWidth="450.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10; -fx-border-color: #cccccc; -fx-border-radius: 10;" text="Start the conversation and get to know each other.&#10;Meeting topic: Football" textAlignment="CENTER" textFill="#4d4d4d">
-                                                              <padding>
-                                                   <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-                                                </padding>
-                                                              <font>
-                                                   <Font name="System Italic" size="14.0" />
-                                                </font>
-                                                          </Label>
-                                                      </VBox>
-                                                  </children>
-                                              </VBox>
-                                          </content>
-                                      </ScrollPane>
+                                        <ScrollPane fx:id="chatScrollArea" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: white; -fx-background: white; -fx-border-color: transparent;" vbarPolicy="AS_NEEDED">
+                                            <content>
+                                                <VBox fx:id="chatMessageArea" spacing="10.0" style="-fx-background-color: white;">
+                                                    <padding>
+                                                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                                    </padding>
+                                                    <children>
+                                                        <VBox alignment="TOP_CENTER" style="-fx-background-color: white;">
+                                                            <padding>
+                                                                <Insets bottom="20.0" top="10.0" />
+                                                            </padding>
+                                                            <Label alignment="CENTER" prefWidth="450.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 10; -fx-border-color: #cccccc; -fx-border-radius: 10;" text="Start the conversation and get to know each other.&#10;Meeting topic: Football" textAlignment="CENTER" textFill="#4d4d4d">
+                                                                <padding>
+                                                                    <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                                                                </padding>
+                                                                <font>
+                                                                    <Font name="System Italic" size="14.0" />
+                                                                </font>
+                                                            </Label>
+                                                        </VBox>
+                                                    </children>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
                                         <Label text="Welcome to Talk &amp; Learn!" textFill="#1a1a1a">
                                             <font><Font name="System Bold" size="24.0" /></font>
                                         </Label>
