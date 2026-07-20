@@ -63,6 +63,8 @@ public class ChatController {
 
     @FXML
     public void initialize() {
+        if (navMenuController != null) navMenuController.setActive("chat");
+
         chatMessageArea.getChildren().clear();
 
         if (chatListContainer != null) {
@@ -183,6 +185,36 @@ public class ChatController {
     }
 
 
+    public void handleGoHome(ActionEvent actionEvent){
+        Main.changeMenu(Main.homeMenu);
+    }
+
+    @FXML
+    private void handleAddPeople() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Start New Conversation");
+        dialog.setHeaderText("Add Someone to Chat");
+        dialog.setContentText("Please enter the username of the person:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String cleanPartnerName = result.get().trim();
+            if (!cleanPartnerName.isEmpty()) {
+                if (cleanPartnerName.equalsIgnoreCase(currentUser)) {
+                    Main.displayAlert(Alert.AlertType.WARNING, "Warning", "You cannot start a chat with yourself!");
+                    return;
+                }
+
+                if (isAlreadyExists(cleanPartnerName)) {
+                    Main.displayAlert(Alert.AlertType.INFORMATION, "Already Exists", "You already have an open conversation with this person. Please click their name in the sidebar.");
+                    return;
+                }
+
+
+    @FXML
+    public void handleGoScoreBoard(ActionEvent actionEvent){
+        Main.changeMenu(Main.leaderboardMenu);
+    }
 
     @FXML
     private void handleWithdraw() {
@@ -682,9 +714,9 @@ public class ChatController {
         }
     }
 
-    public void handleGoHome(ActionEvent actionEvent){
-        Main.changeMenu(Main.homeMenu);
-    }
+//    public void handleGoHome(ActionEvent actionEvent){
+//        Main.changeMenu(Main.homeMenu);
+//    }
 
     public void handleGoDiscovery(ActionEvent actionEvent){
         Main.changeMenu(Main.discoveryMenu);
@@ -696,5 +728,9 @@ public class ChatController {
             Main.leaderboardController.refreshData();
         }
         Main.changeMenu(Main.leaderboardScreen);
+    }
+
+    public void handleGoSettings(ActionEvent actionEvent) {
+        Main.changeMenu(Main.settingsScreen);
     }
 }

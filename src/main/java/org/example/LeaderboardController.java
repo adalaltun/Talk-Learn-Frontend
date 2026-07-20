@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -35,6 +36,7 @@ public class LeaderboardController {
     private VBox fairRankingContainer;
     @FXML
     private VBox highestRatingContainer;
+    @FXML private NavigationController navMenuController;
 
     private final String BACKEND_URL = "http://localhost:8080/api/scoreboard";
     private final HttpClient httpClient = HttpClient.newHttpClient();
@@ -42,10 +44,13 @@ public class LeaderboardController {
 
     @FXML
     public void initialize() {
+        if (navMenuController != null) navMenuController.setActive("leaderboard");
         ranksContainer.getChildren().clear();
         mostMeetupsContainer.getChildren().clear();
         fairRankingContainer.getChildren().clear();
         highestRatingContainer.getChildren().clear();
+
+        refreshData();
     }
 
     private void loadScoreboardData() {
@@ -54,102 +59,125 @@ public class LeaderboardController {
                 .GET()
                 .build();
 
-        try {
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() == 200) {
-                parseAndPopulate(response.body().trim());
+        Thread networkThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (response.statusCode() == 200) {
+                                parseAndPopulate(response.body().trim());
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        });
+        networkThread.setDaemon(true);
+        networkThread.start();
+    }
+
+    private void parseAndPopulate(String json) {
+        try {
+            tools.jackson.databind.json.JsonMapper mapper = tools.jackson.databind.json.JsonMapper.builder().build();
+            java.util.Map<String, Object> responseMap = mapper.readValue(json, new tools.jackson.core.type.TypeReference<java.util.Map<String, Object>>() {});
+
+            int meetupsCreated = 0;
+            int totalReviews = 0;
+            double rating = 0.0;
+
+            if (responseMap.containsKey("meetupsCreated")) {
+                meetupsCreated = ((Number) responseMap.get("meetupsCreated")).intValue();
+            } else if (responseMap.containsKey("meetups_created")) {
+                meetupsCreated = ((Number) responseMap.get("meetups_created")).intValue();
+            }
+
+            if (responseMap.containsKey("totalReviews")) {
+                totalReviews = ((Number) responseMap.get("totalReviews")).intValue();
+            } else if (responseMap.containsKey("total_reviews")) {
+                totalReviews = ((Number) responseMap.get("total_reviews")).intValue();
+            }
+
+            if (responseMap.containsKey("rating")) {
+                rating = ((Number) responseMap.get("rating")).doubleValue();
+            }
+
+            meetupsCreatedLabel.setText(String.valueOf(meetupsCreated));
+            totalReviewsLabel.setText(String.valueOf(totalReviews));
+            ratingLabel.setText(rating + " / 5.0");
+
+            java.util.List<?> rankList = (java.util.List<?>) responseMap.get("rank");
+            int[] ranks = new int[]{0, 0, 0};
+            if (rankList != null && rankList.size() == 3) {
+                ranks[0] = ((Number) rankList.get(0)).intValue();
+                ranks[1] = ((Number) rankList.get(1)).intValue();
+                ranks[2] = ((Number) rankList.get(2)).intValue();
+            }
+            buildRankCards(ranks);
+
+            populateColumnFromJsonList(mostMeetupsContainer, (java.util.List<java.util.Map<String, Object>>) responseMap.get("mostMeetups"), false);
+            populateColumnFromJsonList(fairRankingContainer, (java.util.List<java.util.Map<String, Object>>) responseMap.get("fairRanking"), true);
+            populateColumnFromJsonList(highestRatingContainer, (java.util.List<java.util.Map<String, Object>>) responseMap.get("highestRating"), false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void parseAndPopulate(String json) {
-        int meetupsCreated = 0;
-        int totalReviews = 0;
-        double rating = 0.0;
-        int[] ranks = new int[]{0, 0, 0};
+    private void populateColumnFromJsonList(VBox container, java.util.List<java.util.Map<String, Object>> list, boolean isFairColumn) {
+        container.getChildren().clear();
+        container.setSpacing(30);
 
-        String mostMeetupsRaw = "";
-        String fairRankingRaw = "";
-        String highestRatingRaw = "";
+        if (list == null) return;
 
-        String cleanJson = json.trim();
-        if (cleanJson.startsWith("{")) cleanJson = cleanJson.substring(1);
-        if (cleanJson.endsWith("}")) cleanJson = cleanJson.substring(0, cleanJson.length() - 1);
+        int index = 1;
+        for (java.util.Map<String, Object> entry : list) {
+            String username = (String) entry.get("username");
+            double score = 0.0;
 
-        int idx = 0;
-        while (idx < cleanJson.length()) {
-            int keyStart = cleanJson.indexOf("\"", idx);
-            if (keyStart == -1) break;
-            int keyEnd = cleanJson.indexOf("\"", keyStart + 1);
-            if (keyEnd == -1) break;
-
-            String key = cleanJson.substring(keyStart + 1, keyEnd).trim();
-
-            int colonIdx = cleanJson.indexOf(":", keyEnd);
-            if (colonIdx == -1) break;
-
-            int valueStart = colonIdx + 1;
-            while (valueStart < cleanJson.length() && Character.isWhitespace(cleanJson.charAt(valueStart))) {
-                valueStart++;
+            if (entry.get("score") != null) {
+                score = ((Number) entry.get("score")).doubleValue();
             }
 
-            int valueEnd = valueStart;
-            if (cleanJson.charAt(valueStart) == '[') {
-                int depth = 0;
-                while (valueEnd < cleanJson.length()) {
-                    char c = cleanJson.charAt(valueEnd);
-                    if (c == '[') depth++;
-                    else if (c == ']') {
-                        depth--;
-                        if (depth == 0) {
-                            valueEnd++;
-                            break;
-                        }
-                    }
-                    valueEnd++;
-                }
+            HBox card = new HBox();
+            card.setAlignment(Pos.CENTER_LEFT);
+            card.setPadding(new Insets(15, 15, 15, 15));
+            card.setSpacing(10);
+
+            if (isFairColumn) {
+                card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #90caf9; -fx-border-radius: 10;");
             } else {
-                while (valueEnd < cleanJson.length()) {
-                    char c = cleanJson.charAt(valueEnd);
-                    if (c == ',' || c == '}') {
-                        break;
-                    }
-                    valueEnd++;
-                }
+                card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;");
             }
 
-            String value = cleanJson.substring(valueStart, valueEnd).trim();
+            VBox.setVgrow(card, Priority.ALWAYS);
+            card.setMaxHeight(Double.MAX_VALUE);
 
-            if (key.equals("meetupsCreated")) meetupsCreated = Integer.parseInt(value);
-            else if (key.equals("totalReviews")) totalReviews = Integer.parseInt(value);
-            else if (key.equals("rating")) rating = Double.parseDouble(value);
-            else if (key.equals("rank")) {
-                String cleanArray = value.replace("[", "").replace("]", "").trim();
-                String[] rankTokens = cleanArray.split(",");
-                if (rankTokens.length == 3) {
-                    ranks[0] = Integer.parseInt(rankTokens[0].trim());
-                    ranks[1] = Integer.parseInt(rankTokens[1].trim());
-                    ranks[2] = Integer.parseInt(rankTokens[2].trim());
-                }
-            }
-            else if (key.equals("mostMeetups")) mostMeetupsRaw = value;
-            else if (key.equals("fairRanking")) fairRankingRaw = value;
-            else if (key.equals("highestRating")) highestRatingRaw = value;
+            Label indexLabel = new Label(index + ".");
+            indexLabel.setFont(new Font("System Bold", 14));
+            indexLabel.setTextFill(isFairColumn ? Color.web("#0078fe") : Color.web("#4d4d4d"));
 
-            idx = valueEnd + 1;
+            Label nameLabel = new Label(username);
+            nameLabel.setFont(new Font(14));
+            nameLabel.setTextFill(Color.BLACK);
+
+            String scoreStr = (container == mostMeetupsContainer) ? String.valueOf((int) score) : String.format("%.1f", score);
+
+            Label scoreLabel = new Label(scoreStr);
+            scoreLabel.setFont(new Font("System Bold", 13));
+            scoreLabel.setTextFill(Color.web("#8e8e93"));
+
+            HBox.setHgrow(nameLabel, Priority.ALWAYS);
+            nameLabel.setMaxWidth(Double.MAX_VALUE);
+
+            card.getChildren().addAll(indexLabel, nameLabel, scoreLabel);
+            container.getChildren().add(card);
+            index++;
         }
-
-        meetupsCreatedLabel.setText(String.valueOf(meetupsCreated));
-        totalReviewsLabel.setText(String.valueOf(totalReviews));
-        ratingLabel.setText(rating + " / 5.0");
-
-        buildRankCards(ranks);
-
-        populateColumn(mostMeetupsContainer, parseEntries(mostMeetupsRaw), false);
-        populateColumn(fairRankingContainer, parseEntries(fairRankingRaw), true);
-        populateColumn(highestRatingContainer, parseEntries(highestRatingRaw), false);
     }
 
     private void buildRankCards(int[] ranks) {
@@ -182,101 +210,6 @@ public class LeaderboardController {
         }
     }
 
-    private List<String[]> parseEntries(String arrayRaw) {
-        List<String[]> entries = new ArrayList<>();
-
-        String cleanArray = arrayRaw.trim();
-        if (cleanArray.startsWith("[")) cleanArray = cleanArray.substring(1);
-        if (cleanArray.endsWith("]")) cleanArray = cleanArray.substring(0, cleanArray.length() - 1);
-        cleanArray = cleanArray.trim();
-
-        if (cleanArray.isEmpty()) {
-            return entries;
-        }
-
-        int startPos = 0;
-        while ((startPos = cleanArray.indexOf("{", startPos)) != -1) {
-            int endPos = cleanArray.indexOf("}", startPos);
-            if (endPos == -1) break;
-
-            String obj = cleanArray.substring(startPos + 1, endPos).trim();
-            String[] pairs = obj.split(",");
-            String username = "";
-            String score = "";
-
-            for (String pair : pairs) {
-                String[] kv = pair.split(":", 2);
-                if (kv.length == 2) {
-                    String k = kv[0].replace("\"", "").trim();
-                    String v = kv[1].replace("\"", "").trim();
-                    if (k.equals("username")) {
-                        username = v;
-                    } else if (k.equals("score")) {
-                        score = v;
-                    }
-                }
-            }
-
-            if (!username.isEmpty()) {
-                entries.add(new String[]{username, score});
-            }
-
-            startPos = endPos + 1;
-        }
-
-        return entries;
-    }
-
-    private void populateColumn(VBox container, List<String[]> entries, boolean isFairColumn) {
-        container.getChildren().clear();
-        container.setSpacing(30);
-
-        int index = 1;
-        for (String[] entry : entries) {
-            HBox card = new HBox();
-            card.setAlignment(Pos.CENTER_LEFT);
-            card.setPadding(new Insets(15, 15, 15, 15));
-            card.setSpacing(10);
-
-            if (isFairColumn) {
-                card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #90caf9; -fx-border-radius: 10;");
-            } else {
-                card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;");
-            }
-
-            VBox.setVgrow(card, Priority.ALWAYS);
-            card.setMaxHeight(Double.MAX_VALUE);
-
-            Label indexLabel = new Label(index + ".");
-            indexLabel.setFont(new Font("System Bold", 14));
-            indexLabel.setTextFill(isFairColumn ? Color.web("#0078fe") : Color.web("#4d4d4d"));
-
-            Label nameLabel = new Label(entry[0]);
-            nameLabel.setFont(new Font(14));
-            nameLabel.setTextFill(Color.BLACK);
-
-            String scoreStr = entry[1];
-            if (container == mostMeetupsContainer) {
-                try {
-                    double d = Double.parseDouble(scoreStr);
-                    scoreStr = String.valueOf((int) d);
-                } catch (Exception e) {
-                }
-            }
-
-            Label scoreLabel = new Label(scoreStr);
-            scoreLabel.setFont(new Font("System Bold", 13));
-            scoreLabel.setTextFill(Color.web("#8e8e93"));
-
-            HBox.setHgrow(nameLabel, Priority.ALWAYS);
-            nameLabel.setMaxWidth(Double.MAX_VALUE);
-
-            card.getChildren().addAll(indexLabel, nameLabel, scoreLabel);
-            container.getChildren().add(card);
-            index++;
-        }
-    }
-
     @FXML
     private void handleGoHome(ActionEvent actionEvent) {
         Main.changeMenu(Main.homeMenu);
@@ -293,10 +226,11 @@ public class LeaderboardController {
     }
 
     @FXML
-    private void handleGoSettings(ActionEvent actionEvent) {Main.changeMenu(Main.settingsScreen);}
+    private void handleGoSettings(ActionEvent actionEvent) {
+        Main.changeMenu(Main.settingsScreen);
+    }
 
     public void refreshData() {
-        System.out.println("refresh data");
         currentUser = Main.loggedInUser;
         if (currentUser != null && !currentUser.isEmpty()) {
             loadScoreboardData();

@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,10 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,15 +31,30 @@ public class Main extends Application {
     public static Parent applicationScene;
     public static Parent chatMenu;
     public static Parent leaderboardScreen;
+    public static Parent accountInfoScreen;
+    public static Parent customizationScreen;
     public static Parent settingsScreen;
+
+    public static Parent myMeetupsMenu;
+    public static Parent meetupCreationMenu;
+
+    public static Parent leaderboardMenu;
+    public static Parent settingsMenu;
     public static String loggedInUser = "NoAccount";
     public static String accountCreationDate = "Please Login";
+    public static String selectedWallpaper = null;
+    public static String selectedAvatar = null;
+
     public VBox MainBox;
     public VBox buttonVBox;
 
     private LoginController loginController;
     public static HomeController homeController;
     public static LeaderboardController leaderboardController;
+    public static AccountInfoController accountInfoController;
+    public static CustomizationController customizationController;
+    public static SettingsController settingsController;
+    public static ListingApplyController listingApplyController;
 
     public static Parent loadFXML(String fxmlname) {
         Parent root = null;
@@ -51,8 +71,14 @@ public class Main extends Application {
 
             if (fxmlname.equalsIgnoreCase("homeScreen")) {
                 homeController = loader.getController();
-            }else if (fxmlname.equalsIgnoreCase("leaderboardScreen")) {
+            } else if (fxmlname.equalsIgnoreCase("leaderboardScreen")) {
                 leaderboardController = loader.getController();
+            } else if (fxmlname.equalsIgnoreCase("AccountInfoScreen")) {
+                accountInfoController = loader.getController();
+            } else if (fxmlname.equalsIgnoreCase("CustomizationScreen")) {
+                customizationController = loader.getController();
+            } else if (fxmlname.equalsIgnoreCase("settingsScreen")) {
+                settingsController = loader.getController();
             }
 
         } catch (IOException e) {
@@ -65,11 +91,16 @@ public class Main extends Application {
     //displayAlert method's first parameter is the error type the others are title and the message
     //it is used to prompt a read only warning screen!
     public static void displayAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+
+        // "Platform.runLater()"'ı bunu DiscoveryController'ın initialize()'ında kullandığım için yapmam gerekti.
+        Platform.runLater(() ->
+        {
+            Alert alert = new Alert(type);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 
     public static <T> List<String> listToJSON(List<T> objs) {
@@ -78,17 +109,11 @@ public class Main extends Application {
 
         for (T o : objs) {
             String json = mapper.writeValueAsString(o);
-
             jsonObjs.add( json );
         }
         return jsonObjs;
     }
 
-    /**
-     * JSON'u bir şeyin List'ine çevirir.
-     * <p>
-     * Frontend'de backend'deki classlar burda yok diye otomatik {@code HashMap<String, String>} yapıyo.
-     */
     public static List<HashMap<String, String>> listFromJSON(String body) {
         JsonMapper MAPPER = JsonMapper.builder().build();
 
@@ -103,6 +128,29 @@ public class Main extends Application {
         }
         return objs;
     }
+
+    public static HttpResponse<String> sendHttpPOST(String jsonbody, String URL) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonbody))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    public static HttpResponse<String> sendHttpGET(String URL) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(URL))
+                .GET()
+                .header("Accept","application/json")
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
 
     @Override
     public void start(Stage stage) {
@@ -120,13 +168,19 @@ public class Main extends Application {
         loginScreen = loadFXML("loginScreen");
         leaderboardScreen = loadFXML("leaderboardScreen");
         discoveryMenu = loadFXML("discoveryScreen");
+        accountInfoScreen = loadFXML("AccountInfoScreen");
+        customizationScreen = loadFXML("CustomizationScreen");
         applicationScene = loadFXML("listingApplicationScreen");
         chatMenu = loadFXML("chatScreen");
         settingsScreen = loadFXML("settingsScreen");
 
+        //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
+        //startingScene = discoveryMenu;
+        //fxmlname'nin sonunda .fxml olmasına gerek yok.
+
         scene = new Scene(startingScene, 800, 620);
 
-        //scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/test_style.css").toExternalForm());
 
         stage.setTitle("Talk & Learn");
         stage.setScene(scene);
@@ -142,5 +196,24 @@ public class Main extends Application {
 
     public static void changeMenu(Parent root) {
         scene.setRoot(root);
+
+        if (selectedWallpaper != null && !selectedWallpaper.isEmpty()) {
+            java.net.URL bgURL = Main.class.getResource(selectedWallpaper);
+            if (bgURL != null) {
+                root.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
+        }
+
+        if (root == homeMenu && homeController != null) {
+            homeController.refreshWallpaperAndProfile();
+        } else if (root == settingsScreen && settingsController != null) {
+            settingsController.refreshWallpaperAndProfile();
+        } else if (root == accountInfoScreen && accountInfoController != null) {
+            accountInfoController.refreshWallpaperAndProfile();
+        } else if (root == customizationScreen && customizationController != null) {
+            customizationController.refreshWallpaperAndProfile();
+        }
     }
 }

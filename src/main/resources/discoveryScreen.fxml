@@ -1,150 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.DiscoveryController">
-   <children>
-      <SplitPane dividerPositions="0.25" focusTraversable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
-         <items>
-            <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="210.0" styleClass="sidebar">
+<SplitPane fx:id="discoveryScreen" dividerPositions="0.32" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.DiscoveryController">
+   <items>
+      <AnchorPane maxWidth="350.0" minWidth="280.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;">
+         <children>
+            <Label layoutX="10.0" layoutY="12.0" styleClass="menu-text" text="Filters" textFill="#1a1a1a" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="12.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <VBox fx:id="filterBox" spacing="5.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-color: transparent;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <children>
-                  <Label text="Filters" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <RadioButton mnemonicParsing="false" selected="true" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Newest">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="14.0" />
                      </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="filterButtons" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Closes Today" toggleGroup="$filterButtons">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Lowest Rank" toggleGroup="$filterButtons">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Group" toggleGroup="$filterButtons">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </VBox>
+            <Label layoutX="10.0" layoutY="10.0" style="-fx-text-fill: #333333;" styleClass="menu-text" text="Tags" textFill="#1a1a1a" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="230.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <VBox fx:id="tagBox" layoutX="10.0" layoutY="10.0" spacing="5.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-color: transparent;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="260.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Game Night">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Cooking">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Sports">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10;" styleClass="menu-button" text="Bilkent">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </VBox>
+            <VBox prefHeight="106.0" prefWidth="210.0" spacing="5.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-color: transparent;" AnchorPane.bottomAnchor="76.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
+               <children>
+                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleDebugAddListing" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Listing (DEBUG)" />
+                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleReadAllListings" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Read All From DB (DEBUG)" />
+                  <Button maxWidth="10000.0" mnemonicParsing="false" onAction="#handleSearchListings" prefHeight="32.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Search" />
+               </children>
+            </VBox>
+
+            <!-- Standardized Navigation Bar Include -->
+            <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
+
+      <ScrollPane fx:id="discoveryScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minHeight="0.0" minWidth="450.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;" vbarPolicy="ALWAYS">
+         <content>
+            <AnchorPane id="Content" maxHeight="10000.0" minHeight="-1.0" minWidth="-1.0" styleClass="content-area">
+               <children>
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" styleClass="menu-text" text="Listings" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" fx:id="x1" />
+                     </font>
+                     <textFill>
+                        <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
+                     </textFill>
                   </Label>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                  <VBox fx:id="listingBox" layoutX="5.0" layoutY="43.0" spacing="3.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-color: transparent #e0e0e0 transparent transparent;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
                      <children>
-                        <RadioButton mnemonicParsing="false" text="Newest">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="filterButtons" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Highest Rank" toggleGroup="$filterButtons">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Lowest Rank" toggleGroup="$filterButtons">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Group" toggleGroup="$filterButtons">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
+                        <fx:include fx:id="discoveryListing" maxWidth="10000.0" source="smallListing.fxml" />
+                        <fx:include fx:id="discoveryListing1" maxWidth="10000.0" prefHeight="50.0" source="smallListing.fxml" />
                      </children>
                   </VBox>
-                  <Label layoutX="10.0" layoutY="10.0" text="Tags" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="230.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="201.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="260.0">
-                     <children>
-                        <RadioButton mnemonicParsing="false" text="Game Night">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="tagButtons" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Cooking" toggleGroup="$tagButtons">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Sports" toggleGroup="$tagButtons">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Bilkent" toggleGroup="$tagButtons">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                     </children>
-                  </VBox>
-                  <Button mnemonicParsing="false" onAction="#handleDebugAddListing" prefHeight="32.0" prefWidth="210.0" text="Add Listing (DEBUG)" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                  <Button layoutX="3.0" layoutY="534.0" maxHeight="-Infinity" maxWidth="170.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="210.0" text="Search" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                  <fx:include fx:id="navMenu" source="navigationMenu.fxml" />
-                  <Button layoutX="5.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleReadAllListings" prefHeight="32.0" prefWidth="210.0" text="Read All From DB (DEBUG)" />
                </children>
             </AnchorPane>
-            <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
-               <content>
-                  <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" styleClass="content-area">
-                     <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Listings" textAlignment="CENTER" wrapText="false">
-                           <font>
-                              <Font size="18.0" fx:id="x1" />
-                           </font>
-                           <textFill>
-                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
-                           </textFill>
-                        </Label>
-                        <VBox fx:id="listingBox" layoutX="5.0" layoutY="43.0" prefHeight="550.0" prefWidth="655.0">
-                           <children>
-
-                           <!-- fx:include denemesi işe yaradı -->
-                              <fx:include fx:id="discoveryListing" source="smallDiscoveryListing.fxml" />
-                              <fx:include fx:id="discoveryListing1" source="smallDiscoveryListing.fxml" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </ScrollPane>
-         </items>
-      </SplitPane>
-   </children>
-</VBox>
+         </content>
+      </ScrollPane>
+   </items>
+</SplitPane>

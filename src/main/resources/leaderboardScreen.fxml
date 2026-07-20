@@ -52,14 +52,7 @@
                         </ScrollPane>
                     </center>
                     <bottom>
-                        <HBox alignment="CENTER" prefHeight="60.0" spacing="12.0" style="-fx-background-color: white; -fx-border-color: #e0e0e0 transparent transparent transparent;" BorderPane.alignment="CENTER">
-                            <Button mnemonicParsing="false" onAction="#handleGoHome" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="H" />
-                            <Button mnemonicParsing="false" onAction="#handleGoDiscovery" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-cursor: hand; -fx-text-fill: black;" text="D" />
-                            <Button mnemonicParsing="false" onAction="#handleGoChat" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="C" />
-                            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #0078fe; -fx-background-radius: 20; -fx-border-color: #0078fe; -fx-border-radius: 20; -fx-cursor: hand; -fx-text-fill: white;" text="L" />
-                            <Button mnemonicParsing="false" onAction="#handleGoSettings" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: black; -fx-cursor: hand;" text="S" />
-                        </HBox>
-                    </bottom>
+                        <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />                    </bottom>
                 </BorderPane>
                 <HBox spacing="15.0" style="-fx-background-color: white;">
                     <padding>
@@ -72,7 +65,7 @@
                                 <Label alignment="CENTER" maxWidth="10000" text="Most Meetups" textFill="#1a1a1a">
                                     <font><Font name="System Bold" size="15.0" /></font>
                                 </Label>
-                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS" hbarPolicy="NEVER" vbarPolicy="NEVER">
                                     <content>
                                         <VBox fx:id="mostMeetupsContainer" spacing="10.0" />
                                     </content>
@@ -85,7 +78,7 @@
                                 <Label alignment="CENTER" maxWidth="10000" text="Fair Reliability" textFill="#0078fe">
                                     <font><Font name="System Bold" size="15.0" /></font>
                                 </Label>
-                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS" hbarPolicy="NEVER" vbarPolicy="NEVER">
                                     <content>
                                         <VBox fx:id="fairRankingContainer" spacing="10.0" />
                                     </content>
@@ -98,7 +91,7 @@
                                 <Label alignment="CENTER" maxWidth="1000000" text="Highest Rating" textFill="#1a1a1a">
                                     <font><Font name="System Bold" size="15.0" /></font>
                                 </Label>
-                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS" hbarPolicy="NEVER" vbarPolicy="NEVER">
                                     <content>
                                         <VBox fx:id="highestRatingContainer" spacing="10.0" />
                                     </content>

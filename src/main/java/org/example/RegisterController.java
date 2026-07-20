@@ -28,7 +28,7 @@ public class RegisterController {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         String repeatedPassword = repeatedPasswordField.getText().trim();
-        boolean fieldEmpty = false; //false if the username, password, repeatedPassword datas are entered
+        boolean fieldEmpty = false;
 
         if (username.isEmpty()) {
             Main.displayAlert(Alert.AlertType.ERROR, "Insufficient Information", "Please Enter Username");
@@ -52,9 +52,6 @@ public class RegisterController {
                     }
                 }
 
-                //This if statements check: if the password is at least 8 characters, if the password contains both lower and
-                //uppercase letters, if the password contains at least one digit, if the password has gap in it,
-                //if the password matches with the username
                 if(password.length() < 8) {
                     Main.displayAlert(Alert.AlertType.ERROR, "Security Warning", "Please Enter A Password That Contains Minimum 8 Characters");
                 }
@@ -73,8 +70,6 @@ public class RegisterController {
                 else if (password.indexOf(username) != -1) {
                     Main.displayAlert(Alert.AlertType.ERROR, "Security Warning", "Please Do Not Include Your Username In Your Password");
                 } else {
-                    //the program enters this section if everything is fine with the chosen username and password and repeated password
-                    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                     String jsonBody = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
 
@@ -103,6 +98,9 @@ public class RegisterController {
                                 Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Your account has been registered successfully!");
                                 if (Main.homeController != null) {
                                     Main.homeController.refreshPage();
+                                }
+                                if (Main.leaderboardController != null) {
+                                    Main.leaderboardController.refreshData();
                                 }
                                 Main.changeMenu(Main.homeMenu);
                             });

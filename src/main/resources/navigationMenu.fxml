@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox alignment="CENTER" spacing="8.0" prefHeight="60.0"
-      style="-fx-border-color: #e0e0e0 transparent transparent transparent; -fx-background-color: white;"
-      xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.NavigationController">
+<HBox alignment="CENTER" fillHeight="true" maxWidth="Infinity" minHeight="60.0" prefHeight="60.0" spacing="10.0" style="-fx-border-color: #e0e0e0 transparent transparent transparent; -fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.NavigationController">
     <children>
-        <Button fx:id="homeBtn" onAction="#handleMain" styleClass="nav-button">
-            <graphic><FontIcon iconLiteral="mdi2h-home" iconSize="20" styleClass="nav-icon"/></graphic>
-        </Button>
-        <Button fx:id="discoveryBtn" onAction="#handleDiscovery" styleClass="nav-button">
-            <graphic><FontIcon iconLiteral="mdi2p-plus" iconSize="20" styleClass="nav-icon"/></graphic>
-        </Button>
-        <Button fx:id="chatBtn" onAction="#handleChat" styleClass="nav-button">
-            <graphic><FontIcon iconLiteral="mdi2m-message-text" iconSize="20" styleClass="nav-icon"/></graphic>
-        </Button>
-        <Button fx:id="leaderboardBtn" onAction="#handleLeaderboard" styleClass="nav-button">
-            <graphic><FontIcon iconLiteral="mdi2t-trophy" iconSize="20" styleClass="nav-icon"/></graphic>
-        </Button>
-        <Button fx:id="settingsBtn" onAction="#handleSettings" styleClass="nav-button">
-            <graphic><FontIcon iconLiteral="mdi2c-cog" iconSize="20" styleClass="nav-icon"/></graphic>
-        </Button>
+        <Button fx:id="homeBtn" maxWidth="Infinity" onAction="#handleMain" prefHeight="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: #1a1a1a; -fx-font-weight: bold; -fx-cursor: hand;" text="H" HBox.hgrow="ALWAYS" />
+        <Button fx:id="discoveryBtn" maxWidth="Infinity" onAction="#handleDiscovery" prefHeight="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: #1a1a1a; -fx-font-weight: bold; -fx-cursor: hand;" text="D" HBox.hgrow="ALWAYS" />
+        <Button fx:id="chatBtn" maxWidth="Infinity" onAction="#handleChat" prefHeight="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: #1a1a1a; -fx-font-weight: bold; -fx-cursor: hand;" text="C" HBox.hgrow="ALWAYS" />
+        <Button fx:id="leaderboardBtn" maxWidth="Infinity" onAction="#handleLeaderboard" prefHeight="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: #1a1a1a; -fx-font-weight: bold; -fx-cursor: hand;" text="L" HBox.hgrow="ALWAYS" />
+        <Button fx:id="settingsBtn" maxWidth="Infinity" onAction="#handleSettings" prefHeight="35.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-color: #cccccc; -fx-border-radius: 20; -fx-text-fill: #1a1a1a; -fx-font-weight: bold; -fx-cursor: hand;" text="S" HBox.hgrow="ALWAYS" />
     </children>
 </HBox>

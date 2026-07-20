@@ -4,24 +4,40 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, ProfileUpdatable {
 
     static int i = 0;
 
@@ -45,33 +61,53 @@ public class HomeController implements Initializable {
     @FXML private TextArea meetupDescriptionInput;
 
     @FXML private ToggleGroup locationToggleGroup;
-
-    @FXML private javafx.scene.control.ToggleButton tagGameNight;
-    @FXML private javafx.scene.control.ToggleButton tagCooking;
-    @FXML private javafx.scene.control.ToggleButton tagSports;
-
+    @FXML private ToggleButton tagGameNight;
+    @FXML private ToggleButton tagCooking;
+    @FXML private ToggleButton tagSports;
     @FXML private VBox plannedMeetupsContainer;
     @FXML private VBox pastMeetupsContainer;
     @FXML private VBox applicationsContainer;
 
+    @FXML private NavigationController navMenuController;
+
+    String titleStyle = "", subtitleStyle = "", bodyStyle = "";
+    @FXML private Label titleLabel;
+    @FXML private Label subtitleLabel;
+    @FXML private Label bodyLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        if (navMenuController != null) {
+            navMenuController.setActive("home");
+        }
 
         profileName.setText(Main.loggedInUser);
         profileDate.setText(Main.accountCreationDate);
 
+
+        if (Main.selectedWallpaper != null) {
+            URL bgURL = getClass().getResource(Main.selectedWallpaper);
+            if (bgURL != null) {
+                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
+        }
+
+
+        profileName.setText("Zenco");
+        profileDate.setText("Lvl 99 ngga");
+
         setProfilePicture("/images/defaultProfilePhoto.png");
         //setWindowWallpaper("/images/wallpaper.jpg");
         refreshPage();
+
     }
 
     public void refreshPage() {
-        if (profileName != null) {
-            profileName.setText(Main.loggedInUser);
-        }
-        if(profileDate != null) {
-            profileDate.setText(Main.accountCreationDate);
-        }
+        refreshWallpaperAndProfile();
+
         if (plannedMeetupsContainer != null) {
             plannedMeetupsContainer.getChildren().clear();
         }
@@ -84,6 +120,33 @@ public class HomeController implements Initializable {
         loadWelcomeMessage();
     }
 
+    @Override
+    public void refreshWallpaperAndProfile() {
+        if (Main.selectedWallpaper != null && !Main.selectedWallpaper.isEmpty()) {
+            URL bgURL = getClass().getResource(Main.selectedWallpaper);
+            if (bgURL != null) {
+                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
+                        "-fx-background-size: cover; " +
+                        "-fx-background-position: center;");
+            }
+        }
+
+        if (Main.selectedAvatar != null && !Main.selectedAvatar.isEmpty()) {
+            setProfilePicture(Main.selectedAvatar);
+        }
+
+        if (profileName != null) {
+            profileName.setText(Main.loggedInUser);
+            profileName.setStyle("-fx-font-family: 'System'; -fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: white; -fx-effect: dropshadow(one-pass-box, black, 2.0, 1.0, 0, 0);");
+        }
+        if (profileDate != null) {
+            profileDate.setText(Main.accountCreationDate);
+            profileDate.setStyle("-fx-font-family: 'System'; -fx-font-size: 16px; -fx-text-fill: white; -fx-effect: dropshadow(one-pass-box, black, 1.5, 1.0, 0, 0);");
+        }
+
+        refreshTextColors();
+    }
+
     public void handleMain(ActionEvent actionEvent) {
         if (profileView != null) {
             profileView.setVisible(true);
@@ -94,6 +157,26 @@ public class HomeController implements Initializable {
         refreshPage();
     }
 
+    public void refreshTextColors() {
+        if (titleLabel == null || subtitleLabel == null || bodyLabel == null) return;
+
+        String titleStyleStr, subtitleStyleStr, bodyStyleStr;
+
+        if (Main.selectedWallpaper == null || Main.selectedWallpaper.contains("wp1.jpg") || Main.selectedWallpaper.isEmpty()) {
+            titleStyleStr = "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 10, 0.4, 3, 0);";
+            subtitleStyleStr = "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 8, 0.4, 2, 0);";
+            bodyStyleStr = "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 8, 0.4, 1.5, 0);";
+        } else {
+            titleStyleStr = "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 10, 0.2, 3, 0);";
+            subtitleStyleStr = "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 8, 0.2, 2, 0);";
+            bodyStyleStr = "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 8, 0.2, 1.5, 0);";
+        }
+
+        titleLabel.setStyle(titleStyleStr);
+        subtitleLabel.setStyle(subtitleStyleStr);
+        bodyLabel.setStyle(bodyStyleStr);
+    }
+
     private void loadWelcomeMessage() {
         if (contentArea == null) {
             return;
@@ -101,38 +184,49 @@ public class HomeController implements Initializable {
         contentArea.getChildren().clear();
 
         VBox welcomeBox = new VBox();
-        welcomeBox.setAlignment(javafx.geometry.Pos.CENTER);
+        welcomeBox.setAlignment(Pos.CENTER);
         welcomeBox.setSpacing(25.0);
         welcomeBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20;");
-        welcomeBox.setPadding(new javafx.geometry.Insets(40, 40, 40, 40));
+        welcomeBox.setPadding(new Insets(40, 40, 40, 40));
 
         AnchorPane.setTopAnchor(welcomeBox, 40.0);
         AnchorPane.setBottomAnchor(welcomeBox, 60.0);
         AnchorPane.setLeftAnchor(welcomeBox, 40.0);
         AnchorPane.setRightAnchor(welcomeBox, 40.0);
 
-        Label titleLabel = new Label("Talk & Learn");
-        titleLabel.setTextFill(Color.BLACK);
-        titleLabel.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 42.0));
+        if (Main.selectedWallpaper == null || Main.selectedWallpaper.contains("wp1.jpg") || Main.selectedWallpaper.isEmpty()) {
+            titleStyle += "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 10, 0.4, 3, 0);";
+            subtitleStyle += "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 8, 0.4, 2, 0);";
+            bodyStyle += "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 8, 0.4, 1.5, 0);";
+        } else if (Main.selectedWallpaper.contains("wp2.jpg") || Main.selectedWallpaper.contains("wp3.jpg")) {
+            titleStyle += "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 10, 0.2, 3, 0);";
+            subtitleStyle += "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 8, 0.2, 2, 0);";
+            bodyStyle += "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 8, 0.2, 1.5, 0);";
+        }
 
-        Label subtitleLabel = new Label("Welcome to the ultimate language exchange platform!");
-        subtitleLabel.setTextFill(Color.BLACK);
-        subtitleLabel.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 18.0));
+        titleLabel = new Label("Talk & Learn");
+        titleLabel.setFont(Font.font("System", FontWeight.BOLD, 42.0));
+        titleLabel.setStyle(titleStyle);
 
-        Label bodyLabel = new Label("Connect with people around the world, join active language sessions, or create your own meetings. Improve your communication skills naturally while expanding your network.\n\nUse the sidebar to manage your meetups, check out your favorites, or find ongoing talks near you.");
-        bodyLabel.setTextFill(Color.BLACK);
-        bodyLabel.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 14.0));
+        subtitleLabel = new Label("Welcome to the ultimate language exchange platform!");
+        subtitleLabel.setFont(Font.font("System", FontWeight.BOLD, 20.0));
+        subtitleLabel.setStyle(subtitleStyle);
+
+        bodyLabel = new Label("Connect with people around the world, join active language sessions, or create your own meetings. Improve your communication skills naturally while expanding your network.\n\nUse the sidebar to manage your meetups, check out your favorites, or find ongoing talks near you.");
+        bodyLabel.setFont(Font.font("System", FontWeight.BOLD, 16.0));
         bodyLabel.setPrefWidth(500.0);
         bodyLabel.setWrapText(true);
-        bodyLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        bodyLabel.setTextAlignment(TextAlignment.CENTER);
         bodyLabel.setLineSpacing(6.0);
+        bodyLabel.setStyle(bodyStyle);
+
+        refreshTextColors();
 
         welcomeBox.getChildren().addAll(titleLabel, subtitleLabel, bodyLabel);
         contentArea.getChildren().add(welcomeBox);
     }
 
-    public void handleSignUp(ActionEvent actionEvent) {
-    }
+    public void handleSignUp(ActionEvent actionEvent) {}
 
     public void handleDiscovery(ActionEvent actionEvent) {
         Main.changeMenu(Main.discoveryMenu);
@@ -153,9 +247,6 @@ public class HomeController implements Initializable {
         Main.changeMenu(Main.settingsScreen);
     }
 
-    public void handleDrag(MouseEvent e) {
-    }
-
     public void handleCreateMeetup(ActionEvent actionEvent) {
         profileView.setVisible(true);
         myMeetupsListView.setVisible(false);
@@ -174,14 +265,9 @@ public class HomeController implements Initializable {
         changeView("/SavedMeetupsScreen.fxml");
     }
 
-    /**
-     * Updates the sidebar profile picture using a local file path or URL.
-     * @param imagePath The path to the image asset (e.g., "/images/avatar.png" or a file path)
-     */
     public void setProfilePicture(String imagePath) {
         try {
-            Image img = new Image(getClass().getResourceAsStream(imagePath));
-
+            Image img = new Image(imagePath);
             ImagePattern imgPattern = new ImagePattern(img);
 
             profileCircle.setFill(imgPattern);
@@ -194,26 +280,13 @@ public class HomeController implements Initializable {
         }
     }
 
-    /**
-     * Sets a global wallpaper for the entire application window.
-     * @param imagePath The path to the image inside the resources directory (e.g., "/images/wallpaper.png")
-     */
     public void setWindowWallpaper(String imagePath) {
         try {
             if (!imagePath.startsWith("/")) {
                 imagePath = "/" + imagePath;
             }
-
-            java.net.URL imageURL = getClass().getResource(imagePath);
-            if (imageURL == null) {
-                System.err.println("Wallpaper image not found at path: " + imagePath);
-                return;
-            }
-
-            String externalForm = imageURL.toExternalForm();
-
             rootPane.setStyle(
-                    "-fx-background-image: url('" + externalForm + "'); " +
+                    "-fx-background-image: url('" + imagePath + "'); " +
                             "-fx-background-position: center center; " +
                             "-fx-background-repeat: no-repeat; " +
                             "-fx-background-size: cover;"
@@ -256,108 +329,11 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void handlePlannedMeetupClick(ActionEvent actionEvent) {}
+    public void handleOldMeetupClick(ActionEvent actionEvent) {}
 
-
-    public void handlePlannedMeetupClick(ActionEvent actionEvent) {
-
-    }
-
-    public void handleOldMeetupClick(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
-    public void handleAcceptApplication(javafx.event.ActionEvent actionEvent) {
-        javafx.scene.control.Button clickedButton =
-                (javafx.scene.control.Button) actionEvent.getSource();
-
-        clickedButton.setDisable(true);
-
-        javafx.scene.layout.HBox buttonContainer =
-                (javafx.scene.layout.HBox) clickedButton.getParent();
-        javafx.scene.layout.HBox mainRow =
-                (javafx.scene.layout.HBox) buttonContainer.getParent();
-        javafx.scene.layout.VBox textContainer =
-                (javafx.scene.layout.VBox) mainRow.getChildren().get(1);
-
-        javafx.scene.control.Label nameLabel =
-                (javafx.scene.control.Label) textContainer.getChildren().get(0);
-        javafx.scene.control.Label meetupLabel =
-                (javafx.scene.control.Label) textContainer.getChildren().get(1);
-
-        String applicantUsername = nameLabel.getText().toLowerCase();
-
-        String meetupTitle = meetupLabel.getText()
-                .replace("Wants to join: ", "")
-                .trim();
-
-        String approverUser = Main.loggedInUser;
-
-        String jsonPayload = "{"
-                + "\"hostUsername\":\"" + applicantUsername + "\","
-                + "\"roomName\":\"" + meetupTitle + "\","
-                + "\"isGroupChat\":true,"
-                + "\"participants\":[\"" + applicantUsername + "\", \""
-                + approverUser + "\"]"
-                + "}";
-
-        java.net.http.HttpRequest createRoomRequest =
-                java.net.http.HttpRequest.newBuilder()
-                        .uri(java.net.URI.create(
-                                "http://localhost:8080/api/chat/create-room"))
-                        .header("Content-Type", "application/json")
-                        .POST(java.net.http.HttpRequest.BodyPublishers
-                                .ofString(jsonPayload))
-                        .build();
-
-        Thread chatThread = new Thread(() -> {
-            try {
-                java.net.http.HttpResponse<String> response =
-                        java.net.http.HttpClient.newHttpClient()
-                                .send(createRoomRequest,
-                                        java.net.http.HttpResponse.BodyHandlers
-                                                .ofString());
-
-                javafx.application.Platform.runLater(() -> {
-                    if (response.statusCode() == 200) {
-                        System.out.println(
-                                "SUCCESS! A chat room was created/updated for '"
-                                        + meetupTitle + "' by host "
-                                        + applicantUsername);
-
-                        mainRow.setVisible(false);
-                        mainRow.setManaged(false);
-
-                    } else if (response.statusCode() == 400) {
-                        Main.displayAlert(
-                                javafx.scene.control.Alert.AlertType.WARNING,
-                                "Group Capacity Full",
-                                "A maximum of 8 people can join this group. "
-                                        + "You cannot approve any more participants.");
-
-                        clickedButton.setDisable(false);
-
-                    } else {
-                        System.out.println(
-                                "Error: Failed to create the chat room. Status Code: "
-                                        + response.statusCode());
-
-                        clickedButton.setDisable(false);
-                    }
-                });
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                javafx.application.Platform.runLater(
-                        () -> clickedButton.setDisable(false));
-            }
-        });
-
-        chatThread.setDaemon(true);
-        chatThread.start();
-    }
-    public void handleRejectApplication(ActionEvent actionEvent) {
-    }
+    public void handleAcceptApplication(ActionEvent actionEvent) {}
+    public void handleRejectApplication(ActionEvent actionEvent) {}
 
     public void handlePublishMeetup(ActionEvent actionEvent) {
         // Read the values filled by the user
@@ -365,13 +341,10 @@ public class HomeController implements Initializable {
         String language = languageComboBox.getValue();
         String description = meetupDescriptionInput.getText();
 
-        // Check which location toggle button was selected
-        javafx.scene.control.ToggleButton selectedLocation =
-                (javafx.scene.control.ToggleButton) locationToggleGroup.getSelectedToggle();
-
+        ToggleButton selectedLocation = (ToggleButton) locationToggleGroup.getSelectedToggle();
         String location = (selectedLocation != null) ? selectedLocation.getText() : "None";
 
-        java.util.List<String> selectedTags = new java.util.ArrayList<>();
+        List<String> selectedTags = new ArrayList<>();
 
         if (tagGameNight != null && tagGameNight.isSelected()) {
             selectedTags.add(tagGameNight.getText());
@@ -385,6 +358,54 @@ public class HomeController implements Initializable {
 
 
         //Values: title (string), language (string), description (string), location (string) and selected tags (arraylist) will be used to create a listing under here
+
+        String tagsJson = selectedTags.stream()
+                .map(tag -> "\"" + tag.replace("\"", "\\\"") + "\"")
+                .collect(Collectors.joining(", ", "[", "]"));
+
+        String jsonPayload = String.format(
+                "{\n" +
+                        "  \"listingname\": \"%s\",\n" +
+                        "  \"language\": \"%s\",\n" +
+                        "  \"listingdescription\": \"%s\",\n" +
+                        "  \"location\": \"%s\",\n" +
+                        "  \"tags\": %s\n" +
+                        "}",
+                title.replace("\"", "\\\""),
+                (language != null) ? language.replace("\"", "\\\"") : "",
+                description.replace("\"", "\\\""),
+                location.replace("\"", "\\\""),
+                tagsJson
+        );
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/listings/add?username=" + Main.loggedInUser))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .build();
+
+        System.out.println("Sending Listing to backend...");
+
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(response -> {
+                    // Network responses run on a background thread.
+                    // Use Platform.runLater to interact with UI components safely.
+                    Platform.runLater(() -> {
+                        if (response.statusCode() == 200) {
+                            System.out.println("Backend Success: " + response.body());
+                        } else {
+                            System.err.println("Backend Error (" + response.statusCode() + "): " + response.body());
+                        }
+                    });
+                })
+                .exceptionally(ex -> {
+                    Platform.runLater(() -> {
+                        System.err.println("Failed to connect to backend: " + ex.getMessage());
+                    });
+                    return null;
+                });
+
 
 
 
@@ -412,14 +433,9 @@ public class HomeController implements Initializable {
         }
     }
 
-    /**
-     * Adds a new meetup button card to the left sidebar.
-     * @param title The text displayed on the button.
-     * @param isPlanned True if it goes under PLANNED (blue), false for PAST (gray).
-     */
     public void addMeetupToSidebar(String title, boolean isPlanned) {
         Button meetupBtn = new Button(title);
-        meetupBtn.setMaxWidth(Double.MAX_VALUE);
+        meetupBtn.setMaxWidth(10000);
         meetupBtn.setMnemonicParsing(false);
 
         if (isPlanned) {
@@ -428,9 +444,7 @@ public class HomeController implements Initializable {
             meetupBtn.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;");
         }
 
-        meetupBtn.setOnAction(e -> {
-            // Handle view change or details panel updates here
-        });
+        meetupBtn.setOnAction(e -> {});
 
         // Append to target section container
         if (isPlanned) {
@@ -440,9 +454,6 @@ public class HomeController implements Initializable {
         }
     }
 
-    /**
-     * Removes a meetup button by matching its text title label.
-     */
     public void removeMeetupFromSidebar(String title, boolean isPlanned) {
         VBox targetContainer = isPlanned ? plannedMeetupsContainer : pastMeetupsContainer;
         targetContainer.getChildren().removeIf(node ->
@@ -450,30 +461,22 @@ public class HomeController implements Initializable {
         );
     }
 
-
-
-    /**
-     * Generates and adds a detailed application info card to the right view panel
-     */
     public void addIncomingApplication(String name, String meetupTopic) {
-        // 1. Outer Container Bar
         HBox card = new HBox();
-        card.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        card.setAlignment(Pos.CENTER_LEFT);
         card.setSpacing(15);
-        card.setPadding(new javafx.geometry.Insets(12, 20, 12, 20));
+        card.setPadding(new Insets(12, 20, 12, 20));
         card.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;");
-        card.setMaxWidth(Double.MAX_VALUE);
+        card.setMaxWidth(10000);
 
-        // 2. Profile Avatar Graphic
         Circle avatar = new Circle(20);
         avatar.setFill(Color.web("#e3f2fd"));
         avatar.setStroke(Color.web("#0078fe"));
         avatar.setStrokeWidth(1.5);
 
-        // 3. Info Text Elements Label stack
         VBox textStack = new VBox();
         textStack.setSpacing(4);
-        HBox.setHgrow(textStack, javafx.scene.layout.Priority.ALWAYS);
+        HBox.setHgrow(textStack, Priority.ALWAYS);
 
         Label nameLbl = new Label(name);
         nameLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #1a1a1a;");
@@ -483,11 +486,10 @@ public class HomeController implements Initializable {
 
         textStack.getChildren().addAll(nameLbl, subLbl);
 
-        // 4. Action Button Dock Grouping (Accept / Deny Split)
         HBox actionsContainer = new HBox();
-        actionsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        actionsContainer.setAlignment(Pos.CENTER);
         actionsContainer.setStyle("-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #e0e0e0; -fx-border-radius: 20;");
-        actionsContainer.setPadding(new javafx.geometry.Insets(4, 8, 4, 8));
+        actionsContainer.setPadding(new Insets(4, 8, 4, 8));
 
         Button acceptBtn = new Button("✓");
         acceptBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 4 12 4 12;");
@@ -498,28 +500,22 @@ public class HomeController implements Initializable {
         Button rejectBtn = new Button("✘");
         rejectBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 12px; -fx-cursor: hand; -fx-padding: 4 12 4 12;");
 
-        // Connect action logic handles
         acceptBtn.setOnAction(e -> handleAcceptAction(name, card));
         rejectBtn.setOnAction(e -> handleRejectAction(name, card));
 
         actionsContainer.getChildren().addAll(acceptBtn, separator, rejectBtn);
 
-        // Assemble components into the main card, then push card to screen container
         card.getChildren().addAll(avatar, textStack, actionsContainer);
         applicationsContainer.getChildren().add(card);
     }
 
     private void handleAcceptAction(String name, HBox cardNode) {
         System.out.println("Accepted application from: " + name);
-        // Remove immediately from active visual array
         applicationsContainer.getChildren().remove(cardNode);
     }
 
     private void handleRejectAction(String name, HBox cardNode) {
         System.out.println("Rejected application from: " + name);
-        // Remove immediately from active visual array
         applicationsContainer.getChildren().remove(cardNode);
     }
-
 }
-

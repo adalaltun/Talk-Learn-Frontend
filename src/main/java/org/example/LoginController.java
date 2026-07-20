@@ -65,6 +65,9 @@ public class LoginController {
                     if (Main.homeController != null) {
                         Main.homeController.refreshPage();
                     }
+                    if (Main.leaderboardController != null) {
+                        Main.leaderboardController.refreshData();
+                    }
                     Main.changeMenu(Main.homeMenu);
                 });
             } else {
