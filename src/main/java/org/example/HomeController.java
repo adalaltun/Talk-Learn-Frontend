@@ -9,10 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
@@ -28,14 +25,17 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.*;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HomeController implements Initializable, ProfileUpdatable {
 
@@ -68,22 +68,33 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private VBox pastMeetupsContainer;
     @FXML private VBox applicationsContainer;
 
+
     @FXML private NavigationController navMenuController;
 
     String titleStyle = "", subtitleStyle = "", bodyStyle = "";
     @FXML private Label titleLabel;
     @FXML private Label subtitleLabel;
     @FXML private Label bodyLabel;
+    @FXML private Label calendarMonthYearLabel;
+    @FXML private GridPane calendarGrid;
+    private YearMonth currentYearMonth = YearMonth.now();
+    private Map<LocalDate, List<String>> plannedMeetupsMap = new HashMap<>();
+    @FXML private javafx.scene.control.DatePicker meetupDatePicker;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         if (navMenuController != null) {
             navMenuController.setActive("home");
         }
 
         profileName.setText(Main.loggedInUser);
         profileDate.setText(Main.accountCreationDate);
+        if (calendarGrid != null && calendarMonthYearLabel != null) {
+            populateCalendar(currentYearMonth);
+        }
+        fetchMeetupsFromBackend();
+
 
 
         if (Main.selectedWallpaper != null) {
@@ -105,6 +116,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     }
 
+
     public void refreshPage() {
         refreshWallpaperAndProfile();
 
@@ -117,7 +129,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
         addMeetupToSidebar("Spanish Meeting", true);
         addMeetupToSidebar("Japanese Talk", false);
-        loadWelcomeMessage();
     }
 
     @Override
@@ -337,6 +348,12 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     public void handlePublishMeetup(ActionEvent actionEvent) {
         // Read the values filled by the user
+        if (meetupDatePicker.getValue() == null) {
+            System.out.println("Please select a date!");
+            return;
+        }
+
+        String selectedDate = meetupDatePicker.getValue().toString();
         String title = meetupTitleInput.getText();
         String language = languageComboBox.getValue();
         String description = meetupDescriptionInput.getText();
@@ -517,5 +534,141 @@ public class HomeController implements Initializable, ProfileUpdatable {
     private void handleRejectAction(String name, HBox cardNode) {
         System.out.println("Rejected application from: " + name);
         applicationsContainer.getChildren().remove(cardNode);
+    }
+    @FXML
+    private void handlePrevMonth() {
+        currentYearMonth = currentYearMonth.minusMonths(1);
+        populateCalendar(currentYearMonth);
+    }
+
+    @FXML
+    private void handleNextMonth() {
+        currentYearMonth = currentYearMonth.plusMonths(1);
+        populateCalendar(currentYearMonth);
+    }
+
+    private void fetchMeetupsFromBackend() {
+        // Run network request on a background thread to prevent UI freezing
+        new Thread(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("http://localhost:8080/api/listings/all"))
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    JsonMapper mapper = JsonMapper.builder().build();
+
+                    // The backend returns a List of JSON Strings
+                    List<String> listingsJsonList = mapper.readValue(response.body(), new TypeReference<List<String>>(){});
+
+                    plannedMeetupsMap.clear();
+
+                    for (String jsonString : listingsJsonList) {
+                        // Parse each individual JSON string into a JsonNode
+                        JsonNode node = mapper.readTree(jsonString);
+
+                        if (node.has("listingname") && node.has("meetupDate") && !node.get("meetupDate").isNull()) {
+                            String meetupName = node.get("listingname").asText();
+                            JsonNode dateNode = node.get("meetupDate");
+
+                            LocalDate meetupDate;
+
+                            // Spring Boot sometimes serializes LocalDate as an array [YYYY, MM, DD]
+                            // or as a standard ISO String "YYYY-MM-DD"
+                            if (dateNode.isArray()) {
+                                meetupDate = LocalDate.of(
+                                        dateNode.get(0).asInt(),
+                                        dateNode.get(1).asInt(),
+                                        dateNode.get(2).asInt()
+                                );
+                            } else {
+                                meetupDate = LocalDate.parse(dateNode.asText());
+                            }
+
+                            // Add the parsed meetup to our map
+                            plannedMeetupsMap.computeIfAbsent(meetupDate, k -> new ArrayList<>()).add(meetupName);
+                        }
+                    }
+
+                    // Update the UI on the JavaFX Application Thread
+                    Platform.runLater(() -> populateCalendar(currentYearMonth));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void populateCalendar(YearMonth yearMonth) {
+        calendarGrid.getChildren().clear();
+
+        // Set Header Label
+        calendarMonthYearLabel.setText(yearMonth.getMonth().toString().substring(0, 1) +
+                yearMonth.getMonth().toString().substring(1).toLowerCase() +
+                " " + yearMonth.getYear());
+
+        // Add Day of Week Headers
+        String[] daysOfWeek = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        for (int i = 0; i < daysOfWeek.length; i++) {
+            Label dayLabel = new Label(daysOfWeek[i]);
+            dayLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #757575;");
+            calendarGrid.add(dayLabel, i, 0);
+            GridPane.setHalignment(dayLabel, javafx.geometry.HPos.CENTER);
+        }
+
+        // Calculate days
+        LocalDate firstOfMonth = yearMonth.atDay(1);
+        int dayOfWeekOfFirst = firstOfMonth.getDayOfWeek().getValue();
+        int daysInMonth = yearMonth.lengthOfMonth();
+
+        int row = 1;
+        int col = dayOfWeekOfFirst - 1;
+
+        // Fill actual days
+        for (int day = 1; day <= daysInMonth; day++) {
+            LocalDate currentDate = yearMonth.atDay(day);
+
+            // Use a VBox so we can stack the Date number and the Meetup Labels
+            VBox dayPane = new VBox();
+            dayPane.setAlignment(Pos.TOP_CENTER);
+            dayPane.setPadding(new Insets(5));
+            dayPane.setSpacing(4);
+
+            Label dateLabel = new Label(String.valueOf(day));
+
+            // Style current day vs regular days
+            if (currentDate.equals(LocalDate.now())) {
+                dayPane.setStyle("-fx-background-color: #e3f2fd; -fx-background-radius: 10; -fx-border-color: #0078fe; -fx-border-radius: 10; -fx-cursor: hand;");
+                dateLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0078fe;");
+            } else {
+                dayPane.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-cursor: hand;");
+                dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #1a1a1a;");
+            }
+
+            dayPane.getChildren().add(dateLabel);
+
+            // Inject the meetups into the calendar cells dynamically
+            if (plannedMeetupsMap.containsKey(currentDate)) {
+                for (String meetupName : plannedMeetupsMap.get(currentDate)) {
+                    Label meetupLabel = new Label(meetupName);
+                    meetupLabel.setStyle("-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 2 5 2 5;");
+                    meetupLabel.setMaxWidth(Double.MAX_VALUE);
+                    meetupLabel.setAlignment(Pos.CENTER);
+                    dayPane.getChildren().add(meetupLabel);
+                }
+            }
+
+            calendarGrid.add(dayPane, col, row);
+
+            col++;
+            if (col == 7) {
+                col = 0;
+                row++;
+            }
+        }
     }
 }
