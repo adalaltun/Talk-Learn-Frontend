@@ -1,6 +1,5 @@
 package org.example;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -43,6 +42,16 @@ public class RegisterController {
         }
         if (!fieldEmpty) {
             if (password.equals(repeatedPassword)) {
+
+                if (username.length() > 16) {
+                    Main.displayAlert(Alert.AlertType.ERROR, "Security Warning", "Username cannot be longer than 16 characters");
+                    return;
+                }
+
+                if (password.length() > 20) {
+                    Main.displayAlert(Alert.AlertType.ERROR, "Security Warning", "Password cannot be longer than 20 characters");
+                    return;
+                }
 
                 boolean hasDigit = false;
                 for (char c : password.toCharArray()) {
@@ -94,21 +103,18 @@ public class RegisterController {
                             } else {
                                 Main.accountCreationDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                             }
-                            Platform.runLater(() -> {
-                                Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Your account has been registered successfully!");
-                                if (Main.homeController != null) {
-                                    Main.homeController.refreshPage();
-                                }
-                                if (Main.leaderboardController != null) {
-                                    Main.leaderboardController.refreshData();
-                                }
-                                Main.changeMenu(Main.homeMenu);
-                            });
+
+                            Main.displayAlert(Alert.AlertType.INFORMATION, "Successful", "Your account has been registered successfully!");
+                            if (Main.homeController != null) {
+                                Main.homeController.refreshPage();
+                            }
+                            if (Main.leaderboardController != null) {
+                                Main.leaderboardController.refreshData();
+                            }
+                            Main.changeMenu(Main.homeMenu);
                             clearFields();
                         } else {
-                            Platform.runLater(() -> {
-                                Main.displayAlert(Alert.AlertType.ERROR, "Registration Failed", "Username is already taken");
-                            });
+                            Main.displayAlert(Alert.AlertType.ERROR, "Registration Failed", "Username is already taken");
                         }
 
                     } catch (Exception e) {

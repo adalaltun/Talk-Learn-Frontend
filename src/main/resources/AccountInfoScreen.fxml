@@ -59,6 +59,12 @@
                             </children>
                         </VBox>
 
+                        <HBox alignment="CENTER">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#handleLogout" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #ff3b30; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand;" text="Log Out" />
+                            </children>
+                        </HBox>
+
                     </children>
                 </VBox>
             </content>

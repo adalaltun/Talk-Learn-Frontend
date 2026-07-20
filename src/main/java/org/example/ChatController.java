@@ -78,16 +78,11 @@ public class ChatController {
         showWelcomeScreen(true);
         if (messageField != null) {
             messageField.setTextFormatter(new TextFormatter<String>(change -> {
-
                 if (change.getControlNewText().length() > MAX_CHAR_LIMIT) {
                     return null;
                 }
                 return change;
             }));
-        }
-
-        if (navMenuController != null) {
-            navMenuController.setActive("chat");
         }
 
         chatListContainer.sceneProperty().addListener(new ChangeListener<Scene>() {
@@ -184,7 +179,6 @@ public class ChatController {
         networkThread.start();
     }
 
-
     public void handleGoHome(ActionEvent actionEvent){
         Main.changeMenu(Main.homeMenu);
     }
@@ -210,47 +204,9 @@ public class ChatController {
                     return;
                 }
 
-                String USER_CHECK_URL = "http://localhost:8080/api/auth/exists/";
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(USER_CHECK_URL + cleanPartnerName))
-                        .GET()
-                        .build();
-
-                Thread checkThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (response.statusCode() == 200) {
-                                        if (response.body().trim().equalsIgnoreCase("true")) {
-                                            String yeniOdaId = "room_" + java.util.UUID.randomUUID().toString();
-                                            createSidebarContact(yeniOdaId, cleanPartnerName);
-                                            startPrivateChat(yeniOdaId, cleanPartnerName);
-                                        } else {
-                                            Main.displayAlert(Alert.AlertType.ERROR, "User Not Found",
-                                                    "The username \"" + cleanPartnerName + "\" is not registered in our database!");
-                                        }
-                                    } else {
-                                        Main.displayAlert(Alert.AlertType.ERROR, "Server Error", "Failed to verify user.");
-                                    }
-                                }
-                            });
-                        } catch (Exception ex) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Main.displayAlert(Alert.AlertType.ERROR, "Connection Error", "Could not connect to server.");
-                                }
-                            });
-                        }
-                    }
-                });
-                checkThread.setDaemon(true);
-                checkThread.start();
+                String generatedRoomId = generatePrivateRoomId(currentUser, cleanPartnerName);
+                createSidebarContact(generatedRoomId, cleanPartnerName);
+                startPrivateChat(generatedRoomId, cleanPartnerName);
             }
         }
     }
@@ -350,8 +306,6 @@ public class ChatController {
         nameLabel.setTextFill(Color.BLACK);
 
         contactBox.getChildren().addAll(avatar, nameLabel);
-
-
         contactBox.setOnMouseClicked(event -> startPrivateChat(roomId, partnerName));
 
         if (chatListContainer != null) {
@@ -392,8 +346,6 @@ public class ChatController {
         }
 
         this.chatPartner = partnerName;
-
-
         this.currentRoomId = roomId;
 
         if (activeChatTitle != null) {
@@ -474,7 +426,7 @@ public class ChatController {
 
                                         String sender = "";
                                         String content = "";
-                                        String dbTimestamp = ""; // Variable to store the time received from the database
+                                        String dbTimestamp = "";
 
                                         String[] pairs = obj.split(",");
                                         for (String s : pairs) {
@@ -489,20 +441,17 @@ public class ChatController {
                                                 } else if (key.equalsIgnoreCase("content")) {
                                                     content = value;
                                                 } else if (key.equalsIgnoreCase("timestamp")) {
-                                                    dbTimestamp = value; // Capture the time received from the backend
+                                                    dbTimestamp = value;
                                                 }
                                             }
                                         }
 
                                         if (!sender.isEmpty() && !content.isEmpty()) {
-                                            String displayTime = getCurrentTimeText(); // Use the current time by default
+                                            String displayTime = getCurrentTimeText();
 
-                                            // If a date was received from the database
                                             if (!dbTimestamp.isEmpty() && dbTimestamp.contains("T")) {
                                                 try {
-                                                    // Get the part after "T" ("15:30:45.123")
                                                     String timePart = dbTimestamp.split("T")[1];
-                                                    // Keep only the hour and minute parts ("15:30")
                                                     String[] timeElements = timePart.split(":");
                                                     if (timeElements.length >= 2) {
                                                         displayTime = timeElements[0] + ":" + timeElements[1];
@@ -512,7 +461,6 @@ public class ChatController {
                                                 }
                                             }
 
-                                            // Display the time received from the database instead of the current time
                                             addMessageBubble(sender, content, displayTime);
                                         }
                                     }
@@ -607,22 +555,7 @@ public class ChatController {
                         String sender = parts[1];
                         String content = parts[2];
 
-                        if (currentUser != null && messageRoomId.contains(currentUser.toLowerCase())) {
-
-                            if (!sender.equalsIgnoreCase(currentUser)) {
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (!isAlreadyExists(sender)) {
-                                            createSidebarContact(messageRoomId, sender);
-                                            if (currentRoomId == null) {
-                                                startPrivateChat(messageRoomId, sender);
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-
+                        if (currentUser != null) {
                             if (messageRoomId.equals(currentRoomId)) {
                                 Platform.runLater(new Runnable() {
                                     @Override
@@ -770,14 +703,9 @@ public class ChatController {
         }
     }
 
-//    public void handleGoHome(ActionEvent actionEvent){
-//        Main.changeMenu(Main.homeMenu);
-//    }
-
     public void handleGoDiscovery(ActionEvent actionEvent){
         Main.changeMenu(Main.discoveryMenu);
     }
-
 
     public void handleGoLeaderboard(ActionEvent actionEvent) {
         if (Main.leaderboardController != null) {

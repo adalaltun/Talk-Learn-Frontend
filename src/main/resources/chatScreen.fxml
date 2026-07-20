@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <VBox onKeyPressed="#handleChatKeyEvents" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ChatController">
     <children>
         <SplitPane dividerPositions="0.28" focusTraversable="true" style="-fx-background-color: white; -fx-box-border: transparent;" VBox.vgrow="ALWAYS">
             <items>
-                <!-- FIXED CHAT SIDEBAR: Set to match 240px bounds perfectly -->
                 <BorderPane maxWidth="240.0" minWidth="240.0" style="-fx-background-color: white; -fx-border-color: transparent #e0e0e0 transparent transparent;">
                     <top>
                         <VBox alignment="CENTER" prefHeight="60.0" style="-fx-background-color: white; -fx-border-color: transparent transparent #e0e0e0 transparent;" BorderPane.alignment="CENTER">
@@ -39,7 +47,6 @@
                         </ScrollPane>
                     </center>
 
-                    <!-- Navigation Bar Include -->
                     <bottom>
                         <fx:include fx:id="navMenu" source="navigationMenu.fxml" />
                     </bottom>
@@ -54,8 +61,7 @@
                             <padding>
                                 <Insets left="20.0" right="20.0" />
                             </padding>
-                            <Circle fill="#d1c4e9" radius="25.0" stroke="#8a2be2" strokeType="INSIDE" strokeWidth="2.0" />
-                            <Label fx:id="activeChatTitle" text="Sohbet" textFill="BLACK">
+                            <Circle fill="#d1c4e9" radius="25.0" stroke="#8a2be2" strokeType="INSIDE" strokeWidth="2.0" />                            <Label fx:id="activeChatTitle" text="Sohbet" textFill="BLACK">
                                 <font><Font size="18.0" /></font>
                             </Label>
                             <Region HBox.hgrow="ALWAYS" />
