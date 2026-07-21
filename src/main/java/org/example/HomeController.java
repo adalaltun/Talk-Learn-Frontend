@@ -1,5 +1,6 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -289,56 +287,49 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     @FXML
     public void handleAcceptApplication(ActionEvent actionEvent) {
-        Button clickedButton = (Button) actionEvent.getSource();
-        clickedButton.setDisable(true);
+        // Standard handler for FXML clicks
+        Button btn = (Button) actionEvent.getSource();
+        btn.setDisable(true);
 
-        HBox buttonContainer = (HBox) clickedButton.getParent();
-        HBox mainRow = (HBox) buttonContainer.getParent();
-        VBox textContainer = (VBox) mainRow.getChildren().get(1);
+        // Perform any quick generic UI updates or logic here
+        System.out.println("Application accepted via FXML trigger.");
+    }
 
-        Label nameLabel = (Label) textContainer.getChildren().get(0);
-        Label meetupLabel = (Label) textContainer.getChildren().get(1);
+    public void handleProcessApplication(Long applicationId, String applicantUsername, String meetupTopic, HBox cardNode, Button acceptBtn) {
+        if (acceptBtn != null) {
+            acceptBtn.setDisable(true);
+        }
 
-        String applicantUsername = nameLabel.getText().toLowerCase();
-        String meetupTitle = meetupLabel.getText().replace("Wants to join: ", "").trim();
-        String approverUser = Main.loggedInUser;
+        // Backend endpoint expects /api/applications/accept/{id}
+        String url = "http://localhost:8080/api/applications/accept/" + applicationId;
 
-        String jsonPayload = "{"
-                + "\"hostUsername\":\"" + applicantUsername + "\","
-                + "\"roomName\":\"" + meetupTitle + "\","
-                + "\"isGroupChat\":true,"
-                + "\"participants\":[\"" + applicantUsername + "\", \"" + approverUser + "\"]"
-                + "}";
-
-        HttpRequest createRoomRequest = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/chat/create-room"))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody()) // Empty POST body
                 .build();
 
-        Thread chatThread = new Thread(() -> {
-            try {
-                HttpResponse<String> response = HttpClient.newHttpClient()
-                        .send(createRoomRequest, HttpResponse.BodyHandlers.ofString());
+        HttpClient.newHttpClient().sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(response -> Platform.runLater(() -> {
+                    if (response.statusCode() == 200) {
+                        // Remove application card from screen
+                        if (applicationsContainer != null && cardNode != null) {
+                            applicationsContainer.getChildren().remove(cardNode);
+                        }
 
-                if (response.statusCode() == 200) {
-                    mainRow.setVisible(false);
-                    mainRow.setManaged(false);
-                } else if (response.statusCode() == 400) {
-                    Main.displayAlert(Alert.AlertType.WARNING,
-                            "Group is full",
-                            "The group is full.");
-                    clickedButton.setDisable(false);
-                } else {
-                    clickedButton.setDisable(false);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                clickedButton.setDisable(false);
-            }
-        });
-        chatThread.setDaemon(true);
-        chatThread.start();
+                        Main.displayAlert(Alert.AlertType.INFORMATION, "Application Accepted",
+                                applicantUsername + " has been added to chat for '" + meetupTopic + "'!");
+                    } else {
+                        Main.displayAlert(Alert.AlertType.ERROR, "Error", "Failed to accept application: " + response.body());
+                        if (acceptBtn != null) acceptBtn.setDisable(false);
+                    }
+                }))
+                .exceptionally(ex -> {
+                    Platform.runLater(() -> {
+                        Main.displayAlert(Alert.AlertType.ERROR, "Connection Error", "Could not connect to backend server.");
+                        if (acceptBtn != null) acceptBtn.setDisable(false);
+                    });
+                    return null;
+                });
     }
 
     public void handleRejectApplication(ActionEvent actionEvent) {}
