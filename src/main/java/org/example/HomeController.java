@@ -348,6 +348,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
             return;
         }
 
+        String selectedDate = meetupDatePicker.getValue().toString();
         String title = meetupTitleInput.getText();
         String language = languageComboBox.getValue();
         String description = meetupDescriptionInput.getText();
@@ -376,12 +377,17 @@ public class HomeController implements Initializable, ProfileUpdatable {
                         "  \"language\": \"%s\",\n" +
                         "  \"listingdescription\": \"%s\",\n" +
                         "  \"location\": \"%s\",\n" +
+                        "  \"meetupDate\": \"%s\",\n" +
+                        "  \"date\": \"%s\",\n" +
+                        "  \"participantLimit\": 8,\n" +
                         "  \"tags\": %s\n" +
                         "}",
                 title.replace("\"", "\\\""),
                 (language != null) ? language.replace("\"", "\\\"") : "",
                 description.replace("\"", "\\\""),
                 location.replace("\"", "\\\""),
+                selectedDate,
+                selectedDate,
                 tagsJson
         );
 
