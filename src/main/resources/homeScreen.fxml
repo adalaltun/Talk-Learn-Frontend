@@ -128,7 +128,6 @@
                             </font>
                         </Button>
                         <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleMyMeetups" prefHeight="38.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="My Meetups" />
-                        <Button maxWidth="10000" mnemonicParsing="false" onAction="#handleSavedMeetups" prefHeight="38.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #333333; -fx-font-weight: bold; -fx-cursor: hand;" text="Favourites" />
                     </children>
                 </VBox>
                 <fx:include fx:id="navMenu" source="navigationMenu.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
