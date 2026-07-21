@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="deleted a line causing glitch">
+    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented customizationController's functions to every related class. Added 3 pp 3 wallpapers.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LeaderboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/LeaderboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +97,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "testMeliksah",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -234,23 +236,7 @@
       <option name="project" value="LOCAL" />
       <updated>1784426627421</updated>
     </task>
-    <task id="LOCAL-00007" summary="Discovery screen fix and adjustments.">
-      <option name="closed" value="true" />
-      <created>1784616020512</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1784616020512</updated>
-    </task>
-    <task id="LOCAL-00008" summary="deleted a line causing glitch">
-      <option name="closed" value="true" />
-      <created>1784616212771</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1784616212771</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,9 +270,7 @@
     <MESSAGE value="Added classes" />
     <MESSAGE value="Modified login and register screens to be aligned center." />
     <MESSAGE value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
-    <MESSAGE value="Discovery screen fix and adjustments." />
-    <MESSAGE value="deleted a line causing glitch" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted a line causing glitch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
