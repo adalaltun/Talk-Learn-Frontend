@@ -199,7 +199,7 @@ public class LeaderboardController {
             titleLabel.setFont(new Font("System Bold", 13));
             titleLabel.setTextFill(i == 1 ? Color.web("#0078fe") : Color.web("#4d4d4d"));
             HBox.setHgrow(titleLabel, Priority.ALWAYS);
-            titleLabel.setMaxWidth(Double.MAX_VALUE);
+            titleLabel.setMaxWidth(10000);
 
             Label valueLabel = new Label("#" + ranks[i]);
             valueLabel.setFont(new Font("System Bold", 16));
