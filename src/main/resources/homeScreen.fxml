@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<SplitPane fx:id="rootPane" dividerPositions="0.32" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-box-border: transparent;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
+<SplitPane fx:id="rootPane" dividerPositions="0.32" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-box-border: transparent;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.HomeController">
     <items>
         <AnchorPane maxWidth="350.0" minWidth="280.0" style="-fx-background-color: transparent; -fx-border-color: transparent #e0e0e0 transparent transparent;">
             <children>
@@ -145,12 +135,10 @@
             </children>
         </AnchorPane>
 
-        <!-- UPDATED CONTENT AREA WITH CALENDAR -->
         <AnchorPane fx:id="contentArea" minHeight="0.0" minWidth="450.0" style="-fx-background-color: transparent;">
             <children>
                 <VBox spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
                     <children>
-                        <!-- Condensed Welcome Banner -->
                         <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20; -fx-padding: 20;">
                             <children>
                                 <Label text="Talk &amp; Learn" textFill="black">
@@ -158,7 +146,7 @@
                                         <Font name="System Bold" size="28.0" />
                                     </font>
                                 </Label>
-                                <Label text="Welcome to the ultimate language exchange platform!" textFill="#4d4d4d">
+                                <Label text="Welcome to the ultimate language exchange platform!" textFill="black">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
@@ -166,10 +154,8 @@
                             </children>
                         </VBox>
 
-                        <!-- Custom Calendar Section -->
-                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #e0e0e0; -fx-border-radius: 20; -fx-padding: 20;" VBox.vgrow="ALWAYS">
+                        <VBox spacing="15.0" style="-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20; -fx-padding: 20;" VBox.vgrow="ALWAYS">
                             <children>
-                                <!-- Calendar Header -->
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
                                         <Label fx:id="calendarMonthYearLabel" text="Month Year" textFill="#1a1a1a">
@@ -183,7 +169,6 @@
                                     </children>
                                 </HBox>
 
-                                <!-- Calendar Grid -->
                                 <GridPane fx:id="calendarGrid" hgap="10.0" vgap="10.0" VBox.vgrow="ALWAYS">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="14.28" />

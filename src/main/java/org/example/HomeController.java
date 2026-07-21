@@ -26,13 +26,11 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
-import javafx.application.Platform;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class HomeController implements Initializable, ProfileUpdatable {
 
@@ -40,23 +38,15 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     @FXML private SplitPane rootPane;
     @FXML private AnchorPane contentArea;
-
     @FXML private VBox profileView;
-
     @FXML private Label profileName;
     @FXML private Label profileDate;
-
     @FXML private Circle profileCircle;
     @FXML private Label profileLetterLabel;
-
     @FXML private ScrollPane myMeetupsListView;
-
     @FXML private TextField meetupTitleInput;
-
     @FXML private ComboBox<String> languageComboBox;
-
     @FXML private TextArea meetupDescriptionInput;
-
     @FXML private ToggleGroup locationToggleGroup;
     @FXML private ToggleButton tagGameNight;
     @FXML private ToggleButton tagCooking;
@@ -64,8 +54,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private VBox plannedMeetupsContainer;
     @FXML private VBox pastMeetupsContainer;
     @FXML private VBox applicationsContainer;
-
-
     @FXML private NavigationController navMenuController;
 
     String titleStyle = "", subtitleStyle = "", bodyStyle = "";
@@ -76,11 +64,9 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private GridPane calendarGrid;
     private YearMonth currentYearMonth = YearMonth.now();
     private Map<LocalDate, List<String>> plannedMeetupsMap = new HashMap<>();
-    @FXML private javafx.scene.control.DatePicker meetupDatePicker;
-
+    @FXML private DatePicker meetupDatePicker;
 
     @FXML private AnchorPane listingDetailView;
-
     @FXML private Label listingDetailTitle;
     @FXML private Label listingDetailRating;
     @FXML private Label listingDetailLanguage;
@@ -90,7 +76,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private Label listingDetailDate;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(java.net.URL location, ResourceBundle resources) {
         if (navMenuController != null) {
             navMenuController.setActive("home");
         }
@@ -102,27 +88,18 @@ public class HomeController implements Initializable, ProfileUpdatable {
         }
         fetchMeetupsFromBackend();
 
-
-
         if (Main.selectedWallpaper != null) {
-            URL bgURL = getClass().getResource(Main.selectedWallpaper);
-            if (bgURL != null) {
-                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
-                        "-fx-background-size: cover; " +
-                        "-fx-background-position: center;");
-            }
+            rootPane.setStyle("-fx-background-image: url('" + Main.selectedWallpaper + "'); " +
+                    "-fx-background-size: cover; " +
+                    "-fx-background-position: center;");
         }
-
 
         profileName.setText("Zenco");
         profileDate.setText("Lvl 99 ngga");
 
         setProfilePicture("/images/defaultProfilePhoto.png");
-        //setWindowWallpaper("/images/wallpaper.jpg");
         refreshPage();
-
     }
-
 
     public void refreshPage() {
         refreshWallpaperAndProfile();
@@ -141,12 +118,9 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @Override
     public void refreshWallpaperAndProfile() {
         if (Main.selectedWallpaper != null && !Main.selectedWallpaper.isEmpty()) {
-            URL bgURL = getClass().getResource(Main.selectedWallpaper);
-            if (bgURL != null) {
-                rootPane.setStyle("-fx-background-image: url('" + bgURL.toExternalForm() + "'); " +
-                        "-fx-background-size: cover; " +
-                        "-fx-background-position: center;");
-            }
+            rootPane.setStyle("-fx-background-image: url('" + Main.selectedWallpaper + "'); " +
+                    "-fx-background-size: cover; " +
+                    "-fx-background-position: center;");
         }
 
         if (Main.selectedAvatar != null && !Main.selectedAvatar.isEmpty()) {
@@ -193,55 +167,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
         titleLabel.setStyle(titleStyleStr);
         subtitleLabel.setStyle(subtitleStyleStr);
         bodyLabel.setStyle(bodyStyleStr);
-    }
-
-    private void loadWelcomeMessage() {
-        if (contentArea == null) {
-            return;
-        }
-        contentArea.getChildren().clear();
-
-        VBox welcomeBox = new VBox();
-        welcomeBox.setAlignment(Pos.CENTER);
-        welcomeBox.setSpacing(25.0);
-        welcomeBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.25); -fx-background-radius: 20; -fx-border-color: rgba(224, 224, 224, 0.5); -fx-border-radius: 20;");
-        welcomeBox.setPadding(new Insets(40, 40, 40, 40));
-
-        AnchorPane.setTopAnchor(welcomeBox, 40.0);
-        AnchorPane.setBottomAnchor(welcomeBox, 60.0);
-        AnchorPane.setLeftAnchor(welcomeBox, 40.0);
-        AnchorPane.setRightAnchor(welcomeBox, 40.0);
-
-        if (Main.selectedWallpaper == null || Main.selectedWallpaper.contains("wp1.jpg") || Main.selectedWallpaper.isEmpty()) {
-            titleStyle += "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 10, 0.4, 3, 0);";
-            subtitleStyle += "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 8, 0.4, 2, 0);";
-            bodyStyle += "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 8, 0.4, 1.5, 0);";
-        } else if (Main.selectedWallpaper.contains("wp2.jpg") || Main.selectedWallpaper.contains("wp3.jpg")) {
-            titleStyle += "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 10, 0.2, 3, 0);";
-            subtitleStyle += "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 8, 0.2, 2, 0);";
-            bodyStyle += "-fx-text-fill: white; -fx-effect: dropshadow(gaussian, black, 8, 0.2, 1.5, 0);";
-        }
-
-        titleLabel = new Label("Talk & Learn");
-        titleLabel.setFont(Font.font("System", FontWeight.BOLD, 42.0));
-        titleLabel.setStyle(titleStyle);
-
-        subtitleLabel = new Label("Welcome to the ultimate language exchange platform!");
-        subtitleLabel.setFont(Font.font("System", FontWeight.BOLD, 20.0));
-        subtitleLabel.setStyle(subtitleStyle);
-
-        bodyLabel = new Label("Connect with people around the world, join active language sessions, or create your own meetings. Improve your communication skills naturally while expanding your network.\n\nUse the sidebar to manage your meetups, check out your favorites, or find ongoing talks near you.");
-        bodyLabel.setFont(Font.font("System", FontWeight.BOLD, 16.0));
-        bodyLabel.setPrefWidth(500.0);
-        bodyLabel.setWrapText(true);
-        bodyLabel.setTextAlignment(TextAlignment.CENTER);
-        bodyLabel.setLineSpacing(6.0);
-        bodyLabel.setStyle(bodyStyle);
-
-        refreshTextColors();
-
-        welcomeBox.getChildren().addAll(titleLabel, subtitleLabel, bodyLabel);
-        contentArea.getChildren().add(welcomeBox);
     }
 
     public void handleSignUp(ActionEvent actionEvent) {}
@@ -297,9 +222,9 @@ public class HomeController implements Initializable, ProfileUpdatable {
         Label favListingLanguage = (Label) listingDetailBox.getChildren().get(1);
         Label favListingSize = (Label) listingDetailBox.getChildren().get(2);
 
-        listingDetailTitle.setText( favListingTitle.getText() );
-        listingDetailLanguage.setText( favListingLanguage.getText() );
-        listingDetailSize.setText( favListingSize.getText() );
+        listingDetailTitle.setText(favListingTitle.getText());
+        listingDetailLanguage.setText(favListingLanguage.getText());
+        listingDetailSize.setText(favListingSize.getText());
     }
 
     public void handleCalendar(ActionEvent actionEvent) {
@@ -311,13 +236,9 @@ public class HomeController implements Initializable, ProfileUpdatable {
         try {
             Image img = new Image(imagePath);
             ImagePattern imgPattern = new ImagePattern(img);
-
             profileCircle.setFill(imgPattern);
-
             profileLetterLabel.setVisible(false);
-
         } catch (Exception e) {
-            System.err.println("Could not load profile image: " + imagePath);
             e.printStackTrace();
         }
     }
@@ -333,9 +254,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
                             "-fx-background-repeat: no-repeat; " +
                             "-fx-background-size: cover;"
             );
-
         } catch (Exception e) {
-            System.err.println("Could not load global wallpaper: " + imagePath);
             e.printStackTrace();
         }
     }
@@ -343,7 +262,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
     private void changeView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-
             loader.setControllerFactory(param -> {
                 if (param == HomeController.class) {
                     return this;
@@ -356,7 +274,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
             });
 
             Parent newView = loader.load();
-
             contentArea.getChildren().clear();
 
             AnchorPane.setTopAnchor(newView, 0.0);
@@ -365,9 +282,8 @@ public class HomeController implements Initializable, ProfileUpdatable {
             AnchorPane.setRightAnchor(newView, 0.0);
 
             contentArea.getChildren().add(newView);
-
         } catch (IOException e) {
-            System.err.println("Could not swap view: " + fxmlPath);
+            e.printStackTrace();
         }
     }
 
@@ -375,22 +291,19 @@ public class HomeController implements Initializable, ProfileUpdatable {
     public void handleOldMeetupClick(ActionEvent actionEvent) {}
 
     @FXML
-    public void handleAcceptApplication(javafx.event.ActionEvent actionEvent) {
-        javafx.scene.control.Button clickedButton = (javafx.scene.control.Button) actionEvent.getSource();
-
+    public void handleAcceptApplication(ActionEvent actionEvent) {
+        Button clickedButton = (Button) actionEvent.getSource();
         clickedButton.setDisable(true);
 
-        javafx.scene.layout.HBox buttonContainer = (javafx.scene.layout.HBox) clickedButton.getParent();
-        javafx.scene.layout.HBox mainRow = (javafx.scene.layout.HBox) buttonContainer.getParent();
-        javafx.scene.layout.VBox textContainer = (javafx.scene.layout.VBox) mainRow.getChildren().get(1);
+        HBox buttonContainer = (HBox) clickedButton.getParent();
+        HBox mainRow = (HBox) buttonContainer.getParent();
+        VBox textContainer = (VBox) mainRow.getChildren().get(1);
 
-        javafx.scene.control.Label nameLabel = (javafx.scene.control.Label) textContainer.getChildren().get(0);
-        javafx.scene.control.Label meetupLabel = (javafx.scene.control.Label) textContainer.getChildren().get(1);
+        Label nameLabel = (Label) textContainer.getChildren().get(0);
+        Label meetupLabel = (Label) textContainer.getChildren().get(1);
 
         String applicantUsername = nameLabel.getText().toLowerCase();
-
         String meetupTitle = meetupLabel.getText().replace("Wants to join: ", "").trim();
-
         String approverUser = Main.loggedInUser;
 
         String jsonPayload = "{"
@@ -400,50 +313,44 @@ public class HomeController implements Initializable, ProfileUpdatable {
                 + "\"participants\":[\"" + applicantUsername + "\", \"" + approverUser + "\"]"
                 + "}";
 
-        java.net.http.HttpRequest createRoomRequest = java.net.http.HttpRequest.newBuilder()
-                .uri(java.net.URI.create("http://localhost:8080/api/chat/create-room"))
+        HttpRequest createRoomRequest = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/chat/create-room"))
                 .header("Content-Type", "application/json")
-                .POST(java.net.http.HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
                 .build();
 
         Thread chatThread = new Thread(() -> {
             try {
-                java.net.http.HttpResponse<String> response = java.net.http.HttpClient.newHttpClient()
-                        .send(createRoomRequest, java.net.http.HttpResponse.BodyHandlers.ofString());
+                HttpResponse<String> response = HttpClient.newHttpClient()
+                        .send(createRoomRequest, HttpResponse.BodyHandlers.ofString());
 
-                javafx.application.Platform.runLater(() -> {
-                    if (response.statusCode() == 200) {
-                        System.out.println("SUCCESS! A chat room was created/updated for '" + meetupTitle + "' by host " + applicantUsername);
-                        mainRow.setVisible(false);
-                        mainRow.setManaged(false);
-                    } else if (response.statusCode() == 400) {
-                        Main.displayAlert(javafx.scene.control.Alert.AlertType.WARNING,
-                                "Grup Kapasitesi Doldu",
-                                "Bu gruba en fazla 8 kişi katılabilir. Daha fazla onay veremezsiniz!");
-                        clickedButton.setDisable(false);
-                    } else {
-                        System.out.println("Error: Failed to create the chat room. Status Code: " + response.statusCode());
-                        clickedButton.setDisable(false);
-                    }
-                });
+                if (response.statusCode() == 200) {
+                    mainRow.setVisible(false);
+                    mainRow.setManaged(false);
+                } else if (response.statusCode() == 400) {
+                    Main.displayAlert(Alert.AlertType.WARNING,
+                            "Grup Kapasitesi Doldu",
+                            "Bu gruba en fazla 8 kişi katılabilir. Daha fazla onay veremezsiniz!");
+                    clickedButton.setDisable(false);
+                } else {
+                    clickedButton.setDisable(false);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                javafx.application.Platform.runLater(() -> clickedButton.setDisable(false));
+                clickedButton.setDisable(false);
             }
         });
         chatThread.setDaemon(true);
         chatThread.start();
     }
+
     public void handleRejectApplication(ActionEvent actionEvent) {}
 
     public void handlePublishMeetup(ActionEvent actionEvent) {
-        // Read the values filled by the user
         if (meetupDatePicker.getValue() == null) {
-            System.out.println("Please select a date!");
             return;
         }
 
-        String selectedDate = meetupDatePicker.getValue().toString();
         String title = meetupTitleInput.getText();
         String language = languageComboBox.getValue();
         String description = meetupDescriptionInput.getText();
@@ -452,7 +359,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
         String location = (selectedLocation != null) ? selectedLocation.getText() : "None";
 
         List<String> selectedTags = new ArrayList<>();
-
         if (tagGameNight != null && tagGameNight.isSelected()) {
             selectedTags.add(tagGameNight.getText());
         }
@@ -462,9 +368,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
         if (tagSports != null && tagSports.isSelected()) {
             selectedTags.add(tagSports.getText());
         }
-
-
-        //Values: title (string), language (string), description (string), location (string) and selected tags (arraylist) will be used to create a listing under here
 
         String tagsJson = selectedTags.stream()
                 .map(tag -> "\"" + tag.replace("\"", "\\\"") + "\"")
@@ -492,33 +395,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
                 .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
                 .build();
 
-        System.out.println("Sending Listing to backend...");
-
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> {
-                    // Network responses run on a background thread.
-                    // Use Platform.runLater to interact with UI components safely.
-                    Platform.runLater(() -> {
-                        if (response.statusCode() == 200) {
-                            System.out.println("Backend Success: " + response.body());
-                        } else {
-                            System.err.println("Backend Error (" + response.statusCode() + "): " + response.body());
-                        }
-                    });
-                })
-                .exceptionally(ex -> {
-                    Platform.runLater(() -> {
-                        System.err.println("Failed to connect to backend: " + ex.getMessage());
-                    });
-                    return null;
-                });
-
-
-
-
-        System.out.println("Publishing Meetup: " + title + " [" + language + "] at " + location);
-        System.out.println("Selected Tags: " + selectedTags);
-        System.out.println("Saved Meetup: " + title);
+        client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
         meetupTitleInput.clear();
         meetupDescriptionInput.clear();
@@ -553,7 +430,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
         meetupBtn.setOnAction(e -> {});
 
-        // Append to target section container
         if (isPlanned) {
             plannedMeetupsContainer.getChildren().add(meetupBtn);
         } else {
@@ -611,18 +487,15 @@ public class HomeController implements Initializable, ProfileUpdatable {
         rejectBtn.setOnAction(e -> handleRejectAction(name, card));
 
         actionsContainer.getChildren().addAll(acceptBtn, separator, rejectBtn);
-
         card.getChildren().addAll(avatar, textStack, actionsContainer);
         applicationsContainer.getChildren().add(card);
     }
 
     private void handleAcceptAction(String name, HBox cardNode) {
-        System.out.println("Accepted application from: " + name);
         applicationsContainer.getChildren().remove(cardNode);
     }
 
     private void handleRejectAction(String name, HBox cardNode) {
-        System.out.println("Rejected application from: " + name);
         applicationsContainer.getChildren().remove(cardNode);
     }
     @FXML
@@ -638,7 +511,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
     }
 
     private void fetchMeetupsFromBackend() {
-        // Run network request on a background thread to prevent UI freezing
         new Thread(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
@@ -651,14 +523,12 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
                 if (response.statusCode() == 200) {
                     JsonMapper mapper = JsonMapper.builder().build();
-
-                    // The backend returns a List of JSON Strings
                     List<String> listingsJsonList = mapper.readValue(response.body(), new TypeReference<List<String>>(){});
 
                     plannedMeetupsMap.clear();
 
-                    for (String jsonString : listingsJsonList) {
-                        // Parse each individual JSON string into a JsonNode
+                    for (int i = 0; i < listingsJsonList.size(); i++) {
+                        String jsonString = listingsJsonList.get(i);
                         JsonNode node = mapper.readTree(jsonString);
 
                         if (node.has("listingname") && node.has("meetupDate") && !node.get("meetupDate").isNull()) {
@@ -666,9 +536,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
                             JsonNode dateNode = node.get("meetupDate");
 
                             LocalDate meetupDate;
-
-                            // Spring Boot sometimes serializes LocalDate as an array [YYYY, MM, DD]
-                            // or as a standard ISO String "YYYY-MM-DD"
                             if (dateNode.isArray()) {
                                 meetupDate = LocalDate.of(
                                         dateNode.get(0).asInt(),
@@ -679,13 +546,9 @@ public class HomeController implements Initializable, ProfileUpdatable {
                                 meetupDate = LocalDate.parse(dateNode.asText());
                             }
 
-                            // Add the parsed meetup to our map
                             plannedMeetupsMap.computeIfAbsent(meetupDate, k -> new ArrayList<>()).add(meetupName);
                         }
                     }
-
-                    // Update the UI on the JavaFX Application Thread
-                    Platform.runLater(() -> populateCalendar(currentYearMonth));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -696,21 +559,18 @@ public class HomeController implements Initializable, ProfileUpdatable {
     private void populateCalendar(YearMonth yearMonth) {
         calendarGrid.getChildren().clear();
 
-        // Set Header Label
         calendarMonthYearLabel.setText(yearMonth.getMonth().toString().substring(0, 1) +
                 yearMonth.getMonth().toString().substring(1).toLowerCase() +
                 " " + yearMonth.getYear());
 
-        // Add Day of Week Headers
         String[] daysOfWeek = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         for (int i = 0; i < daysOfWeek.length; i++) {
             Label dayLabel = new Label(daysOfWeek[i]);
-            dayLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #757575;");
+            dayLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black;");
             calendarGrid.add(dayLabel, i, 0);
             GridPane.setHalignment(dayLabel, javafx.geometry.HPos.CENTER);
         }
 
-        // Calculate days
         LocalDate firstOfMonth = yearMonth.atDay(1);
         int dayOfWeekOfFirst = firstOfMonth.getDayOfWeek().getValue();
         int daysInMonth = yearMonth.lengthOfMonth();
@@ -718,11 +578,9 @@ public class HomeController implements Initializable, ProfileUpdatable {
         int row = 1;
         int col = dayOfWeekOfFirst - 1;
 
-        // Fill actual days
         for (int day = 1; day <= daysInMonth; day++) {
             LocalDate currentDate = yearMonth.atDay(day);
 
-            // Use a VBox so we can stack the Date number and the Meetup Labels
             VBox dayPane = new VBox();
             dayPane.setAlignment(Pos.TOP_CENTER);
             dayPane.setPadding(new Insets(5));
@@ -730,7 +588,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
             Label dateLabel = new Label(String.valueOf(day));
 
-            // Style current day vs regular days
             if (currentDate.equals(LocalDate.now())) {
                 dayPane.setStyle("-fx-background-color: #e3f2fd; -fx-background-radius: 10; -fx-border-color: #0078fe; -fx-border-radius: 10; -fx-cursor: hand;");
                 dateLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0078fe;");
@@ -741,9 +598,10 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
             dayPane.getChildren().add(dateLabel);
 
-            // Inject the meetups into the calendar cells dynamically
             if (plannedMeetupsMap.containsKey(currentDate)) {
-                for (String meetupName : plannedMeetupsMap.get(currentDate)) {
+                List<String> meetups = plannedMeetupsMap.get(currentDate);
+                for (int j = 0; j < meetups.size(); j++) {
+                    String meetupName = meetups.get(j);
                     Label meetupLabel = new Label(meetupName);
                     meetupLabel.setStyle("-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 2 5 2 5;");
                     meetupLabel.setMaxWidth(Double.MAX_VALUE);
