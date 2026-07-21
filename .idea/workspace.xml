@@ -4,10 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend.">
+    <list default="true" id="ab2f8ca1-88c7-42da-8b97-9e49fe07fdf8" name="Changes" comment="Implemented customizationController's functions to every related class. Added 3 pp 3 wallpapers.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/MeetupCreationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/MyMeetupsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SmallListingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/smallListing.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DiscoveryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ListingApplyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ListingApplyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MeetupCreationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MeetupCreationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/discoveryScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/homeScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/listingApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/navigationMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/navigationMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smallApplicationScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smallDiscoveryListing.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/test_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/test_style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +66,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="listing-search-unstable" />
+        <entry key="$PROJECT_DIR$" value="testMeliksah" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,12 +77,12 @@
     &quot;assignee&quot;: &quot;adalaltun&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/adalaltun/Talk-Learn-Frontend.git&quot;,
-    &quot;accountId&quot;: &quot;aab7bea7-37c3-4b78-b9d6-1cef4d64aa10&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/adalaltun/Talk-Learn-Frontend.git",
+    "accountId": "aab7bea7-37c3-4b78-b9d6-1cef4d64aa10"
   }
-}</component>
+}]]></component>
   <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.2.0-bin/11i5gvueggl8a5cioxuftxrik/gradle-9.2.0" javaHome="/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home" gradleVersion="9.2.0" />
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/org/example/Main.java" root0="SKIP_INSPECTION" />
@@ -235,15 +251,7 @@
       <option name="project" value="LOCAL" />
       <updated>1784426627421</updated>
     </task>
-    <task id="LOCAL-00007" summary="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend.">
-      <option name="closed" value="true" />
-      <created>1784572268268</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1784572268268</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,8 +285,23 @@
     <MESSAGE value="Added classes" />
     <MESSAGE value="Modified login and register screens to be aligned center." />
     <MESSAGE value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
-    <MESSAGE value="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented changing username and password. Set constraints for string length in username and password inputs. Connected customization preferences with backend." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added leaderboardscreen and its functionalities. Set a default wallpaper and pp. Customized page designs. Adjusted navigation bar." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/SmallListingController.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
