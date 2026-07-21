@@ -95,7 +95,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
                     "-fx-background-position: center;");
         }
 
-        setProfilePicture("/images/defaultProfilePhoto.png");
         refreshPage();
     }
 
