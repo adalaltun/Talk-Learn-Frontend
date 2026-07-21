@@ -32,6 +32,7 @@ import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 
+
 public class HomeController implements Initializable, ProfileUpdatable {
 
     static int i = 0;
@@ -93,9 +94,6 @@ public class HomeController implements Initializable, ProfileUpdatable {
                     "-fx-background-size: cover; " +
                     "-fx-background-position: center;");
         }
-
-        profileName.setText("Zenco");
-        profileDate.setText("Lvl 99 ngga");
 
         setProfilePicture("/images/defaultProfilePhoto.png");
         refreshPage();
@@ -329,8 +327,8 @@ public class HomeController implements Initializable, ProfileUpdatable {
                     mainRow.setManaged(false);
                 } else if (response.statusCode() == 400) {
                     Main.displayAlert(Alert.AlertType.WARNING,
-                            "Grup Kapasitesi Doldu",
-                            "Bu gruba en fazla 8 kişi katılabilir. Daha fazla onay veremezsiniz!");
+                            "Group is full",
+                            "The group is full.");
                     clickedButton.setDisable(false);
                 } else {
                     clickedButton.setDisable(false);

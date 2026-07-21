@@ -161,7 +161,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
 
         //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-        startingScene = loadFXML("homeScreen");
+        startingScene = loadFXML("loginScreen");
         //fxmlname'nin sonunda .fxml olmasına gerek yok.
         homeMenu = loadFXML("homeScreen");
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
