@@ -216,6 +216,7 @@ public class ChatController {
         Main.changeMenu(Main.leaderboardMenu);
     }
 
+
     @FXML
     private void handleWithdraw() {
         if (currentRoomId == null) {
@@ -225,18 +226,26 @@ public class ChatController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Withdraw Conversation");
         alert.setHeaderText("Are you sure to withdraw?");
-        alert.setContentText("This will instantly close the session for both of you and wipe the chat history permanently.");
+        alert.setContentText("Do you really want to leave this conversation?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            String signalPrefix = "";
+            if (currentRoomId.startsWith(currentUser.toLowerCase() + "_")) {
+                signalPrefix = "[ROOM_DESTROYED_BY_]";
+            } else {
+                signalPrefix = "[PARTICIPANT_LEFT_]";
+            }
 
-            String shutdownPayload = "{\"roomId\":\"" + currentRoomId + "\",\"sender\":\"" + currentUser + "\",\"content\":\"[WITHDRAW_EVENT_BY_]" + currentUser + "\"}";
+            String shutdownPayload = "{\"roomId\":\"" + currentRoomId + "\",\"sender\":\"" + currentUser + "\",\"content\":\"" + signalPrefix + currentUser + "\"}";
 
             HttpRequest signalRequest = HttpRequest.newBuilder()
                     .uri(URI.create(BACKEND_URL + "/send"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(shutdownPayload))
                     .build();
+
+            final String roomToDelete = currentRoomId;
 
             String targetPartner = chatPartner;
             removeContactFromSidebar(targetPartner);
@@ -250,12 +259,13 @@ public class ChatController {
                 public void run() {
                     try {
                         httpClient.send(signalRequest, HttpResponse.BodyHandlers.ofString());
+
                         try {
                             Thread.sleep(800);
                         } catch (InterruptedException ignored) {}
 
                         HttpRequest deleteRequest = HttpRequest.newBuilder()
-                                .uri(URI.create(BACKEND_URL + "/withdraw/" + currentRoomId + "/" + currentUser))
+                                .uri(URI.create(BACKEND_URL + "/withdraw/" + roomToDelete + "/" + currentUser))
                                 .DELETE()
                                 .build();
 
@@ -560,18 +570,20 @@ public class ChatController {
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (content.startsWith("[WITHDRAW_EVENT_BY_]")) {
-                                            String withdrawerUser = content.replace("[WITHDRAW_EVENT_BY_]", "");
-
+                                        if (content.startsWith("[ROOM_DESTROYED_BY_]")) {
+                                            String withdrawerUser = content.replace("[ROOM_DESTROYED_BY_]", "");
                                             if (!withdrawerUser.equalsIgnoreCase(currentUser)) {
-                                                addSecureShutdownMessage(withdrawerUser + " has withdrawn from this chat session. Session is closed!");
+                                                addSecureShutdownMessage(
+                                                        "The host (" + withdrawerUser + ") closed the chat. The session has ended"
+                                                );
                                                 enableChatInputs(false);
                                                 removeContactFromSidebar(withdrawerUser);
-
-                                                if (withdrawButton != null) {
-                                                    withdrawButton.setVisible(false);
-                                                    withdrawButton.setManaged(false);
-                                                }
+                                            }
+                                        } else if (content.startsWith("[PARTICIPANT_LEFT_]")) {
+                                            String withdrawerUser = content.replace("[PARTICIPANT_LEFT_]", "");
+                                            if (!withdrawerUser.equalsIgnoreCase(currentUser)) {
+                                                addSystemMessage(withdrawerUser + " left the room.");
+                                                removeContactFromSidebar(withdrawerUser);
                                             }
                                         } else {
                                             addMessageBubble(sender, content, getCurrentTimeText());
@@ -587,7 +599,7 @@ public class ChatController {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    addSystemMessage("Connection failure.");
+                    addSystemMessage("Connection error.");
                 }
             });
         }
