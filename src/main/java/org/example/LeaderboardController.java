@@ -104,11 +104,13 @@ public class LeaderboardController {
 
             if (responseMap.containsKey("rating")) {
                 rating = ((Number) responseMap.get("rating")).doubleValue();
+            } else if (responseMap.containsKey("averageRating")) {
+                rating = ((Number) responseMap.get("averageRating")).doubleValue();
             }
 
             meetupsCreatedLabel.setText(String.valueOf(meetupsCreated));
             totalReviewsLabel.setText(String.valueOf(totalReviews));
-            ratingLabel.setText(rating + " / 5.0");
+            ratingLabel.setText(String.format("%.1f", rating));
 
             java.util.List<?> rankList = (java.util.List<?>) responseMap.get("rank");
             int[] ranks = new int[]{0, 0, 0};
@@ -141,6 +143,10 @@ public class LeaderboardController {
 
             if (entry.get("score") != null) {
                 score = ((Number) entry.get("score")).doubleValue();
+            } else if (entry.get("rating") != null) {
+                score = ((Number) entry.get("rating")).doubleValue();
+            } else if (entry.get("averageRating") != null) {
+                score = ((Number) entry.get("averageRating")).doubleValue();
             }
 
             HBox card = new HBox();
