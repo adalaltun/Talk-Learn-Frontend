@@ -290,7 +290,8 @@ public class HomeController implements Initializable, ProfileUpdatable {
                                             for (Map<String, String> app : apps) {
                                                 String applicant = app.get("username");
                                                 String topic = app.get("listingTitle");
-                                                addIncomingApplicationCard(applicant, topic);
+                                                String appId = String.valueOf(app.get("id"));
+                                                addIncomingApplicationCard(applicant, topic, appId);
                                             }
                                         }
                                     }
@@ -303,7 +304,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
                 });
     }
 
-    public void addIncomingApplicationCard(final String name, final String meetupTopic) {
+    public void addIncomingApplicationCard(final String name, final String meetupTopic, final String appId) {
         if (applicationsContainer == null) {
             return;
         }
@@ -350,7 +351,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
         acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                handleAcceptAction(name, card);
+                handleAcceptAction(name, meetupTopic, appId, card);
             }
         });
 
@@ -368,12 +369,16 @@ public class HomeController implements Initializable, ProfileUpdatable {
     }
 
     public void addIncomingApplication(String name, String meetupTopic) {
+        addIncomingApplication(name, meetupTopic, null);
+    }
+
+    public void addIncomingApplication(String name, String meetupTopic, String appId) {
         if (applicationsContainer == null) {
             handleMyMeetups(null);
         }
 
         if (applicationsContainer != null) {
-            addIncomingApplicationCard(name, meetupTopic);
+            addIncomingApplicationCard(name, meetupTopic, appId);
         }
     }
 
@@ -488,31 +493,56 @@ public class HomeController implements Initializable, ProfileUpdatable {
                 .thenAccept(new Consumer<HttpResponse<String>>() {
                     @Override
                     public void accept(final HttpResponse<String> response) {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (response.statusCode() == 200) {
-                                    if (applicationsContainer != null && cardNode != null) {
-                                        applicationsContainer.getChildren().remove(cardNode);
-                                    }
-
-                                    Main.displayAlert(Alert.AlertType.INFORMATION, "Application Accepted",
-                                            applicantUsername + " has been added to chat for '" + meetupTopic + "'!");
-                                } else {
-                                    Main.displayAlert(Alert.AlertType.ERROR, "Error", "Failed to accept application: " + response.body());
-                                    if (acceptBtn != null) {
-                                        acceptBtn.setDisable(false);
-                                    }
-                                }
+                        if (response.statusCode() == 200) {
+                            if (applicationsContainer != null && cardNode != null) {
+                                applicationsContainer.getChildren().remove(cardNode);
                             }
-                        });
+
+                            Main.displayAlert(Alert.AlertType.INFORMATION, "Application Accepted",
+                                    applicantUsername + " has been added to chat for '" + meetupTopic + "'!");
+                        } else {
+                            Main.displayAlert(Alert.AlertType.ERROR, "Error", "Failed to accept application: " + response.body());
+                            if (acceptBtn != null) {
+                                acceptBtn.setDisable(false);
+                            }
+                        }
                     }
                 });
     }
 
-    public void handleAcceptAction(String name, HBox cardNode) {
+    public void handleAcceptAction(final String name, final String meetupTopic, String appId, final HBox cardNode) {
         if (applicationsContainer != null && cardNode != null) {
             applicationsContainer.getChildren().remove(cardNode);
+        }
+
+        if (appId == null || appId.equalsIgnoreCase("null") || appId.isEmpty()) {
+            Main.displayAlert(Alert.AlertType.ERROR, "Error", "Application ID is missing. Cannot accept.");
+            return;
+        }
+
+        try {
+            String url = "http://localhost:8080/api/listings/applications/accept/" + appId;
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(new Consumer<HttpResponse<String>>() {
+                        @Override
+                        public void accept(final HttpResponse<String> response) {
+                            if (response.statusCode() == 200) {
+                                Main.displayAlert(Alert.AlertType.INFORMATION, "Application Accepted",
+                                        name + " has been added to the chat for '" + meetupTopic + "'!");
+                            } else {
+                                Main.displayAlert(Alert.AlertType.ERROR, "Error",
+                                        "Failed to accept application: " + response.body());
+                            }
+                        }
+                    });
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
