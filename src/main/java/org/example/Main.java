@@ -34,6 +34,9 @@ public class Main extends Application {
     public static Parent accountInfoScreen;
     public static Parent customizationScreen;
     public static Parent settingsScreen;
+    public static Parent smallApplicationScreen;
+    public static Parent smallApplicationBox;
+    public static Parent myMeetupsScreen;
 
     public static Parent myMeetupsMenu;
     public static Parent meetupCreationMenu;
@@ -161,7 +164,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
 
         //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
-        startingScene = loadFXML("loginScreen");
+        startingScene = loadFXML("homeScreen");
         //fxmlname'nin sonunda .fxml olmasına gerek yok.
         homeMenu = loadFXML("homeScreen");
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -174,6 +177,10 @@ public class Main extends Application {
         applicationScene = loadFXML("listingApplicationScreen");
         chatMenu = loadFXML("chatScreen");
         settingsScreen = loadFXML("settingsScreen");
+
+        smallApplicationScreen = loadFXML("smallApplicationScreen");
+        //smallApplicationBox = loadFXML("smallApplicationBox");
+        myMeetupsScreen = loadFXML("MyMeetupsScreen");
 
         //GUI'ye kod yazıp test edecekseniz startingScene'nin fxmlname'sini değiştirin
         //startingScene = discoveryMenu;
