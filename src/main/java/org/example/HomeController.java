@@ -764,7 +764,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
                     String meetupName = meetups.get(j);
                     Label meetupLabel = new Label(meetupName);
                     meetupLabel.setStyle("-fx-background-color: #0078fe; -fx-text-fill: white; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 2 5 2 5;");
-                    meetupLabel.setMaxWidth(Double.MAX_VALUE);
+                    meetupLabel.setMaxWidth(10000);
                     meetupLabel.setAlignment(Pos.CENTER);
                     dayPane.getChildren().add(meetupLabel);
                 }
