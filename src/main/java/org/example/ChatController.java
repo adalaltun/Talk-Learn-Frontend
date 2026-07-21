@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -364,6 +365,7 @@ public class ChatController {
 
         chatMessageArea.getChildren().clear();
         addSystemMessage("---Chat session has been established with " + chatPartner + "---");
+        addSystemMessage("To rate users, use: /rate_\"username\"_\"score\"");
 
         loadHistory();
     }
@@ -499,16 +501,25 @@ public class ChatController {
             return;
         }
 
+        if (content.startsWith("/rate_")) {
+            handleRateCommand(content);
+            messageField.clear();
+            return;
+        }
+
         sendButton.setDisable(true);
         messageField.setEditable(false);
         messageField.setPromptText("Please wait...");
 
         javafx.animation.PauseTransition cooldown = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
-        cooldown.setOnFinished(e -> {
-            sendButton.setDisable(false);
-            messageField.setEditable(true);
-            messageField.setPromptText("Send a message...");
-            messageField.requestFocus();
+        cooldown.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                sendButton.setDisable(false);
+                messageField.setEditable(true);
+                messageField.setPromptText("Send a message...");
+                messageField.requestFocus();
+            }
         });
         cooldown.play();
 
@@ -524,6 +535,76 @@ public class ChatController {
 
         Thread sendThread = getSendThread(request);
         sendThread.start();
+    }
+
+    private void handleRateCommand(String command) {
+        String[] parts = command.split("_");
+
+        if (parts.length != 3) {
+            addSystemMessage("Invalid rate command format. Usage: /rate_username_score (e.g. /rate_john_4.5)");
+            return;
+        }
+
+        String targetUsername = parts[1].trim();
+        String scoreStr = parts[2].trim();
+
+        final double score;
+        try {
+            score = Double.parseDouble(scoreStr);
+        } catch (NumberFormatException e) {
+            addSystemMessage("Invalid rating score. Please enter a valid number between 0 and 5.");
+            return;
+        }
+
+        if (score < 0 || score > 5) {
+            addSystemMessage("Rating score must be between 0 and 5.");
+            return;
+        }
+
+        if (targetUsername.equalsIgnoreCase(currentUser)) {
+            addSystemMessage("You cannot rate yourself!");
+            return;
+        }
+
+        try {
+            String urlStr = String.format("http://localhost:8080/api/users/rate?raterUsername=%s&targetUsername=%s&rating=%.1f",
+                    java.net.URLEncoder.encode(currentUser, java.nio.charset.StandardCharsets.UTF_8),
+                    java.net.URLEncoder.encode(targetUsername, java.nio.charset.StandardCharsets.UTF_8),
+                    score).replace(",", ".");
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(urlStr))
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(new java.util.function.Consumer<HttpResponse<String>>() {
+                        @Override
+                        public void accept(final HttpResponse<String> response) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (response.statusCode() == 200) {
+                                        addSystemMessage("⭐ You rated " + targetUsername + " with " + score + " stars successfully!");
+
+                                        String notifyPayload = "{\"roomId\":\"" + currentRoomId + "\",\"sender\":\"" + currentUser + "\",\"content\":\"⭐ Rated " + targetUsername + " " + score + "/5 stars!\"}";
+                                        HttpRequest notifyRequest = HttpRequest.newBuilder()
+                                                .uri(URI.create(BACKEND_URL + "/send"))
+                                                .header("Content-Type", "application/json")
+                                                .POST(HttpRequest.BodyPublishers.ofString(notifyPayload))
+                                                .build();
+                                        httpClient.sendAsync(notifyRequest, HttpResponse.BodyHandlers.ofString());
+                                    } else {
+                                        addSystemMessage("Failed to rate user: " + response.body());
+                                    }
+                                }
+                            });
+                        }
+                    });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            addSystemMessage("Error occurred while sending rating.");
+        }
     }
 
     private Thread getSendThread(HttpRequest request) {
