@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox onKeyPressed="#handleChatKeyEvents" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ChatController">
+<VBox onKeyPressed="#handleChatKeyEvents" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ChatController">
     <children>
         <SplitPane dividerPositions="0.28" focusTraversable="true" style="-fx-background-color: white; -fx-box-border: transparent;" VBox.vgrow="ALWAYS">
             <items>
@@ -97,7 +97,7 @@
                                         <Label text="Welcome to Talk &amp; Learn!" textFill="#1a1a1a">
                                             <font><Font name="System Bold" size="24.0" /></font>
                                         </Label>
-                                        <Label alignment="CENTER" prefWidth="420.0" text="Please select a contact from the left panel to start chatting and learning.&#10;&#10;⚠️ Keep your conversations constructive and always be respectful while chatting." textAlignment="CENTER" textFill="#757575" wrapText="true">
+                                        <Label alignment="CENTER" prefWidth="420.0" text="Please select a contact from the left panel to start chatting and learning.&#10;" textAlignment="CENTER" textFill="#757575" wrapText="true">
                                             <font><Font name="System Italic" size="14.0" /></font>
                                         </Label>
                                     </children>
