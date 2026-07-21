@@ -33,7 +33,8 @@ import java.io.IOException;
 
 public class HomeController implements Initializable, ProfileUpdatable {
 
-    static int i = 0;
+    public static Label smallApplicationText;
+    public static Label smallApplicationUsername;
 
     @FXML private SplitPane rootPane;
     @FXML private AnchorPane contentArea;
@@ -52,7 +53,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private ToggleButton tagSports;
     @FXML private VBox plannedMeetupsContainer;
     @FXML private VBox pastMeetupsContainer;
-    @FXML private VBox applicationsContainer;
+    @FXML public static VBox applicationsContainer;
     @FXML private NavigationController navMenuController;
 
     String titleStyle = "", subtitleStyle = "", bodyStyle = "";
@@ -65,6 +66,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
     private Map<LocalDate, List<String>> plannedMeetupsMap = new HashMap<>();
     @FXML private DatePicker meetupDatePicker;
 
+    // favorites için
     @FXML private AnchorPane listingDetailView;
     @FXML private Label listingDetailTitle;
     @FXML private Label listingDetailRating;
@@ -286,7 +288,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
     public void handleOldMeetupClick(ActionEvent actionEvent) {}
 
     @FXML
-    public void handleAcceptApplication(ActionEvent actionEvent) {
+    public static void handleAcceptApplication(ActionEvent actionEvent) {
         // Standard handler for FXML clicks
         Button btn = (Button) actionEvent.getSource();
         btn.setDisable(true);
