@@ -22,6 +22,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -113,11 +115,10 @@ public class HomeController implements Initializable, ProfileUpdatable {
         if (profileDate != null) {
             profileDate.setText(Main.accountCreationDate);
         }
-
+        fetchMeetupsFromBackend();
         if (calendarGrid != null && calendarMonthYearLabel != null) {
             populateCalendar(currentYearMonth);
         }
-        fetchMeetupsFromBackend();
 
         if (Main.selectedWallpaper != null && rootPane != null) {
             rootPane.setStyle("-fx-background-image: url('" + Main.selectedWallpaper + "'); " +
@@ -126,6 +127,15 @@ public class HomeController implements Initializable, ProfileUpdatable {
         }
 
         refreshPage();
+        Platform.runLater(() -> {
+            if (rootPane != null && rootPane.getScene() != null) {
+                rootPane.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                    if (event.getCode() == KeyCode.ESCAPE) {
+                        reloadHomeScreen(); // Reloads the page to show the calendar
+                    }
+                });
+            }
+        });
     }
 
     public void refreshPage() {
@@ -184,6 +194,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
     }
 
     public void handleMain(ActionEvent actionEvent) {
+        reloadHomeScreen();
         if (profileView != null) {
             profileView.setVisible(true);
         }
@@ -631,6 +642,14 @@ public class HomeController implements Initializable, ProfileUpdatable {
                                         plannedMeetupsMap.get(meetupDate).add(meetupName);
                                     }
                                 }
+
+                                // RE-POPULATE THE CALENDAR ON THE FX THREAD ONCE DATA ARRIVES
+                                Platform.runLater(() -> {
+                                    if (calendarGrid != null && calendarMonthYearLabel != null) {
+                                        populateCalendar(currentYearMonth);
+                                    }
+                                });
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -745,6 +764,26 @@ public class HomeController implements Initializable, ProfileUpdatable {
         }
         targetContainer.getChildren().removeAll(nodesToRemove);
     }
+    private void returnToMainView() {
+        // Hide the secondary views
+        if (myMeetupsListView != null) myMeetupsListView.setVisible(false);
+        if (listingDetailView != null) listingDetailView.setVisible(false);
+
+        // Show the default views (Profile and Calendar)
+        if (profileView != null) profileView.setVisible(true);
+        if (contentArea != null) contentArea.setVisible(true);
+    }
+    private void reloadHomeScreen() {
+        try {
+            // Reloads the entire home screen, bringing the calendar back
+            Parent root = FXMLLoader.load(getClass().getResource("/homeScreen.fxml"));
+            if (rootPane != null && rootPane.getScene() != null) {
+                rootPane.getScene().setRoot(root);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void populateCalendar(YearMonth yearMonth) {
         calendarGrid.getChildren().clear();
@@ -760,6 +799,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
             calendarGrid.add(dayLabel, i, 0);
             GridPane.setHalignment(dayLabel, javafx.geometry.HPos.CENTER);
         }
+
 
         LocalDate firstOfMonth = yearMonth.atDay(1);
         int dayOfWeekOfFirst = firstOfMonth.getDayOfWeek().getValue();

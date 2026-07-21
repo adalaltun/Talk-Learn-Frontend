@@ -2,7 +2,11 @@ package org.example;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class NavigationController {
 
@@ -47,7 +51,21 @@ public class NavigationController {
         settingsBtn.setStyle(INACTIVE_STYLE);
     }
 
-    @FXML public void handleMain(ActionEvent e) { Main.changeMenu(Main.homeMenu); }
+    @FXML
+    private void handleMain(ActionEvent event) {
+        try {
+            // Load the home screen layout
+            Parent root = FXMLLoader.load(getClass().getResource("/homeScreen.fxml"));
+
+            // Get the current window (stage) from the button click event
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Set the screen to the fresh Home Screen (restoring the calendar)
+            stage.getScene().setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML public void handleDiscovery(ActionEvent e) { Main.changeMenu(Main.discoveryMenu); }
     @FXML public void handleChat(ActionEvent e) { Main.changeMenu(Main.chatMenu); }
     @FXML public void handleLeaderboard(ActionEvent e) { Main.changeMenu(Main.leaderboardScreen); }
