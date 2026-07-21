@@ -624,7 +624,7 @@ public class ChatController {
     private void addSecureShutdownMessage(String text) {
         HBox row = new HBox();
         row.setAlignment(Pos.CENTER);
-        row.setMaxWidth(Double.MAX_VALUE);
+        row.setMaxWidth(10000);
         row.setPadding(new javafx.geometry.Insets(10, 0, 10, 0));
 
         Label label = new Label(text);
@@ -641,7 +641,7 @@ public class ChatController {
     private void addMessageBubble(String sender, String content, String time) {
         HBox messageRow = new HBox();
         messageRow.setSpacing(10);
-        messageRow.setMaxWidth(Double.MAX_VALUE);
+        messageRow.setMaxWidth(10000);
         HBox.setHgrow(messageRow, Priority.ALWAYS);
 
         VBox bubbleContainer = new VBox();
@@ -688,7 +688,7 @@ public class ChatController {
     private void addSystemMessage(String text) {
         HBox row = new HBox();
         row.setAlignment(Pos.CENTER);
-        row.setMaxWidth(Double.MAX_VALUE);
+        row.setMaxWidth(10000);
         Label label = new Label(text);
         label.setStyle("-fx-text-fill: gray; -fx-font-style: italic; -fx-padding: 5;");
         row.getChildren().add(label);

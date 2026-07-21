@@ -178,7 +178,7 @@ public class LeaderboardController {
             scoreLabel.setTextFill(Color.web("#8e8e93"));
 
             HBox.setHgrow(nameLabel, Priority.ALWAYS);
-            nameLabel.setMaxWidth(Double.MAX_VALUE);
+            nameLabel.setMaxWidth(10000);
 
             card.getChildren().addAll(indexLabel, nameLabel, scoreLabel);
             container.getChildren().add(card);
