@@ -5,10 +5,14 @@ import javafx.event.ActionEvent;
 public class SmallApplicationController {
 
     public void handleAcceptApplication(ActionEvent actionEvent) {
-        Main.homeController.handleAcceptApplication(actionEvent);
+        if (Main.homeController != null) {
+            Main.homeController.handleAcceptApplication(actionEvent);
+        }
     }
 
     public void handleRejectApplication(ActionEvent actionEvent) {
-        Main.homeController.handleRejectApplication(actionEvent);
+        if (Main.homeController != null) {
+            Main.homeController.handleRejectApplication(actionEvent);
+        }
     }
 }

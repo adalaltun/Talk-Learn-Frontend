@@ -1,22 +1,21 @@
 package org.example;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.function.Consumer;
 
 public class ListingApplyController {
-
-    // VBox from MyMeetupsScreen in HomeMenu
-    @FXML private VBox applicationsContainer;
 
     @FXML private Button applyButton;
     @FXML private Button goBackButton;
@@ -25,69 +24,82 @@ public class ListingApplyController {
     @FXML private Label applicationTitle;
     @FXML private Label applicationLanguage;
 
+    private String hostUsername;
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+
     @FXML
     public void handleApplication(ActionEvent actionEvent) {
+        if (Main.loggedInUser != null && Main.loggedInUser.equalsIgnoreCase(hostUsername)) {
+            Main.displayAlert(Alert.AlertType.WARNING, "Warning", "You cannot apply to your own meetup listing!");
+            return;
+        }
+
         sendApplication();
-        Main.displayAlert(Alert.AlertType.INFORMATION, "Application Success!",
-                "Your application has been sent to the host. You will be added to chat if accepted.");
-        Main.changeMenu(Main.discoveryMenu);
-
-        String title = applicationTitle.getText();
-        String username = "deneme";
-
-        System.out.println(title);
-        System.out.println(username);
-
-        HBox smallApplicationBox = (HBox) Main.loadFXML("smallApplicationBox");
-
-        VBox applicationBox = (VBox) smallApplicationBox.getChildren().get(1);
-
-        Label applicantName = (Label) applicationBox.getChildren().get(0);
-        Label applicationTopic = (Label) applicationBox.getChildren().get(1);
-
-        applicantName.setText(username);
-        applicantName.setText("Wants to join: " + title);
-
-        //burası sıkıntılı
-        //myMeetups fxml içinden fx:id'si applicantionsContainer olanı alıyorum
-        AnchorPane myMeetups = (AnchorPane) Main.myMeetupsScreen;
-        ScrollPane applicationsPane =  (ScrollPane)(myMeetups.getChildren().getFirst());
-        VBox applicationsContainer = (VBox)(applicationsPane.getContent());
-
-        applicationsContainer.getChildren().add(smallApplicationBox);
-    }
-
-    public void setLabels(Label listingTitle, Label listingLanguage) {
-        this.applicationTitle.setText(listingTitle.getText());
-        this.applicationLanguage.setText(listingLanguage.getText());
     }
 
     private void sendApplication() {
         try {
-            String text = applicationTextField.getText().trim();
-            String title = applicationTitle.getText();
+            String text = (applicationTextField != null) ? applicationTextField.getText().trim() : "";
+            String title = (applicationTitle != null) ? applicationTitle.getText() : "";
             String jsonBody = String.format("{\"username\":\"%s\",\"listingTitle\":\"%s\",\"message\":\"%s\"}",
                     Main.loggedInUser, title, text);
 
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("http://localhost:8080/api/listings/apply"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                     .build();
 
-            client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenAccept(new Consumer<HttpResponse<String>>() {
+                        @Override
+                        public void accept(final HttpResponse<String> response) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (response.statusCode() == 200) {
+                                        Main.displayAlert(Alert.AlertType.INFORMATION, "Application Success!",
+                                                "Your application has been sent to the host.");
+                                        Main.changeMenu(Main.homeMenu);
+                                        if (Main.homeController != null) {
+                                            Main.homeController.handleMyMeetups(null);
+                                        }
+                                    } else {
+                                        Main.displayAlert(Alert.AlertType.WARNING, "Application Failed", response.body());
+                                    }
+                                }
+                            });
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void setLabels(Label listingTitle, Label listingLanguage, String hostUser) {
+        if (this.applicationTitle != null && listingTitle != null) {
+            this.applicationTitle.setText(listingTitle.getText());
+        }
+        if (this.applicationLanguage != null && listingLanguage != null) {
+            this.applicationLanguage.setText(listingLanguage.getText());
+        }
+        this.hostUsername = hostUser;
+    }
+
     @FXML
     public void handleGoBack(ActionEvent actionEvent) {
-        applyButton.getScene().lookup("#smallApplicationScreen").setVisible(false);
-        applyButton.getScene().lookup("#smallApplicationScreen").setManaged(false);
+        if (applyButton != null && applyButton.getScene() != null) {
+            Node appScreen = applyButton.getScene().lookup("#smallApplicationScreen");
+            Node discPane = applyButton.getScene().lookup("#discoveryScrollPane");
 
-        applyButton.getScene().lookup("#discoveryScrollPane").setVisible(true);
-        applyButton.getScene().lookup("#discoveryScrollPane").setManaged(true);
+            if (appScreen != null) {
+                appScreen.setVisible(false);
+                appScreen.setManaged(false);
+            }
+            if (discPane != null) {
+                discPane.setVisible(true);
+                discPane.setManaged(true);
+            }
+        }
     }
 }

@@ -2,34 +2,55 @@ package org.example;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.util.Callback;
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.function.Consumer;
+
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
-
-import java.io.IOException;
-
 
 public class HomeController implements Initializable, ProfileUpdatable {
 
@@ -53,20 +74,22 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private ToggleButton tagSports;
     @FXML private VBox plannedMeetupsContainer;
     @FXML private VBox pastMeetupsContainer;
-    @FXML public static VBox applicationsContainer;
+    @FXML private VBox applicationsContainer;
     @FXML private NavigationController navMenuController;
 
-    String titleStyle = "", subtitleStyle = "", bodyStyle = "";
+    private String titleStyle = "";
+    private String subtitleStyle = "";
+    private String bodyStyle = "";
+
     @FXML private Label titleLabel;
     @FXML private Label subtitleLabel;
     @FXML private Label bodyLabel;
     @FXML private Label calendarMonthYearLabel;
     @FXML private GridPane calendarGrid;
     private YearMonth currentYearMonth = YearMonth.now();
-    private Map<LocalDate, List<String>> plannedMeetupsMap = new HashMap<>();
+    private Map<LocalDate, List<String>> plannedMeetupsMap = new HashMap<LocalDate, List<String>>();
     @FXML private DatePicker meetupDatePicker;
 
-    // favorites için
     @FXML private AnchorPane listingDetailView;
     @FXML private Label listingDetailTitle;
     @FXML private Label listingDetailRating;
@@ -76,20 +99,27 @@ public class HomeController implements Initializable, ProfileUpdatable {
     @FXML private Label listingDetailSize;
     @FXML private Label listingDetailDate;
 
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+
     @Override
     public void initialize(java.net.URL location, ResourceBundle resources) {
         if (navMenuController != null) {
             navMenuController.setActive("home");
         }
 
-        profileName.setText(Main.loggedInUser);
-        profileDate.setText(Main.accountCreationDate);
+        if (profileName != null) {
+            profileName.setText(Main.loggedInUser);
+        }
+        if (profileDate != null) {
+            profileDate.setText(Main.accountCreationDate);
+        }
+
         if (calendarGrid != null && calendarMonthYearLabel != null) {
             populateCalendar(currentYearMonth);
         }
         fetchMeetupsFromBackend();
 
-        if (Main.selectedWallpaper != null) {
+        if (Main.selectedWallpaper != null && rootPane != null) {
             rootPane.setStyle("-fx-background-image: url('" + Main.selectedWallpaper + "'); " +
                     "-fx-background-size: cover; " +
                     "-fx-background-position: center;");
@@ -103,13 +133,30 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
         if (plannedMeetupsContainer != null) {
             plannedMeetupsContainer.getChildren().clear();
+            addMeetupToSidebar("Spanish Meeting", true);
         }
         if (pastMeetupsContainer != null) {
             pastMeetupsContainer.getChildren().clear();
+            addMeetupToSidebar("Japanese Talk", false);
+        }
+    }
+
+    public void addMeetupToSidebar(String title, boolean isPlanned) {
+        Button meetupBtn = new Button(title);
+        meetupBtn.setMaxWidth(10000);
+        meetupBtn.setMnemonicParsing(false);
+
+        if (isPlanned) {
+            meetupBtn.setStyle("-fx-background-color: #e3f2fd; -fx-background-radius: 10; -fx-text-fill: #0078fe; -fx-font-weight: bold; -fx-padding: 8; -fx-cursor: hand;");
+        } else {
+            meetupBtn.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;");
         }
 
-        addMeetupToSidebar("Spanish Meeting", true);
-        addMeetupToSidebar("Japanese Talk", false);
+        if (isPlanned && plannedMeetupsContainer != null) {
+            plannedMeetupsContainer.getChildren().add(meetupBtn);
+        } else if (!isPlanned && pastMeetupsContainer != null) {
+            pastMeetupsContainer.getChildren().add(meetupBtn);
+        }
     }
 
     @Override
@@ -147,9 +194,13 @@ public class HomeController implements Initializable, ProfileUpdatable {
     }
 
     public void refreshTextColors() {
-        if (titleLabel == null || subtitleLabel == null || bodyLabel == null) return;
+        if (titleLabel == null || subtitleLabel == null || bodyLabel == null) {
+            return;
+        }
 
-        String titleStyleStr, subtitleStyleStr, bodyStyleStr;
+        String titleStyleStr;
+        String subtitleStyleStr;
+        String bodyStyleStr;
 
         if (Main.selectedWallpaper == null || Main.selectedWallpaper.contains("wp1.jpg") || Main.selectedWallpaper.isEmpty()) {
             titleStyleStr = "-fx-text-fill: black; -fx-effect: dropshadow(gaussian, white, 10, 0.4, 3, 0);";
@@ -195,10 +246,135 @@ public class HomeController implements Initializable, ProfileUpdatable {
     }
 
     public void handleMyMeetups(ActionEvent actionEvent) {
-        profileView.setVisible(false);
-        myMeetupsListView.setVisible(true);
-        listingDetailView.setVisible(false);
+        if (profileView != null) {
+            profileView.setVisible(false);
+        }
+        if (myMeetupsListView != null) {
+            myMeetupsListView.setVisible(true);
+        }
+        if (listingDetailView != null) {
+            listingDetailView.setVisible(false);
+        }
+
         changeView("/MyMeetupsScreen.fxml");
+        fetchIncomingApplicationsFromBackend();
+    }
+
+    public void fetchIncomingApplicationsFromBackend() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/listings/applications?hostUsername=" + Main.loggedInUser))
+                .GET()
+                .build();
+
+        httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(new Consumer<HttpResponse<String>>() {
+                    @Override
+                    public void accept(final HttpResponse<String> response) {
+                        if (response.statusCode() == 200) {
+                            try {
+                                JsonMapper mapper = JsonMapper.builder().build();
+                                final List<Map<String, String>> apps = mapper.readValue(response.body(), new TypeReference<List<Map<String, String>>>() {});
+
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (applicationsContainer != null) {
+                                            List<Node> nodesToRemove = new ArrayList<Node>();
+                                            for (Node node : applicationsContainer.getChildren()) {
+                                                if (node instanceof HBox) {
+                                                    nodesToRemove.add(node);
+                                                }
+                                            }
+                                            applicationsContainer.getChildren().removeAll(nodesToRemove);
+
+                                            for (Map<String, String> app : apps) {
+                                                String applicant = app.get("username");
+                                                String topic = app.get("listingTitle");
+                                                addIncomingApplicationCard(applicant, topic);
+                                            }
+                                        }
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void addIncomingApplicationCard(final String name, final String meetupTopic) {
+        if (applicationsContainer == null) {
+            return;
+        }
+
+        final HBox card = new HBox();
+        card.setAlignment(Pos.CENTER_LEFT);
+        card.setSpacing(15);
+        card.setPadding(new Insets(12, 20, 12, 20));
+        card.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;");
+        card.setMaxWidth(10000);
+
+        Circle avatar = new Circle(20);
+        avatar.setFill(Color.web("#e3f2fd"));
+        avatar.setStroke(Color.web("#0078fe"));
+        avatar.setStrokeWidth(1.5);
+
+        VBox textStack = new VBox();
+        textStack.setSpacing(4);
+        HBox.setHgrow(textStack, Priority.ALWAYS);
+
+        Label nameLbl = new Label(name);
+        nameLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #1a1a1a;");
+
+        String displayTopic = meetupTopic.startsWith("Wants to join:") ? meetupTopic : "Wants to join: " + meetupTopic;
+        Label subLbl = new Label(displayTopic);
+        subLbl.setStyle("-fx-text-fill: #757575; -fx-font-size: 13px;");
+
+        textStack.getChildren().addAll(nameLbl, subLbl);
+
+        HBox actionsContainer = new HBox();
+        actionsContainer.setAlignment(Pos.CENTER);
+        actionsContainer.setStyle("-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #e0e0e0; -fx-border-radius: 20;");
+        actionsContainer.setPadding(new Insets(4, 8, 4, 8));
+
+        Button acceptBtn = new Button("✓");
+        acceptBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 4 12 4 12;");
+
+        Line separator = new Line(0, 0, 0, 20);
+        separator.setStroke(Color.web("#e0e0e0"));
+
+        Button rejectBtn = new Button("✘");
+        rejectBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 12px; -fx-cursor: hand; -fx-padding: 4 12 4 12;");
+
+        acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                handleAcceptAction(name, card);
+            }
+        });
+
+        rejectBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                handleRejectAction(name, meetupTopic, card);
+            }
+        });
+
+        actionsContainer.getChildren().addAll(acceptBtn, separator, rejectBtn);
+        card.getChildren().addAll(avatar, textStack, actionsContainer);
+
+        applicationsContainer.getChildren().add(card);
+    }
+
+    public void addIncomingApplication(String name, String meetupTopic) {
+        if (applicationsContainer == null) {
+            handleMyMeetups(null);
+        }
+
+        if (applicationsContainer != null) {
+            addIncomingApplicationCard(name, meetupTopic);
+        }
     }
 
     public void handleSavedMeetups(ActionEvent actionEvent) {
@@ -209,7 +385,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
     }
 
     public void handleListingDetail(ActionEvent actionEvent) {
-        HBox parentBox = (HBox) (((Button)actionEvent.getSource()).getParent());
+        HBox parentBox = (HBox) (((Button) actionEvent.getSource()).getParent());
         HBox listingDetailBox = (HBox) parentBox.getChildren().getLast();
 
         profileView.setVisible(false);
@@ -259,14 +435,17 @@ public class HomeController implements Initializable, ProfileUpdatable {
     private void changeView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            loader.setControllerFactory(param -> {
-                if (param == HomeController.class) {
-                    return this;
-                }
-                try {
-                    return param.getDeclaredConstructor().newInstance();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> param) {
+                    if (param == HomeController.class) {
+                        return HomeController.this;
+                    }
+                    try {
+                        return param.getDeclaredConstructor().newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
 
@@ -279,7 +458,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
             AnchorPane.setRightAnchor(newView, 0.0);
 
             contentArea.getChildren().add(newView);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -289,52 +468,146 @@ public class HomeController implements Initializable, ProfileUpdatable {
 
     @FXML
     public static void handleAcceptApplication(ActionEvent actionEvent) {
-        // Standard handler for FXML clicks
         Button btn = (Button) actionEvent.getSource();
         btn.setDisable(true);
-
-        // Perform any quick generic UI updates or logic here
-        System.out.println("Application accepted via FXML trigger.");
     }
 
-    public void handleProcessApplication(Long applicationId, String applicantUsername, String meetupTopic, HBox cardNode, Button acceptBtn) {
+    public void handleProcessApplication(Long applicationId, final String applicantUsername, final String meetupTopic, final HBox cardNode, final Button acceptBtn) {
         if (acceptBtn != null) {
             acceptBtn.setDisable(true);
         }
 
-        // Backend endpoint expects /api/applications/accept/{id}
         String url = "http://localhost:8080/api/applications/accept/" + applicationId;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .POST(HttpRequest.BodyPublishers.noBody()) // Empty POST body
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        HttpClient.newHttpClient().sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> Platform.runLater(() -> {
-                    if (response.statusCode() == 200) {
-                        // Remove application card from screen
-                        if (applicationsContainer != null && cardNode != null) {
-                            applicationsContainer.getChildren().remove(cardNode);
-                        }
+        httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(new Consumer<HttpResponse<String>>() {
+                    @Override
+                    public void accept(final HttpResponse<String> response) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (response.statusCode() == 200) {
+                                    if (applicationsContainer != null && cardNode != null) {
+                                        applicationsContainer.getChildren().remove(cardNode);
+                                    }
 
-                        Main.displayAlert(Alert.AlertType.INFORMATION, "Application Accepted",
-                                applicantUsername + " has been added to chat for '" + meetupTopic + "'!");
-                    } else {
-                        Main.displayAlert(Alert.AlertType.ERROR, "Error", "Failed to accept application: " + response.body());
-                        if (acceptBtn != null) acceptBtn.setDisable(false);
+                                    Main.displayAlert(Alert.AlertType.INFORMATION, "Application Accepted",
+                                            applicantUsername + " has been added to chat for '" + meetupTopic + "'!");
+                                } else {
+                                    Main.displayAlert(Alert.AlertType.ERROR, "Error", "Failed to accept application: " + response.body());
+                                    if (acceptBtn != null) {
+                                        acceptBtn.setDisable(false);
+                                    }
+                                }
+                            }
+                        });
                     }
-                }))
-                .exceptionally(ex -> {
-                    Platform.runLater(() -> {
-                        Main.displayAlert(Alert.AlertType.ERROR, "Connection Error", "Could not connect to backend server.");
-                        if (acceptBtn != null) acceptBtn.setDisable(false);
-                    });
-                    return null;
                 });
     }
 
-    public void handleRejectApplication(ActionEvent actionEvent) {}
+    public void handleAcceptAction(String name, HBox cardNode) {
+        if (applicationsContainer != null && cardNode != null) {
+            applicationsContainer.getChildren().remove(cardNode);
+        }
+    }
+
+    public void handleRejectAction(String name, String meetupTopic, HBox cardNode) {
+        if (applicationsContainer != null && cardNode != null) {
+            applicationsContainer.getChildren().remove(cardNode);
+        }
+
+        try {
+            String cleanTitle = meetupTopic.replace("Wants to join:", "").trim();
+            String encodedTitle = URLEncoder.encode(cleanTitle, StandardCharsets.UTF_8);
+            String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+
+            String url = String.format("http://localhost:8080/api/listings/applications/reject?applicantUsername=%s&listingTitle=%s",
+                    encodedName, encodedTitle);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .DELETE()
+                    .build();
+
+            httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void handleRejectApplication(ActionEvent actionEvent) {
+        if (actionEvent != null && actionEvent.getSource() instanceof Button) {
+            Button btn = (Button) actionEvent.getSource();
+            btn.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void handlePrevMonth() {
+        currentYearMonth = currentYearMonth.minusMonths(1);
+        populateCalendar(currentYearMonth);
+    }
+
+    @FXML
+    private void handleNextMonth() {
+        currentYearMonth = currentYearMonth.plusMonths(1);
+        populateCalendar(currentYearMonth);
+    }
+
+    private void fetchMeetupsFromBackend() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/listings/all"))
+                .GET()
+                .build();
+
+        httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenAccept(new Consumer<HttpResponse<String>>() {
+                    @Override
+                    public void accept(HttpResponse<String> response) {
+                        if (response.statusCode() == 200) {
+                            try {
+                                JsonMapper mapper = JsonMapper.builder().build();
+                                List<String> listingsJsonList = mapper.readValue(response.body(), new TypeReference<List<String>>() {});
+
+                                plannedMeetupsMap.clear();
+
+                                for (int i = 0; i < listingsJsonList.size(); i++) {
+                                    String jsonString = listingsJsonList.get(i);
+                                    JsonNode node = mapper.readTree(jsonString);
+
+                                    if (node.has("listingname") && node.has("meetupDate") && !node.get("meetupDate").isNull()) {
+                                        String meetupName = node.get("listingname").asText();
+                                        JsonNode dateNode = node.get("meetupDate");
+
+                                        LocalDate meetupDate;
+                                        if (dateNode.isArray()) {
+                                            meetupDate = LocalDate.of(
+                                                    dateNode.get(0).asInt(),
+                                                    dateNode.get(1).asInt(),
+                                                    dateNode.get(2).asInt()
+                                            );
+                                        } else {
+                                            meetupDate = LocalDate.parse(dateNode.asText());
+                                        }
+
+                                        if (!plannedMeetupsMap.containsKey(meetupDate)) {
+                                            plannedMeetupsMap.put(meetupDate, new ArrayList<String>());
+                                        }
+                                        plannedMeetupsMap.get(meetupDate).add(meetupName);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
 
     public void handlePublishMeetup(ActionEvent actionEvent) {
         if (meetupDatePicker.getValue() == null) {
@@ -349,7 +622,7 @@ public class HomeController implements Initializable, ProfileUpdatable {
         ToggleButton selectedLocation = (ToggleButton) locationToggleGroup.getSelectedToggle();
         String location = (selectedLocation != null) ? selectedLocation.getText() : "None";
 
-        List<String> selectedTags = new ArrayList<>();
+        List<String> selectedTags = new ArrayList<String>();
         if (tagGameNight != null && tagGameNight.isSelected()) {
             selectedTags.add(tagGameNight.getText());
         }
@@ -360,9 +633,15 @@ public class HomeController implements Initializable, ProfileUpdatable {
             selectedTags.add(tagSports.getText());
         }
 
-        String tagsJson = selectedTags.stream()
-                .map(tag -> "\"" + tag.replace("\"", "\\\"") + "\"")
-                .collect(Collectors.joining(", ", "[", "]"));
+        StringBuilder tagsJsonBuilder = new StringBuilder("[");
+        for (int i = 0; i < selectedTags.size(); i++) {
+            tagsJsonBuilder.append("\"").append(selectedTags.get(i).replace("\"", "\\\"")).append("\"");
+            if (i < selectedTags.size() - 1) {
+                tagsJsonBuilder.append(", ");
+            }
+        }
+        tagsJsonBuilder.append("]");
+        String tagsJson = tagsJsonBuilder.toString();
 
         String jsonPayload = String.format(
                 "{\n" +
@@ -384,14 +663,13 @@ public class HomeController implements Initializable, ProfileUpdatable {
                 tagsJson
         );
 
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/api/listings/add?username=" + Main.loggedInUser))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
                 .build();
 
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
 
         meetupTitleInput.clear();
         meetupDescriptionInput.clear();
@@ -401,155 +679,41 @@ public class HomeController implements Initializable, ProfileUpdatable {
             locationToggleGroup.getSelectedToggle().setSelected(false);
         }
 
-        if (tagGameNight != null) tagGameNight.setSelected(false);
-        if (tagCooking != null) tagCooking.setSelected(false);
-        if (tagSports != null) tagSports.setSelected(false);
+        if (tagGameNight != null) {
+            tagGameNight.setSelected(false);
+        }
+        if (tagCooking != null) {
+            tagCooking.setSelected(false);
+        }
+        if (tagSports != null) {
+            tagSports.setSelected(false);
+        }
 
-        if (profileView != null) profileView.setVisible(true);
-        if (myMeetupsListView != null) myMeetupsListView.setVisible(false);
+        if (profileView != null) {
+            profileView.setVisible(true);
+        }
+        if (myMeetupsListView != null) {
+            myMeetupsListView.setVisible(false);
+        }
 
         if (contentArea != null) {
             contentArea.getChildren().clear();
         }
     }
 
-    public void addMeetupToSidebar(String title, boolean isPlanned) {
-        Button meetupBtn = new Button(title);
-        meetupBtn.setMaxWidth(10000);
-        meetupBtn.setMnemonicParsing(false);
-
-        if (isPlanned) {
-            meetupBtn.setStyle("-fx-background-color: #e3f2fd; -fx-background-radius: 10; -fx-text-fill: #0078fe; -fx-font-weight: bold; -fx-padding: 8; -fx-cursor: hand;");
-        } else {
-            meetupBtn.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 10; -fx-text-fill: #555555; -fx-padding: 8; -fx-cursor: hand;");
-        }
-
-        meetupBtn.setOnAction(e -> {});
-
-        if (isPlanned) {
-            plannedMeetupsContainer.getChildren().add(meetupBtn);
-        } else {
-            pastMeetupsContainer.getChildren().add(meetupBtn);
-        }
-    }
-
     public void removeMeetupFromSidebar(String title, boolean isPlanned) {
         VBox targetContainer = isPlanned ? plannedMeetupsContainer : pastMeetupsContainer;
-        targetContainer.getChildren().removeIf(node ->
-                node instanceof Button && ((Button) node).getText().equals(title)
-        );
-    }
+        if (targetContainer == null) {
+            return;
+        }
 
-    public void addIncomingApplication(String name, String meetupTopic) {
-        HBox card = new HBox();
-        card.setAlignment(Pos.CENTER_LEFT);
-        card.setSpacing(15);
-        card.setPadding(new Insets(12, 20, 12, 20));
-        card.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;");
-        card.setMaxWidth(10000);
-
-        Circle avatar = new Circle(20);
-        avatar.setFill(Color.web("#e3f2fd"));
-        avatar.setStroke(Color.web("#0078fe"));
-        avatar.setStrokeWidth(1.5);
-
-        VBox textStack = new VBox();
-        textStack.setSpacing(4);
-        HBox.setHgrow(textStack, Priority.ALWAYS);
-
-        Label nameLbl = new Label(name);
-        nameLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #1a1a1a;");
-
-        Label subLbl = new Label("Wants to join: " + meetupTopic);
-        subLbl.setStyle("-fx-text-fill: #757575; -fx-font-size: 13px;");
-
-        textStack.getChildren().addAll(nameLbl, subLbl);
-
-        HBox actionsContainer = new HBox();
-        actionsContainer.setAlignment(Pos.CENTER);
-        actionsContainer.setStyle("-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #e0e0e0; -fx-border-radius: 20;");
-        actionsContainer.setPadding(new Insets(4, 8, 4, 8));
-
-        Button acceptBtn = new Button("✓");
-        acceptBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 4 12 4 12;");
-
-        Line separator = new Line(0, 0, 0, 20);
-        separator.setStroke(Color.web("#e0e0e0"));
-
-        Button rejectBtn = new Button("✘");
-        rejectBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 12px; -fx-cursor: hand; -fx-padding: 4 12 4 12;");
-
-        acceptBtn.setOnAction(e -> handleAcceptAction(name, card));
-        rejectBtn.setOnAction(e -> handleRejectAction(name, card));
-
-        actionsContainer.getChildren().addAll(acceptBtn, separator, rejectBtn);
-        card.getChildren().addAll(avatar, textStack, actionsContainer);
-        applicationsContainer.getChildren().add(card);
-    }
-
-    private void handleAcceptAction(String name, HBox cardNode) {
-        applicationsContainer.getChildren().remove(cardNode);
-    }
-
-    private void handleRejectAction(String name, HBox cardNode) {
-        applicationsContainer.getChildren().remove(cardNode);
-    }
-    @FXML
-    private void handlePrevMonth() {
-        currentYearMonth = currentYearMonth.minusMonths(1);
-        populateCalendar(currentYearMonth);
-    }
-
-    @FXML
-    private void handleNextMonth() {
-        currentYearMonth = currentYearMonth.plusMonths(1);
-        populateCalendar(currentYearMonth);
-    }
-
-    private void fetchMeetupsFromBackend() {
-        new Thread(() -> {
-            try {
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:8080/api/listings/all"))
-                        .GET()
-                        .build();
-
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-                if (response.statusCode() == 200) {
-                    JsonMapper mapper = JsonMapper.builder().build();
-                    List<String> listingsJsonList = mapper.readValue(response.body(), new TypeReference<List<String>>(){});
-
-                    plannedMeetupsMap.clear();
-
-                    for (int i = 0; i < listingsJsonList.size(); i++) {
-                        String jsonString = listingsJsonList.get(i);
-                        JsonNode node = mapper.readTree(jsonString);
-
-                        if (node.has("listingname") && node.has("meetupDate") && !node.get("meetupDate").isNull()) {
-                            String meetupName = node.get("listingname").asText();
-                            JsonNode dateNode = node.get("meetupDate");
-
-                            LocalDate meetupDate;
-                            if (dateNode.isArray()) {
-                                meetupDate = LocalDate.of(
-                                        dateNode.get(0).asInt(),
-                                        dateNode.get(1).asInt(),
-                                        dateNode.get(2).asInt()
-                                );
-                            } else {
-                                meetupDate = LocalDate.parse(dateNode.asText());
-                            }
-
-                            plannedMeetupsMap.computeIfAbsent(meetupDate, k -> new ArrayList<>()).add(meetupName);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        List<Node> nodesToRemove = new ArrayList<Node>();
+        for (Node node : targetContainer.getChildren()) {
+            if (node instanceof Button && ((Button) node).getText().equals(title)) {
+                nodesToRemove.add(node);
             }
-        }).start();
+        }
+        targetContainer.getChildren().removeAll(nodesToRemove);
     }
 
     private void populateCalendar(YearMonth yearMonth) {

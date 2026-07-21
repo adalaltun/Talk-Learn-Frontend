@@ -1,12 +1,14 @@
 package org.example;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DiscoveryController {
+
     @FXML public VBox listingBox;
     @FXML private ScrollPane discoveryScrollPane;
     @FXML private GridPane filterBox;
@@ -61,16 +64,23 @@ public class DiscoveryController {
             showListingsButton.setManaged(true);
         }
 
+        EventHandler<ActionEvent> buttonColorHandler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                handleToggleButtonColor(event);
+            }
+        };
+
         for (int i = 0; i < filterBox.getChildren().size(); i++) {
             if (filterBox.getChildren().get(i) instanceof ToggleButton) {
                 ToggleButton button = (ToggleButton) filterBox.getChildren().get(i);
-                button.setOnAction(this::handleToggleButtonColor);
+                button.setOnAction(buttonColorHandler);
             }
         }
         for (int i = 0; i < tagBox.getChildren().size(); i++) {
             if (tagBox.getChildren().get(i) instanceof ToggleButton) {
                 ToggleButton button = (ToggleButton) tagBox.getChildren().get(i);
-                button.setOnAction(this::handleToggleButtonColor);
+                button.setOnAction(buttonColorHandler);
             }
         }
 
@@ -219,7 +229,7 @@ public class DiscoveryController {
             if (response.statusCode() == 200) {
                 searchResult = parseJsonArray(response.body());
             } else {
-                Main.displayAlert(Alert.AlertType.ERROR, "Search failed.", response.body());
+                Main.displayAlert(Alert.AlertType.ERROR, "Search Failed", response.body());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -240,7 +250,7 @@ public class DiscoveryController {
                 List<HashMap<String, String>> parsedList = parseJsonArray(response.body());
                 addReadListings(parsedList);
             } else {
-                Main.displayAlert(Alert.AlertType.ERROR, "Reading failed.", response.body());
+                Main.displayAlert(Alert.AlertType.ERROR, "Reading Failed", response.body());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -265,17 +275,20 @@ public class DiscoveryController {
         for (int i = 0; i < maplistings.size(); i++) {
             HashMap<String, String> map = maplistings.get(i);
             StackPane listingPane = (StackPane) Main.loadFXML("smallListing");
+
             if (listingPane != null && !listingPane.getChildren().isEmpty()) {
                 HBox listingLabels = (HBox) listingPane.getChildren().get(0);
 
                 Label ratingLabel = (Label) listingLabels.getChildren().get(0);
-                Label userLabel = (Label) listingLabels.getChildren().get(1);
+                final Label userLabel = (Label) listingLabels.getChildren().get(1);
                 Label langLabel = (Label) listingLabels.getChildren().get(2);
-                Label topicLabel = (Label) listingLabels.getChildren().get(3);
+                final Label topicLabel = (Label) listingLabels.getChildren().get(3);
                 Label tagsLabel = (Label) listingLabels.getChildren().get(4);
                 Label locLabel = (Label) listingLabels.getChildren().get(5);
                 Label limitLabel = (Label) listingLabels.getChildren().get(6);
                 Label dateLabel = (Label) listingLabels.getChildren().get(7);
+
+                final Label currentLangLabel = langLabel;
 
                 String rating = map.get("fairRating");
                 if (rating != null) {
@@ -345,16 +358,20 @@ public class DiscoveryController {
                     dateLabel.setText("No Date");
                 }
 
-                listingPane.setOnMouseClicked(event -> {
-                    if (smallApplicationScreen != null && smallApplicationScreenController != null) {
-                        smallApplicationScreenController.setLabels(topicLabel, langLabel);
+                listingPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if (smallApplicationScreen != null && smallApplicationScreenController != null) {
+                            String hostName = (userLabel != null) ? userLabel.getText() : "";
+                            smallApplicationScreenController.setLabels(topicLabel, currentLangLabel, hostName);
 
-                        if (discoveryScrollPane != null) {
-                            discoveryScrollPane.setVisible(false);
-                            discoveryScrollPane.setManaged(false);
+                            if (discoveryScrollPane != null) {
+                                discoveryScrollPane.setVisible(false);
+                                discoveryScrollPane.setManaged(false);
+                            }
+                            smallApplicationScreen.setVisible(true);
+                            smallApplicationScreen.setManaged(true);
                         }
-                        smallApplicationScreen.setVisible(true);
-                        smallApplicationScreen.setManaged(true);
                     }
                 });
 
